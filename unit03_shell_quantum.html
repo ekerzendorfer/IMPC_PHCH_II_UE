@@ -4,1038 +4,364 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UE 03 – The Shell: Wave Mechanics, Box Models & Orbitals | Physical Chemistry II</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-  <!-- Optional external codes.js (works locally & on GitHub Pages) -->
-  <script src="codes.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script defer src="codes.js?v=ue03-v2"></script>
+  <script defer src="unit03_shell_quantum.js"></script>
   <style>
-    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: #f8fafc; color: #0f172a; }
-    .katex-display { margin: 0.5em 0 !important; overflow-x: auto; }
-    .row-selectable { cursor: pointer; transition: all 0.15s ease; }
-    .row-selectable:hover { background-color: #e0f2fe; }
-    .row-selected { background-color: #bae6fd !important; font-weight: 700; outline: 2px solid #0284c7; }
-    @media print { .no-print { display: none !important; } body { background: white; } }
+    :root{font-family:system-ui,sans-serif;color:#1e293b;background:#f8fafc;line-height:1.53}
+    *,*::before,*::after{box-sizing:border-box}
+    [hidden]{display:none!important}
+    body{margin:0} main,.wrap{max-width:68rem;margin:auto;padding:0 1rem}
+    main{padding-top:1rem;padding-bottom:3rem}
+    h1,h2,h3,p{margin:.25rem 0 .7rem} h1{font-size:clamp(1.35rem,4vw,2rem)}
+    h2{font-size:1.2rem} h3{font-size:1rem}
+    a{color:#075985;text-underline-offset:.15em} .top a{color:#bae6fd}
+    .top{background:#0f172a;color:#fff;padding:1rem 0}
+    .top .meta{color:#cbd5e1;font-size:.88rem}
+    #release-form{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
+    #release-code{width:min(100%,13rem)}
+    #release-status{min-height:1.5em;color:#fef3c7;margin:0}
+    .status-line{display:flex;flex-wrap:wrap;gap:.35rem 1.2rem;font-size:.88rem;color:#dbeafe}
+    nav,.note,.sources{padding:.85rem 1.1rem;background:#fff;border:1px solid #cbd5e1;border-radius:.8rem;margin:0 0 1.15rem}
+    nav a{display:inline-block;margin:.15rem .5rem .15rem 0}.note p:last-child,.sources p:last-child{margin-bottom:0}
+    .card{--accent:#3730a3;--tint:#eef2ff;border-radius:.8rem;overflow:hidden;border:1px solid #cbd5e1;background:#fff;margin:0 0 1.1rem}
+    .Concept{--accent:#92400e;--tint:#fffbeb}.Practice{--accent:#065f46;--tint:#ecfdf5}.Homework{--accent:#5b21b6;--tint:#f5f3ff}
+    .card>header{color:white;background:var(--accent);padding:.7rem 1.1rem}
+    .card>header p{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;margin:0}.card>header h2{margin:.1rem 0}
+    .body{padding:1rem 1.1rem}.body>p:first-child{margin-top:0}
+    details{border:1px solid #cbd5e1;border-radius:.55rem;margin:.65rem 0;background:#fff}
+    details>summary{cursor:pointer;font-weight:650;padding:.65rem .8rem}
+    details>div{padding:.05rem .8rem .65rem}
+    .lookup{background:#eff6ff;border-color:#bfdbfe}.lookup>summary{color:#075985}
+    .guided,.solution,.step{background:var(--tint)}
+    .solution{border-color:var(--accent)}.solution>summary{color:var(--accent)}
+    .step{margin:.75rem 0;border:1px solid #cbd5e1;border-radius:.55rem;padding:.75rem .85rem}
+    .prompt{font-weight:600;margin-bottom:.55rem}
+    .inputs{display:flex;flex-wrap:wrap;align-items:end;gap:.65rem}
+    label{font-weight:600}.inputs label{display:grid;gap:.25rem;font-size:.9rem}
+    input,select,button{font:inherit}
+    input[type=text],select{background:#fff;color:#0f172a;border:1px solid #94a3b8;border-radius:.35rem;padding:.35rem .5rem;max-width:100%}
+    .inputs input[type=text]{width:9rem}.inputs input[readonly]{background:#f1f5f9}
+    button{background:#334155;color:#fff;border:0;border-radius:.35rem;padding:.38rem .7rem;cursor:pointer;font-weight:650}
+    #release-form button{background:#fbbf24;color:#0f172a}button:disabled{opacity:.65;cursor:default}
+    :focus-visible{outline:3px solid #0284c7;outline-offset:2px}
+    .feedback{margin:.45rem 0 0;font-size:.92rem}.feedback:empty{display:none}
+    .feedback[data-kind=pass]{color:#065f46}.feedback[data-kind=retry]{color:#9f1239}
+    .lock-note{color:#475569;font-size:.9rem}.format{font-size:.88rem;color:#475569}
+    .tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:.75rem}
+    fieldset{margin:0;min-width:0;border:1px solid #cbd5e1;border-radius:.5rem;padding:.5rem}
+    .table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.93rem}
+    th,td{text-align:left;padding:.38rem .5rem;border-bottom:1px solid #cbd5e1}
+    tr:has(input:checked){background:#dbeafe}tr label{cursor:pointer}
+    .katex-display{overflow-x:auto;overflow-y:hidden;margin:.6em 0}.katex{font-size:1.02em}
+    @media print{body,.top{background:#fff;color:#000}.top .meta{color:#000}nav,#release-form,.status-line,#release-status,button{display:none}.card>header{background:#fff;color:#000}.step,.note,.lookup,.guided,.solution{background:#fff}}
   </style>
 </head>
-<body class="min-h-screen pb-16">
-
-  <!-- HEADER & LOCK CONTROL BAR -->
-  <header class="bg-slate-900 text-white shadow-lg border-b border-slate-700 sticky top-0 z-40">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <a href="index.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-600 transition">
-          &larr; Course Hub
-        </a>
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="px-2 py-0.5 rounded text-[11px] font-extrabold uppercase tracking-wider bg-amber-500 text-slate-950">UE 03 &bull; Pilot Unit</span>
-            <span class="text-xs text-slate-400 hidden sm:inline">FH IMC Krems &bull; Physical Chemistry II (L22_The Shell.pdf)</span>
-          </div>
-          <h1 class="text-base sm:text-lg font-bold tracking-tight text-white">
-            The Shell: Wave Mechanics, Box Models &amp; Atomic Orbitals
-          </h1>
-        </div>
-      </div>
-
-      <!-- SECRETLECTURER TRIGGER: Double-click on Mag. Erich Kerzendorfer -->
-      <div class="text-xs text-slate-300 text-right select-none">
-        <div
-          id="lecturer-Secret-Trigger"
-          ondblclick="toggleLecturerMode()"
-          title="Lecturer Coaching Mode"
-          class="cursor-pointer hover:text-white transition"
-        >
-          <strong>UE Coaching:</strong> Mag. Erich Kerzendorfer <span id="prof-dot" class="hidden">🟢</span>
-        </div>
-        <div><strong>Main Lecture:</strong> Prof. Manfred Kerschbaumer</div>
-      </div>
-    </div>
-
-    <!-- CODE UNLOCK BAR -->
-    <div class="bg-slate-800/95 border-t border-slate-700 no-print">
-      <div class="max-w-6xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3">
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="text-xs font-bold uppercase tracking-wider text-amber-400">🔑 Solution Unlock Code:</span>
-          <input
-            id="unlock-code-input"
-            type="text"
-            placeholder="e.g. G-U3, IN-U3 or HW-U3"
-            onkeydown="if(event.key==='Enter') submitUnlockCode()"
-            class="px-3 py-1 rounded bg-slate-900 border border-slate-600 text-white text-xs font-mono focus:outline-none focus:border-amber-400 w-48"
-          />
-          <button
-            onclick="submitUnlockCode()"
-            class="px-3 py-1 rounded bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition shadow-sm"
-          >
-            Unlock Solutions
-          </button>
-          <button
-            onclick="resetAllLocks()"
-            class="px-2.5 py-1 rounded bg-slate-700 hover:bg-rose-600 text-slate-200 text-xs font-semibold transition"
-          >
-            Reset Locks
-          </button>
-          <span id="unlock-msg" class="text-xs font-semibold text-emerald-400"></span>
-        </div>
-
-        <div class="flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
-          <span id="badge-guided" class="px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-400">🔒 Part 1 (G-U3)</span>
-          <span id="badge-inclass" class="px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-400">🔒 Part 2 (IN-U3)</span>
-          <span id="badge-hw" class="px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-400">🔒 Part 3 (HW-U3)</span>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main class="max-w-6xl mx-auto px-4 mt-6 space-y-8">
-
-    <!-- COLLAPSIBLE FORMULA & CONSTANTS REFERENCE BOX -->
-    <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-      <button
-        onclick="document.getElementById('formula-box').classList.toggle('hidden')"
-        class="w-full px-5 py-3.5 bg-slate-100 hover:bg-slate-200/70 flex items-center justify-between text-left transition"
-      >
-        <div class="flex items-center gap-2.5">
-          <span class="text-lg">📐</span>
-          <div>
-            <h2 class="font-bold text-slate-800 text-sm sm:text-base">Reference Box: The 5 "By Heart" Formulas, Constants &amp; UE 03 Equations</h2>
-            <p class="text-xs text-slate-500">Click to expand/collapse reference formulas and physical constants from L22_The Shell.pdf</p>
-          </div>
-        </div>
-        <span class="text-slate-600 font-bold text-sm">▼</span>
-      </button>
-
-      <div id="formula-box" class="p-5 border-t border-slate-200 space-y-4">
-        <div class="bg-rose-50 border border-rose-200 rounded-lg p-3">
-          <div class="text-[11px] font-bold uppercase tracking-wider text-rose-800 mb-1.5">
-            🧠 The 5 Fundamental "By Heart" Formulas (Required in Every Exam &amp; Try-Test!)
-          </div>
-          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-xs bg-white p-2 rounded border border-rose-100">
-            <div>$$\rho = \frac{m}{V}$$</div>
-            <div>$$n = \frac{m}{M}$$</div>
-            <div>$$c = \frac{n}{V}$$</div>
-            <div>$$p \cdot V = n \cdot R \cdot T$$</div>
-            <div>$$x_i = \frac{n_i}{n_{\text{tot}}}$$</div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-          <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-1.5">
-            <h3 class="font-bold text-slate-800 uppercase tracking-wider border-b pb-1">UE 03 Key Equations (L22_The Shell.pdf)</h3>
-            <div><strong>De Broglie &amp; Acceleration:</strong> $\lambda = \dfrac{h}{p} = \dfrac{h}{m v} = \dfrac{h}{\sqrt{2 m_e e U}}$</div>
-            <div><strong>Heisenberg Uncertainty (Slide 19):</strong> $\Delta x \cdot \Delta p_x \ge \dfrac{h}{4\pi} \implies \Delta v_{x,\min} = \dfrac{h}{4\pi \cdot m \cdot \Delta x}$</div>
-            <div><strong>1D Box (Slide 20):</strong> $E_n = \dfrac{n^2 h^2}{8 m_e L^2}, \quad \Delta E = (n_{\text{LUMO}}^2 - n_{\text{HOMO}}^2)\dfrac{h^2}{8 m_e L^2}, \quad \lambda = \dfrac{h c}{\Delta E}$</div>
-            <div><strong>2D / 3D Box (Slides 21–22):</strong> $E_{n_1,n_2} = \dfrac{h^2}{8 m_e}\left(\dfrac{n_1^2}{L_1^2} + \dfrac{n_2^2}{L_2^2}\right), \quad E_{n_1,n_2}^{\text{square}} = E_0(n_1^2 + n_2^2)$</div>
-          </div>
-
-          <div class="bg-amber-50/70 p-3.5 rounded-lg border border-amber-200 space-y-1.5">
-            <h3 class="font-bold text-amber-900 uppercase tracking-wider border-b border-amber-200 pb-1">Physical Constants (Try-Test Standard)</h3>
-            <ul class="space-y-1 text-slate-700 list-disc list-inside">
-              <li>Planck constant: $h = 6.626 \times 10^{-34}\text{ J s}$ ($\text{kg m}^2\text{ s}^{-1}$)</li>
-              <li>Speed of light: $c = 2.9979 \times 10^8\text{ m s}^{-1}$</li>
-              <li>Electron mass: $m_e = 9.109 \times 10^{-31}\text{ kg}$</li>
-              <li>Proton mass: $m_p = 1.673 \times 10^{-27}\text{ kg}$</li>
-              <li>Elementary charge &amp; eV: $1\text{ eV} = 1.602 \times 10^{-19}\text{ J}$</li>
-              <li>Length prefixes: $1\text{ nm} = 10^{-9}\text{ m}$, $1\text{ pm} = 10^{-12}\text{ m}$, $1\text{ fm} = 10^{-15}\text{ m}$</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================================== -->
-    <!-- PART 1: IN-CLASS GUIDED MODELING (G1 & G2)                            -->
-    <!-- ===================================================================== -->
-    <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-      <div class="px-6 py-3.5 bg-indigo-950 text-white flex flex-wrap items-center justify-between gap-2">
-        <div>
-          <span class="text-[11px] uppercase font-bold tracking-wider text-indigo-300">Part 1 &bull; In-Class Guided Modeling (~20 Min.)</span>
-          <h2 class="text-base sm:text-lg font-bold">👨‍🏫 2 Lecturer Beamer Walkthroughs (G1 &amp; G2)</h2>
-        </div>
-        <span id="part1-status-tag" class="px-2.5 py-1 rounded bg-indigo-900 border border-indigo-700 text-xs font-mono text-indigo-200">
-          Steps locked until Lecturer Demo / Code G-U3
-        </span>
-      </div>
-
-      <div class="p-6 space-y-6">
-        <!-- GUIDED G1: 1D BOX WITH FEW ELECTRONS (HEXATRIENE) -->
-        <div class="border border-slate-200 rounded-xl p-5 bg-slate-50/70 space-y-3">
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-wider text-indigo-700">Guided Demo G1 &bull; 1D Box Before 2D Box</span>
-              <h3 class="text-sm sm:text-base font-bold text-slate-900">1D Particle in a Box with Few Electrons: 1,3,5-Hexatriene ($6\text{ }\pi\text{-Electrons}$)</h3>
-            </div>
-            <div class="flex flex-wrap gap-1.5">
-              <button onclick="toggleGuidedStep('g1-a')" class="guided-btn px-2.5 py-1 rounded bg-indigo-100 hover:bg-indigo-200 text-indigo-900 text-xs font-semibold">🔒 Step a</button>
-              <button onclick="toggleGuidedStep('g1-b')" class="guided-btn px-2.5 py-1 rounded bg-indigo-100 hover:bg-indigo-200 text-indigo-900 text-xs font-semibold">🔒 Step b</button>
-              <button onclick="toggleGuidedStep('g1-c')" class="guided-btn px-2.5 py-1 rounded bg-indigo-100 hover:bg-indigo-200 text-indigo-900 text-xs font-semibold">🔒 Step c</button>
-            </div>
-          </div>
-
-          <!-- Script Lookup Box -->
-          <div class="bg-sky-50 border-l-4 border-sky-600 rounded-r-lg p-3 text-xs text-sky-950 flex flex-wrap items-center justify-between gap-2">
-            <div>
-              🔎 <strong>Skript-Nachschau:</strong> Open <strong>L22_The Shell.pdf, Slide 20</strong> (1D Particle in a Box). Locate the energy formula $E_n$ for a box of length $L$.
-            </div>
-            <button onclick="document.getElementById('slide-g1').classList.toggle('hidden')" class="px-2.5 py-1 rounded bg-sky-700 hover:bg-sky-600 text-white font-bold text-[11px] transition">
-              📖 Show Slide 20 Extract
-            </button>
-          </div>
-          <div id="slide-g1" class="hidden bg-white border border-sky-300 rounded-lg p-3 text-xs text-slate-700 space-y-1">
-            <div class="font-bold text-sky-900">📌 Extract from L22_The Shell.pdf (Slide 20 – Confined Electrons in a 1D Box):</div>
-            <p>A particle of mass $m_e$ confined to a 1D potential well of length $L$ ($V=0$ inside, $V=\infty$ outside) forms standing de Broglie waves with $L = n \cdot \frac{\lambda}{2}$ ($n = 1, 2, 3, \dots$). Its quantized energy levels are:</p>
-            $$E_n = \frac{n^2 h^2}{8 m_e L^2}$$
-            <p>By the Pauli exclusion principle, each spatial level $n$ accommodates at most <strong>2 electrons</strong> ($\uparrow\downarrow$).</p>
-          </div>
-
-          <p class="text-sm text-slate-700 leading-relaxed">
-            <strong>Problem:</strong> In conjugated polyenes, the delocalized $\pi$-electrons can be modeled as particles moving freely along a 1D box of length $L$. <strong>1,3,5-Hexatriene</strong> ($\text{CH}_2\text{=CH–CH=CH–CH=CH}_2$) has $N = 6\text{ }\pi\text{-electrons}$ in a box of length $L = 0.730\text{ nm}$.<br />
-            <strong>(a)</strong> Determine the quantum numbers $n_{\text{HOMO}}$ and $n_{\text{LUMO}}$ in the ground state.<br />
-            <strong>(b)</strong> Calculate the minimum excitation energy $\Delta E = E_{\text{LUMO}} - E_{\text{HOMO}}$ (in $\text{J}$ and $\text{eV}$).<br />
-            <strong>(c)</strong> Calculate the absorption wavelength $\lambda$ (in $\text{nm}$) and compare it with the experimental UV peak ($\lambda_{\text{exp}} = 258\text{ nm}$).
-          </p>
-
-          <div id="g1-a" class="hidden bg-white p-3.5 rounded-lg border border-indigo-200 text-xs sm:text-sm space-y-1">
-            <div class="font-bold text-indigo-900">Step (a) – Orbital Filling ($6\text{ }\pi\text{-Electrons}$):</div>
+<body>
+<header class="top">
+<div class="wrap">
+  <p class="meta"><a href="index.html">← Course Hub</a> · Physical Chemistry II · UE 03 Pilot</p>
+  <h1>The Shell · Wave Mechanics, Box Models &amp; Atomic Orbitals</h1>
+  <p class="meta">FH IMC Krems · Main lecture: Manfred Kerschbaumer · Exercise coaching: Erich Kerzendorfer</p>
+  <form id="release-form">
+    <label for="release-code">Solution unlock code</label>
+    <input id="release-code" type="text" placeholder="Enter the announced code" autocomplete="off" spellcheck="false">
+    <button type="submit">Unlock solutions</button>
+  </form>
+  <div class="status-line"><span id="status-inclass">In-class solutions: locked</span><span id="status-homework">Homework solutions: locked</span></div>
+  <p id="release-status" role="status"></p>
+</div></header>
+<main>
+  <nav aria-label="Order of activities"><strong>In class</strong>
+    <a href="#g1">G1</a> → <a href="#r1">R1</a> · <a href="#g2">G2</a> → <a href="#c1">C1</a> · <a href="#c2">C2</a> → <a href="#r2">R2</a> · <strong>Voluntary</strong> <a href="#h1">H1</a> <a href="#h2">H2</a> · <a href="#sources">Sources</a>
+  </nav>
+  <section class="note" aria-label="How to use this worksheet">
+    <p><strong>Work on paper first.</strong> Use the lecture script and your calculator, as you would in a paper-based exam. In R1 and R2, a correct check opens the next step. Each check assesses only the current step.</p>
+    <p>Guided steps are available from the start. The lecturer announces one code for C1, C2, R1 and R2 after the practice phase, and a separate code for H1 and H2 a few days later. A code makes the solutions available to open individually. Release codes are also shared in Teams.</p>
+  </section>
+  <details class="note">
+<summary>Constants and input notation</summary>
+<div>
+    <p>Use $h=6.626\times10^{-34}\,\mathrm{J\,s}$, $c=2.9979\times10^{8}\,\mathrm{m\,s^{-1}}$, $m_e=9.109\times10^{-31}\,\mathrm{kg}$, $m_p=1.673\times10^{-27}\,\mathrm{kg}$ and $1\,\mathrm{eV}=1.602\times10^{-19}\,\mathrm{J}$.</p>
+    <p>Enter the number in the unit shown. Decimal point and decimal comma are both accepted. For example, <code>2.5e-12</code> means $2.5\times10^{-12}$. Do not type units in the field.</p>
+  </div>
+</details>
+<section id="g1" class="card Guided">
+<header>
+<p>Guided</p>
+<h2>G1 · Hexatriene in a 1D box</h2></header>
+<div class="body">
+<details class="lookup">
+<summary>Lecture script lookup · <a href="#source-l22">L22</a> slide 20 · One-dimensional box</summary>
+<div>
+<p>Slide 20 applies the standing-wave condition $L=n\lambda_{\mathrm{dB}}/2$ to a confined electron. This gives $E_n=n^2h^2/(8m_eL^2)$ with $n=1,2,\ldots$. The box length $L$ and the electron’s de Broglie wavelength are distinct from the wavelength of an absorbed photon.</p></div>
+</details>
+<p>Model 1,3,5-hexatriene as six π electrons in a 1D box of <strong>assumed effective length</strong> $L=0.730\,\mathrm{nm}$. Find the HOMO and LUMO, their energy difference, and the absorption wavelength. For comparison, <a href="https://openstax.org/books/organic-chemistry/pages/14-8-interpreting-ultraviolet-spectra-the-effect-of-conjugation">OpenStax lists an absorption maximum of 258 nm</a>.</p>
+<details class="guided">
+<summary>Step a · Fill the levels</summary>
+<div>
+<div class="font-bold text-indigo-900">Step (a) – Orbital Filling ($6\text{ }\pi\text{-Electrons}$):</div>
             <p>With 2 electrons ($\uparrow\downarrow$) per level, $N = 6$ electrons fill the lowest three levels $n = 1, 2, 3$:</p>
-            $$n_{\text{HOMO}} = \frac{N}{2} = \mathbf{3}, \qquad n_{\text{LUMO}} = n_{\text{HOMO}} + 1 = \mathbf{4}$$
-          </div>
-          <div id="g1-b" class="hidden bg-white p-3.5 rounded-lg border border-indigo-200 text-xs sm:text-sm space-y-1">
-            <div class="font-bold text-indigo-900">Step (b) – HOMO $\to$ LUMO Excitation Energy $\Delta E$:</div>
+            $$n_{\text{HOMO}} = \frac{N}{2} = \mathbf{3}, \qquad n_{\text{LUMO}} = n_{\text{HOMO}} + 1 = \mathbf{4}$$</div>
+</details>
+<details class="guided">
+<summary>Step b · Calculate the gap</summary>
+<div>
+<div class="font-bold text-indigo-900">Step (b) – HOMO $\to$ LUMO Excitation Energy $\Delta E$:</div>
             <p>Converting $L = 0.730\text{ nm} = 0.730 \times 10^{-9}\text{ m}$:</p>
-            $$\Delta E = E_4 - E_3 = (4^2 - 3^2)\frac{h^2}{8 m_e L^2} = 7 \cdot \frac{(6.626 \times 10^{-34}\text{ J s})^2}{8 \cdot (9.109 \times 10^{-31}\text{ kg}) \cdot (0.730 \times 10^{-9}\text{ m})^2} = \mathbf{7.914 \times 10^{-19}\text{ J}} \quad (\mathbf{4.94\text{ eV}})$$
-          </div>
-          <div id="g1-c" class="hidden bg-white p-3.5 rounded-lg border border-indigo-200 text-xs sm:text-sm space-y-1">
-            <div class="font-bold text-indigo-900">Step (c) – Absorption Wavelength $\lambda$:</div>
-            $$\lambda = \frac{h \cdot c}{\Delta E} = \frac{6.626 \times 10^{-34}\text{ J s} \cdot 2.9979 \times 10^8\text{ m s}^{-1}}{7.914 \times 10^{-19}\text{ J}} = 2.510 \times 10^{-7}\text{ m} = \mathbf{251.0\text{ nm}}$$
-            <p class="text-emerald-800 font-medium">For a short chain ($6\text{ }\pi\text{-e}^-$), the 1D box prediction ($251\text{ nm}$) matches the experimental UV value ($258\text{ nm}$) remarkably well! Next, in <strong>Task R1</strong>, you will apply this exact 3-step recipe to $\beta$-carotene ($22\text{ }\pi\text{-e}^-$).</p>
-          </div>
-        </div>
-
-        <!-- GUIDED G2: 2D SQUARE BOX & DE BROGLIE -->
-        <div class="border border-slate-200 rounded-xl p-5 bg-slate-50/70 space-y-3">
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-wider text-indigo-700">Guided Demo G2 &bull; 2D Box &amp; De Broglie (T02 Q4 &amp; L22 Slides 18, 21)</span>
-              <h3 class="text-sm sm:text-base font-bold text-slate-900">From 1D to a Square 2D Box ($E_{n_1,n_2}$) &amp; De Broglie Acceleration</h3>
-            </div>
-            <div class="flex flex-wrap gap-1.5">
-              <button onclick="toggleGuidedStep('g2-a')" class="guided-btn px-2.5 py-1 rounded bg-indigo-100 hover:bg-indigo-200 text-indigo-900 text-xs font-semibold">🔒 Step a</button>
-              <button onclick="toggleGuidedStep('g2-b')" class="guided-btn px-2.5 py-1 rounded bg-indigo-100 hover:bg-indigo-200 text-indigo-900 text-xs font-semibold">🔒 Step b</button>
-            </div>
-          </div>
-
-          <p class="text-sm text-slate-700 leading-relaxed">
-            <strong>Problem:</strong> <strong>(a)</strong> When an electron is accelerated across an electric potential difference $U = 100\text{ V}$ (`L22_The Shell.pdf`, Slide 18 / Ex. 2), how does its de Broglie wavelength $\lambda$ depend on $U$, and what is $\lambda$ in $\text{pm}$?<br />
-            <strong>(b)</strong> If electrons are confined in a <strong>square 2D plane</strong> ($L_x = L_y = L$, `L22_The Shell.pdf`, Slide 21 &amp; `T02 Q4`), how is the energy $E_{n_1,n_2}$ expressed as a multiple of $E_0 = \dfrac{h^2}{8 m_e L^2}$?
-          </p>
-
-          <div id="g2-a" class="hidden bg-white p-3.5 rounded-lg border border-indigo-200 text-xs sm:text-sm space-y-1">
-            <div class="font-bold text-indigo-900">Step (a) – De Broglie Wavelength &amp; the Square-Root Exam Trap:</div>
-            <p>Kinetic energy $E_{\text{kin}} = e \cdot U = \dfrac{p^2}{2 m_e} \implies p = \sqrt{2 m_e e U}$. Inserting into $\lambda = \dfrac{h}{p}$ gives:</p>
-            $$\lambda = \frac{h}{\sqrt{2 m_e e U}} = \frac{6.626 \times 10^{-34}\text{ J s}}{\sqrt{2 \cdot 9.109 \times 10^{-31}\text{ kg} \cdot 1.602 \times 10^{-19}\text{ C} \cdot 100\text{ V}}} = 1.226 \times 10^{-10}\text{ m} = \mathbf{122.6\text{ pm}}$$
-            <p class="text-rose-800 font-semibold">⚠️ C/W Quiz Trap: $\lambda$ is inversely proportional to $\sqrt{U}$ (NOT inversely proportional to $U$!).</p>
-          </div>
-          <div id="g2-b" class="hidden bg-white p-3.5 rounded-lg border border-indigo-200 text-xs sm:text-sm space-y-1">
-            <div class="font-bold text-indigo-900">Step (b) – Energy Formula in a Square 2D Box ($L_x = L_y = L$):</div>
+            $$\Delta E = E_4 - E_3 = (4^2 - 3^2)\frac{h^2}{8 m_e L^2} = 7 \cdot \frac{(6.626 \times 10^{-34}\text{ J s})^2}{8 \cdot (9.109 \times 10^{-31}\text{ kg}) \cdot (0.730 \times 10^{-9}\text{ m})^2} = \mathbf{7.91 \times 10^{-19}\text{ J}} \quad (\mathbf{4.94\text{ eV}})$$</div>
+</details>
+<details class="guided">
+<summary>Step c · Find the wavelength</summary>
+<div>
+<div class="font-bold text-indigo-900">Step (c) – Absorption Wavelength $\lambda$:</div>
+            $$\lambda = \frac{h \cdot c}{\Delta E} = \frac{6.626 \times 10^{-34}\text{ J s} \cdot 2.9979 \times 10^8\text{ m s}^{-1}}{7.914 \times 10^{-19}\text{ J}} = 2.510 \times 10^{-7}\text{ m} = \mathbf{251\text{ nm}}$$
+            <p>The calculation is close to the reference value for this assumed length. That agreement alone does not establish how well the model generalises. Try the same method in R1.</p></div>
+</details></div>
+</section>
+<section id="r1" class="card Practice">
+<header>
+<p>Practice</p>
+<h2>R1 · From β-carotene occupancy to wavelength</h2></header>
+<div class="body">
+<details class="lookup">
+<summary>Lecture script lookup · <a href="#source-l22">L22</a> slide 20 · PDF p. 83, Exercise 6</summary>
+<div>
+<p>Slide 20 defines the spectrum of a 1D box. Find the dependence of $E_n$ on the quantum number and on the effective length. Exercise 6 applies the model to β-carotene and invites a comparison with experiment. Use the same route as in G1, starting with level occupancy.</p></div>
+</details>
+<p>Treat the 22 delocalised π electrons of β-carotene as independent electrons in a one-dimensional box with effective length $L=2.94\,\mathrm{nm}$. The reference absorption wavelength in L22 is $497\,\mathrm{nm}$. Write down your reasoning before each check.</p>
+<form id="step-r1a" class="step" data-step="r1a">
+<div class="prompt">(a) Find the quantum numbers of the highest occupied and lowest unoccupied levels.</div>
+<div class="inputs"><label for="answer-homo">HOMO<span><input id="answer-homo" type="text" autocomplete="off" spellcheck="false"> </span></label><label for="answer-lumo">LUMO<span><input id="answer-lumo" type="text" autocomplete="off" spellcheck="false"> </span></label><button type="submit" class="check">Check</button></div>
+<p class="feedback" role="status"></p>
+</form>
+<form id="step-r1b" class="step" data-step="r1b" hidden>
+<div class="prompt">(b) Calculate the energy gap between those two levels.</div>
+<div class="inputs"><label for="answer-gap">Energy gap<span><input id="answer-gap" type="text" autocomplete="off" spellcheck="false"> J</span></label><button type="submit" class="check">Check</button></div>
+<p class="feedback" role="status"></p>
+</form>
+<form id="step-r1c" class="step" data-step="r1c" hidden>
+<div class="prompt">(c) Predict the absorption wavelength.</div>
+<div class="inputs"><label for="answer-wavelength">Wavelength<span><input id="answer-wavelength" type="text" autocomplete="off" spellcheck="false"> nm</span></label><button type="submit" class="check">Check</button></div>
+<p class="feedback" role="status"></p>
+</form>
+<p id="r1-reflect" class="note" hidden>Compare your wavelength with the reference value. Would the box model put the absorption in the same spectral region? What did the modelling assumption leave out?</p>
+<p class="lock-note" data-lock-note="inclass">The complete solution is released after in-class practice.</p>
+<details id="solution-r1" class="solution" data-release="inclass" hidden>
+<summary>Show complete solution · R1</summary>
+<div>
+<p><strong>(a)</strong> Two electrons per level fill $n=1$ to $11$. Therefore $n_{\mathrm{HOMO}}=11$ and $n_{\mathrm{LUMO}}=12$.</p>
+<p><strong>(b)</strong> Use $L=2.94\times10^{-9}\,\mathrm m$ and subtract the two energies:</p>
+$$\Delta E=(12^2-11^2)\frac{h^2}{8m_eL^2}=1.60\times10^{-19}\,\mathrm J\approx1.00\,\mathrm{eV}.$$
+<p><strong>(c)</strong> With the unrounded gap, $\lambda=hc/\Delta E\approx 1.24\times10^{-6}\,\mathrm m$, or about $1239\,\mathrm{nm}$.</p>
+<p><strong>Model check.</strong> The prediction is in the near infrared, whereas $497\,\mathrm{nm}$ lies in the visible. Compared with G1 the model captures the trend toward longer wavelengths, but it assumes a flat potential and depends strongly on the effective length. It omits the molecular bonding pattern, including bond-length alternation, and electron interactions.</p></div>
+</details></div>
+</section>
+<section id="g2" class="card Guided">
+<header>
+<p>Guided</p>
+<h2>G2 · From a 1D box to a square 2D box</h2></header>
+<div class="body">
+<details class="lookup">
+<summary>Lecture script lookup · <a href="#source-l22">L22</a> slides 21–22 · <a href="#source-t02">T02</a> Q4 (PDF p. 8, printed p. 6)</summary>
+<div>
+<p>Slide 21 adds the independent confinement energies in the two directions. Slide 22 asks what happens when the quantum numbers are exchanged in a square. T02 Q4 takes the next step and asks how six electrons occupy the levels. The square is a model, not the shape of a benzene molecule.</p></div>
+</details>
+<p>Starting from the rectangular 2D box, simplify the expression for $L_x=L_y=L$ and identify the common energy scale $E_0$.</p>
+<details class="guided">
+<summary>Guided derivation · Square box</summary>
+<div>
+<div class="font-bold text-indigo-900">Step (b) – Energy Formula in a Square 2D Box ($L_x = L_y = L$):</div>
             <p>In 2D, the energy is the sum of the independent $x$- and $y$-motions ($n_1, n_2 \in \{1, 2, 3, \dots\}$):</p>
-            $$E_{n_1,n_2} = \frac{h^2}{8 m_e}\left(\frac{n_1^2}{L_x^2} + \frac{n_2^2}{L_y^2}\right) \xrightarrow{L_x = L_y = L} \frac{h^2}{8 m_e L^2}(n_1^2 + n_2^2) = \mathbf{E_0 \cdot (n_1^2 + n_2^2)}$$
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================================== -->
-    <!-- PART 2A: IN-CLASS CONCEPT & STRUCTURE TASKS (C1 & C2)                 -->
-    <!-- ===================================================================== -->
-    <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-      <div class="px-6 py-3.5 bg-amber-600 text-slate-950 flex flex-wrap items-center justify-between gap-2">
-        <div>
-          <span class="text-[11px] uppercase font-extrabold tracking-wider text-amber-950">Part 2A &bull; In-Class Concept &amp; Structure (~30 Min.)</span>
-          <h2 class="text-base sm:text-lg font-extrabold">🧩 2 Interactive Concept &amp; Script-Lookup Tasks (C1 &amp; C2)</h2>
-        </div>
-      </div>
-
-      <div class="p-6 space-y-8">
-        <!-- TASK C1: 2D SQUARE BOX (1,1), (1,2), (2,1) -->
-        <div class="border border-slate-200 rounded-xl p-5 bg-white shadow-sm space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
-            <h3 class="font-bold text-slate-900 text-base">Task C1: Degeneracy &amp; 6-Electron Ground State in a Square 2D Box (Try-Test T02, Question 4)</h3>
-            <span class="px-2.5 py-0.5 rounded bg-amber-100 text-amber-900 text-xs font-bold">L22 Slides 21–22 &bull; T02 Q4</span>
-          </div>
-
-          <div class="bg-sky-50 border-l-4 border-sky-600 rounded-r-lg p-3 text-xs text-sky-950">
-            🔎 <strong>Skript-Nachschau:</strong> Open <strong>L22_The Shell.pdf, Slides 21–22</strong> (and <strong>T02_Try_Tests_Lecture2.pdf, Question 4</strong>). Let us model benzene simplified as a flat square molecule of side length $L$ containing $6$ confined $\pi$-electrons. Compare specifically the states $(n_1, n_2) = (1,1)$, $(1,2)$, and $(2,1)$.
-          </div>
-
-          <!-- Subtask C1a -->
-          <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2.5">
-            <div class="text-sm font-semibold text-slate-800">
-              (a) Express the energies of the three states $(1,1)$, $(1,2)$, and $(2,1)$ as multiples of $E_0 = \dfrac{h^2}{8 m_e L^2}$ (enter the integer factor in front of $E_0$):
-            </div>
-            <div class="flex flex-wrap items-center gap-4 text-sm">
-              <div class="flex items-center gap-1.5">
-                <span>$E_{1,1} =$</span>
-                <input id="c1-e11" type="text" placeholder="?" class="w-16 px-2 py-1 rounded border border-slate-300 font-mono text-center" />
-                <span>$\cdot E_0$</span>
-              </div>
-              <div class="flex items-center gap-1.5">
-                <span>$E_{1,2} =$</span>
-                <input id="c1-e12" type="text" placeholder="?" class="w-16 px-2 py-1 rounded border border-slate-300 font-mono text-center" />
-                <span>$\cdot E_0$</span>
-              </div>
-              <div class="flex items-center gap-1.5">
-                <span>$E_{2,1} =$</span>
-                <input id="c1-e21" type="text" placeholder="?" class="w-16 px-2 py-1 rounded border border-slate-300 font-mono text-center" />
-                <span>$\cdot E_0$</span>
-              </div>
-              <button onclick="checkC1a()" class="px-3 py-1 rounded bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold uppercase">Check (a)</button>
-            </div>
-            <div id="fb-c1a" class="text-xs font-semibold hidden"></div>
-          </div>
-
-          <!-- Subtask C1b -->
-          <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2.5">
-            <div class="text-sm font-semibold text-slate-800">
-              (b) Why do the two distinct quantum states $(n_1=1, n_2=2)$ and $(n_1=2, n_2=1)$ have the exact same energy (*degenerate*), and how are $6\text{ }\pi\text{-electrons}$ distributed across these states in the ground state?
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-              <div>
-                <label class="font-bold text-slate-700 block mb-1">Reason for Degeneracy of $(1,2)$ and $(2,1)$:</label>
-                <select id="c1-deg-select" class="w-full p-2 rounded border border-slate-300 bg-white">
-                  <option value="">-- Select physical reason --</option>
-                  <option value="wrong1">Because $n_1 + n_2 = 3$ is odd</option>
-                  <option value="correct">Because in a square ($L_x = L_y = L$), swapping $x$ and $y$ ($1^2+2^2 = 2^2+1^2 = 5$) leaves the energy unchanged</option>
-                  <option value="wrong2">Because the Pauli principle forces all orbitals to have equal energy</option>
-                </select>
-              </div>
-              <div>
-                <label class="font-bold text-slate-700 block mb-1">Ground-State Occupation with $6\text{ e}^-$ (T02 Q4.3):</label>
-                <select id="c1-occ-select" class="w-full p-2 rounded border border-slate-300 bg-white">
-                  <option value="">-- Select electron distribution --</option>
-                  <option value="wrong1">All 6 electrons in $E_{1,1}$</option>
-                  <option value="correct">2 e⁻ in $E_{1,1}$, 2 e⁻ in $E_{1,2}$, and 2 e⁻ in $E_{2,1}$ (all 3 lowest orbitals doubly occupied)</option>
-                  <option value="wrong2">2 e⁻ in $E_{1,1}$, 2 e⁻ in $E_{2,2}$, and 2 e⁻ in $E_{3,3}$</option>
-                </select>
-              </div>
-            </div>
-            <button onclick="checkC1b()" class="px-3 py-1 rounded bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold uppercase">Check (b)</button>
-            <div id="fb-c1b" class="text-xs font-semibold hidden"></div>
-          </div>
-
-          <!-- Full Solution Box (Unlocked via IN-U3 or Lecturer Mode) -->
-          <div class="pt-1">
-            <button onclick="toggleInClassSolution('sol-c1')" class="inclass-sol-btn px-3 py-1.5 rounded bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold transition">
-              🔒 Show Complete Solution C1 (Code: IN-U3)
-            </button>
-            <div id="sol-c1" class="hidden mt-2 bg-emerald-50 border border-emerald-300 rounded-lg p-3.5 text-xs text-slate-800 space-y-1.5">
-              <div class="font-bold text-emerald-900">✅ Complete Solution – Task C1 (T02 Question 4):</div>
-              <div><strong>1. Energies:</strong> Using $E_{n_1,n_2} = E_0(n_1^2 + n_2^2)$: $E_{1,1} = (1^2+1^2)E_0 = \mathbf{2\,E_0}$; $E_{1,2} = (1^2+2^2)E_0 = \mathbf{5\,E_0}$; $E_{2,1} = (2^2+1^2)E_0 = \mathbf{5\,E_0}$ (and the next level is $E_{2,2} = 8\,E_0$).</div>
-              <div><strong>2. Degeneracy:</strong> Because the box is square ($L_x = L_y = L$), a $90^\circ$ rotation simply swaps the $x$- and $y$-axes. Having one node along $x$ and two along $y$ ($(1,2)$) costs the exact same kinetic energy as two along $x$ and one along $y$ ($(2,1)$).</div>
-              <div><strong>3. Ground-state occupation ($6\text{ e}^-$):</strong> Each spatial state $(n_1, n_2)$ holds 2 electrons ($\uparrow\downarrow$). Thus, the 6 electrons completely fill the lowest level $E_{1,1}$ ($2\text{ e}^-$) and the two degenerate levels $E_{1,2}$ ($2\text{ e}^-$) and $E_{2,1}$ ($2\text{ e}^-$).</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- TASK C2: SCHRÖDINGER WAVE FUNCTION TABLE LOOKUP (T02 Q5 & SLIDE 25) -->
-        <div class="border border-slate-200 rounded-xl p-5 bg-white shadow-sm space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
-            <h3 class="font-bold text-slate-900 text-base">Task C2: Assembling a Hydrogen Wave Function $\psi_{n,\ell,m} = R_{n,\ell}(r) \cdot Y_{\ell,m}(\theta,\phi)$ (T02, Question 5)</h3>
-            <span class="px-2.5 py-0.5 rounded bg-amber-100 text-amber-900 text-xs font-bold">L22 Slide 25 &bull; T02 Q5</span>
-          </div>
-
-          <div class="bg-sky-50 border-l-4 border-sky-600 rounded-r-lg p-3 text-xs text-sky-950">
-            🔎 <strong>Skript-Nachschau:</strong> Open <strong>L22_The Shell.pdf, Slide 25</strong> (and <strong>T02_Try_Tests_Lecture2.pdf, Question 5</strong>):<br />
-            <em>"Using the expression for the Schrödinger equation and the solutions for the radial wave function and the angular wave function, what is the solution for the SEQ for a <strong>2p-orbital ($m = -1$)</strong>?"</em><br />
-            <strong>Instruction:</strong> Click the matching row in Table 1 (Radial part $R_{n,\ell}$) and in Table 2 (Angular part $Y_{\ell,m}$) below to mark your selection!
-          </div>
-
-          <!-- Interactive Tables from Slide 25 -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-            <!-- Radial Table -->
-            <div class="border border-slate-300 rounded-lg overflow-hidden">
-              <div class="bg-slate-800 text-white px-3 py-2 font-bold">1. Click the Row for Radial Part $R_{n,\ell}(r)$ (with $\rho = \frac{2Zr}{n a_0}$):</div>
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr class="bg-slate-100 border-b border-slate-300">
-                    <th class="p-2">$n$</th>
-                    <th class="p-2">$\ell$</th>
-                    <th class="p-2">Orbital</th>
-                    <th class="p-2">$R_{n,\ell}(r)$</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-200">
-                  <tr id="rad-row-10" onclick="selectRadialRow('10')" class="row-selectable">
-                    <td class="p-2 font-mono">1</td>
-                    <td class="p-2 font-mono">0</td>
-                    <td class="p-2 font-semibold">1s</td>
-                    <td class="p-2">$2\left(\dfrac{Z}{a_0}\right)^{3/2} e^{-\rho/2}$</td>
-                  </tr>
-                  <tr id="rad-row-20" onclick="selectRadialRow('20')" class="row-selectable">
-                    <td class="p-2 font-mono">2</td>
-                    <td class="p-2 font-mono">0</td>
-                    <td class="p-2 font-semibold">2s</td>
-                    <td class="p-2">$\dfrac{1}{\sqrt{8}}\left(\dfrac{Z}{a_0}\right)^{3/2} (2 - \rho) e^{-\rho/2}$</td>
-                  </tr>
-                  <tr id="rad-row-21" onclick="selectRadialRow('21')" class="row-selectable">
-                    <td class="p-2 font-mono">2</td>
-                    <td class="p-2 font-mono">1</td>
-                    <td class="p-2 font-semibold">2p</td>
-                    <td class="p-2">$\dfrac{1}{\sqrt{24}}\left(\dfrac{Z}{a_0}\right)^{3/2} \rho\, e^{-\rho/2}$</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Angular Table -->
-            <div class="border border-slate-300 rounded-lg overflow-hidden">
-              <div class="bg-slate-800 text-white px-3 py-2 font-bold">2. Click the Row for Angular Part $Y_{\ell,m}(\theta,\phi)$:</div>
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr class="bg-slate-100 border-b border-slate-300">
-                    <th class="p-2">$\ell$</th>
-                    <th class="p-2">$m$</th>
-                    <th class="p-2">$Y_{\ell,m}(\theta,\phi)$</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-200">
-                  <tr id="ang-row-00" onclick="selectAngularRow('00')" class="row-selectable">
-                    <td class="p-2 font-mono">0</td>
-                    <td class="p-2 font-mono">0</td>
-                    <td class="p-2">$\left(\dfrac{1}{4\pi}\right)^{1/2}$</td>
-                  </tr>
-                  <tr id="ang-row-10" onclick="selectAngularRow('10')" class="row-selectable">
-                    <td class="p-2 font-mono">1</td>
-                    <td class="p-2 font-mono">0</td>
-                    <td class="p-2">$\left(\dfrac{3}{4\pi}\right)^{1/2}\cos\theta$</td>
-                  </tr>
-                  <tr id="ang-row-1m1" onclick="selectAngularRow('1m1')" class="row-selectable">
-                    <td class="p-2 font-mono">1</td>
-                    <td class="p-2 font-mono">$-1$</td>
-                    <td class="p-2">$\left(\dfrac{3}{8\pi}\right)^{1/2}\sin\theta\,e^{-i\phi}$</td>
-                  </tr>
-                  <tr id="ang-row-1p1" onclick="selectAngularRow('1p1')" class="row-selectable">
-                    <td class="p-2 font-mono">1</td>
-                    <td class="p-2 font-mono">$+1$</td>
-                    <td class="p-2">$\left(\dfrac{3}{8\pi}\right)^{1/2}\sin\theta\,e^{+i\phi}$</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap items-center gap-3">
-            <button onclick="checkC2()" class="px-3.5 py-1.5 rounded bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold uppercase">
-              Check Selected Rows &amp; Assemble $\psi_{2,1,-1}$
-            </button>
-            <button onclick="toggleInClassSolution('sol-c2')" class="inclass-sol-btn px-3 py-1.5 rounded bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold transition">
-              🔒 Show Complete Solution C2 (Code: IN-U3)
-            </button>
-          </div>
-          <div id="fb-c2" class="text-xs font-semibold hidden"></div>
-
-          <div id="sol-c2" class="hidden bg-emerald-50 border border-emerald-300 rounded-lg p-3.5 text-xs text-slate-800 space-y-2">
-            <div class="font-bold text-emerald-900">✅ Complete Solution – Task C2 (T02 Question 5):</div>
-            <p>For a <strong>2p-orbital with $m = -1$</strong>, the quantum numbers are $n = 2$, $\ell = 1$, and $m = -1$. Multiplying $R_{2,1}(r)$ and $Y_{1,-1}(\theta,\phi)$ (with $Z = 1$ for hydrogen and $\rho = \dfrac{Z r}{a_0}$ for $n=2$) yields:</p>
-            $$\psi_{2,1,-1}(r,\theta,\phi) = R_{2,1}(r) \cdot Y_{1,-1}(\theta,\phi) = \frac{1}{\sqrt{24}}\left(\frac{Z}{a_0}\right)^{3/2} \rho\, e^{-\rho/2} \cdot \left(\frac{3}{8\pi}\right)^{1/2}\sin\theta\,e^{-i\phi} = \frac{1}{8\sqrt{\pi}}\left(\frac{Z}{a_0}\right)^{3/2} \rho\, e^{-\rho/2}\sin\theta\,e^{-i\phi}$$
-            <div id="prof-note-slide25" class="hidden mt-2 p-2.5 rounded bg-amber-100 border border-amber-400 text-amber-950">
-              <strong>👨‍🏫 Dozenten-Notiz für das Gespräch mit Prof. Kerschbaumer am Donnerstag:</strong><br />
-              Auf <strong>L22_The Shell.pdf, Folie 25</strong> (und identisch in <strong>Final Exam, Task 2B</strong>) befinden sich in der Radialtabelle für $n=3$ zwei Tippfehler:<br />
-              1. In der <strong>$3s$-Zeile ($n=3,\ell=0$)</strong> fehlt das Polynom $(6 - 6\rho + \rho^2)$ vor $e^{-\rho/2}$.<br />
-              2. In der <strong>$3d$-Zeile ($n=3,\ell=2$)</strong> steht im Vorfaktor $\frac{1}{2430}$ statt korrekt $\frac{1}{\sqrt{2430}}$.
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================================== -->
-    <!-- PART 2B: IN-CLASS CALCULATION PRACTICE (R1 & R2)                      -->
-    <!-- ===================================================================== -->
-    <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-      <div class="px-6 py-3.5 bg-emerald-800 text-white flex flex-wrap items-center justify-between gap-2">
-        <div>
-          <span class="text-[11px] uppercase font-bold tracking-wider text-emerald-200">Part 2B &bull; In-Class Calculation Practice (~35 Min.)</span>
-          <h2 class="text-base sm:text-lg font-bold">🧮 2 Self-Calculation Exercises (R1 &amp; R2)</h2>
-        </div>
-        <span class="text-xs text-emerald-200 font-mono">Tolerance: &plusmn;1.5%</span>
-      </div>
-
-      <div class="p-6 space-y-8">
-        <!-- TASK R1: BETA-CAROTENE (1D BOX) -->
-        <div class="border border-slate-200 rounded-xl p-5 bg-white shadow-sm space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
-            <h3 class="font-bold text-slate-900 text-base">Task R1: 1D Box Transfer – $\beta$-Carotene from Orbital Filling to Wavelength &amp; Model Critique</h3>
-            <span class="px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-900 text-xs font-bold">L22 Slide 20 &bull; Ex. 6</span>
-          </div>
-
-          <div class="bg-sky-50 border-l-4 border-sky-600 rounded-r-lg p-3 text-xs text-sky-950">
-            🔎 <strong>Skript-Nachschau:</strong> <strong>L22_The Shell.pdf, Slide 20</strong> (and Slide 51, Ex. 6): Take the formula for $E_n$ in a 1D box. Justify <em>before</em> plugging in numbers why $n_{\text{HOMO}} = 11$ for $\beta$-carotene, then follow the exact three steps from Guided Demo G1.
-          </div>
-
-          <p class="text-sm text-slate-700 leading-relaxed">
-            <strong>Problem:</strong> The orange pigment <strong>$\beta$-carotene</strong> has a linear conjugated chain containing <strong>$N = 22\text{ }\pi\text{-electrons}$</strong> along a box length of $L = 2.94\text{ nm}$ ($2.94 \times 10^{-9}\text{ m}$). Experimentally, $\beta$-carotene absorbs blue-green light at $\lambda_{\text{exp}} = 497\text{ nm}$.
-          </p>
-
-          <!-- Step R1a -->
-          <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-2">
-            <label class="block text-xs sm:text-sm font-semibold text-slate-800">
-              Step R1a: With $22\text{ }\pi\text{-electrons}$ (2 per spatial level), what is the quantum number $n_{\text{LUMO}}$ of the lowest unoccupied level?
-            </label>
-            <div class="flex flex-wrap items-center gap-2">
-              <input id="in-r1a" type="text" placeholder="Enter n_LUMO..." class="px-3 py-1.5 rounded border border-slate-300 text-sm font-mono w-36" />
-              <span class="text-xs font-bold text-slate-600 bg-slate-200 px-2 py-1 rounded">dimensionless</span>
-              <button onclick="checkNumStep('r1a', 12, 0.001, [{val:11, msg:'11 is n_HOMO (22 / 2 = 11). The lowest unoccupied level is n_LUMO = 11 + 1 = 12!'}, {val:22, msg:'Remember the Pauli principle: 2 electrons fit into each energy level n!'}])" class="px-3 py-1.5 rounded bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold uppercase">Check</button>
-            </div>
-            <div id="fb-r1a" class="text-xs font-semibold hidden"></div>
-          </div>
-
-          <!-- Step R1b -->
-          <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-2">
-            <label class="block text-xs sm:text-sm font-semibold text-slate-800">
-              Step R1b: Calculate the excitation energy $\Delta E = E_{12} - E_{11} = (12^2 - 11^2)\dfrac{h^2}{8 m_e L^2}$ (enter in units of $10^{-19}\text{ J}$, e.g. enter 1.60 for $1.60 \times 10^{-19}\text{ J}$):
-            </label>
-            <div class="flex flex-wrap items-center gap-2">
-              <input id="in-r1b" type="text" placeholder="Enter value..." class="px-3 py-1.5 rounded border border-slate-300 text-sm font-mono w-36" />
-              <span class="text-xs font-bold text-slate-600 bg-slate-200 px-2 py-1 rounded">&times; 10⁻¹⁹ J</span>
-              <button onclick="checkNumStep('r1b', 1.6032, 0.015, [{val:1.00, msg:'1.00 is the energy in eV! Multiply by 1.602e-19 to get Joules (1.60 x 10^-19 J).'}, {val:0.0697, msg:'Did you forget the factor (12^2 - 11^2) = 23?'}])" class="px-3 py-1.5 rounded bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold uppercase">Check</button>
-            </div>
-            <div id="fb-r1b" class="text-xs font-semibold hidden"></div>
-          </div>
-
-          <!-- Step R1c -->
-          <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-2">
-            <label class="block text-xs sm:text-sm font-semibold text-slate-800">
-              Step R1c: Calculate the theoretical absorption wavelength $\lambda = \dfrac{h \cdot c}{\Delta E}$ predicted by the free-electron 1D box model (in $\text{nm}$):
-            </label>
-            <div class="flex flex-wrap items-center gap-2">
-              <input id="in-r1c" type="text" placeholder="Enter wavelength..." class="px-3 py-1.5 rounded border border-slate-300 text-sm font-mono w-36" />
-              <span class="text-xs font-bold text-slate-600 bg-slate-200 px-2 py-1 rounded">nm</span>
-              <button onclick="checkNumStep('r1c', 1239.1, 0.015, [{val:1.239, msg:'Unit conversion: 1.239e-6 m = 1239 nm (multiply meters by 10^9)!'}])" class="px-3 py-1.5 rounded bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold uppercase">Check</button>
-            </div>
-            <div id="fb-r1c" class="text-xs font-semibold hidden"></div>
-          </div>
-
-          <!-- Model Discussion Box -->
-          <div class="bg-amber-50/80 border border-amber-200 rounded-lg p-3.5 text-xs text-slate-800 space-y-1.5">
-            <div class="font-bold text-amber-900">💡 In-Class Discussion – Why does the 1D Box give $1239\text{ nm}$ (near-IR) instead of $497\text{ nm}$ (visible blue-green)?</div>
-            <p>
-              <strong>What the model achieves:</strong> It correctly predicts that lengthening a conjugated $\pi$-system lowers $\Delta E$ and shifts absorption toward longer wavelengths.<br />
-              <strong>What the model misses:</strong> The 1D box assumes a completely flat potential ($V = 0$) with equal $\text{C–C}$ bond lengths. In reality, long polyenes show <strong>bond-length alternation</strong> (shorter $\text{C=C}$ double bonds and longer $\text{C–C}$ single bonds) and electron–electron repulsion. This periodic potential opens an additional energy gap at the Fermi level (Peierls distortion), increasing $\Delta E$ and shifting $\lambda$ from $1239\text{ nm}$ down to $497\text{ nm}$.
-            </p>
-          </div>
-
-          <div>
-            <button onclick="toggleInClassSolution('sol-r1')" class="inclass-sol-btn px-3 py-1.5 rounded bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold transition">
-              🔒 Show Complete Step-by-Step Solution R1 (Code: IN-U3)
-            </button>
-            <div id="sol-r1" class="hidden mt-2 bg-emerald-50 border border-emerald-300 rounded-lg p-3.5 text-xs text-slate-800 space-y-1">
-              <div class="font-bold text-emerald-900">✅ Complete Solution – Task R1 ($\beta$-Carotene, L22 Ex. 6):</div>
-              <div><strong>(a)</strong> $22\text{ }\pi\text{-electrons}$ fill $n = 1 \dots 11$ with 2 electrons each $\implies n_{\text{HOMO}} = \mathbf{11}$, $n_{\text{LUMO}} = \mathbf{12}$.</div>
-              <div><strong>(b)</strong> $\Delta E = (12^2 - 11^2)\dfrac{h^2}{8 m_e L^2} = 23 \cdot \dfrac{(6.626 \times 10^{-34})^2}{8 \cdot 9.109 \times 10^{-31} \cdot (2.94 \times 10^{-9})^2} = \mathbf{1.603 \times 10^{-19}\text{ J}} = \mathbf{1.001\text{ eV}}$.</div>
-              <div><strong>(c)</strong> $\lambda = \dfrac{h c}{\Delta E} = \dfrac{6.626 \times 10^{-34} \cdot 2.9979 \times 10^8}{1.6032 \times 10^{-19}} = 1.239 \times 10^{-6}\text{ m} = \mathbf{1239\text{ nm}}$.</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- TASK R2: HEISENBERG UNCERTAINTY (MINIMUM UNCERTAINTY) -->
-        <div class="border border-slate-200 rounded-xl p-5 bg-white shadow-sm space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
-            <h3 class="font-bold text-slate-900 text-base">Task R2: Heisenberg's Uncertainty Principle – Minimum Velocity Uncertainty $\Delta v_{x,\min}$</h3>
-            <span class="px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-900 text-xs font-bold">L22 Slide 19 &bull; Ex. 3</span>
-          </div>
-
-          <div class="bg-sky-50 border-l-4 border-sky-600 rounded-r-lg p-3 text-xs text-sky-950">
-            🔎 <strong>Skript-Nachschau:</strong> Open <strong>L22_The Shell.pdf, Slide 19</strong> (and Slide 50, Ex. 3): Take Heisenberg's uncertainty relation $\Delta x \cdot \Delta p_x \ge \dfrac{h}{4\pi}$ with $\Delta p_x = m \cdot \Delta v_x$. Solve for the <strong>minimum uncertainty in velocity $\Delta v_{x,\min}$</strong> (using the equality sign).
-          </div>
-
-          <!-- Step R2a -->
-          <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-2">
-            <label class="block text-xs sm:text-sm font-semibold text-slate-800">
-              Step R2a (Macroscopic world): Calculate the minimum velocity uncertainty $\Delta v_{x,\min}$ of a mosquito ($m = 1.00\text{ mg} = 1.00 \times 10^{-6}\text{ kg}$) whose position is known within $\Delta x = 0.100\text{ mm} = 1.00 \times 10^{-4}\text{ m}$ (enter in units of $10^{-25}\text{ m s}^{-1}$, e.g. 5.27):
-            </label>
-            <div class="flex flex-wrap items-center gap-2">
-              <input id="in-r2a" type="text" placeholder="Enter value..." class="px-3 py-1.5 rounded border border-slate-300 text-sm font-mono w-36" />
-              <span class="text-xs font-bold text-slate-600 bg-slate-200 px-2 py-1 rounded">&times; 10⁻²⁵ m s⁻¹</span>
-              <button onclick="checkNumStep('r2a', 5.2728, 0.015, [{val:10.55, msg:'Check the denominator: L22 Slide 19 uses h / (4 * pi), not h / (2 * pi)!'}, {val:5.2728e-28, msg:'Careful with mg to kg: 1.0 mg = 10^-3 g = 1.0 x 10^-6 kg!'}])" class="px-3 py-1.5 rounded bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold uppercase">Check</button>
-            </div>
-            <div id="fb-r2a" class="text-xs font-semibold hidden"></div>
-          </div>
-
-          <!-- Step R2b -->
-          <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-2">
-            <label class="block text-xs sm:text-sm font-semibold text-slate-800">
-              Step R2b (Subatomic world): Calculate the minimum velocity uncertainty $\Delta v_{x,\min}$ of a proton ($m_p = 1.673 \times 10^{-27}\text{ kg}$) confined within an atomic nucleus of diameter $\Delta x = 3.00\text{ fm} = 3.00 \times 10^{-15}\text{ m}$ (enter in units of $10^{7}\text{ m s}^{-1}$):
-            </label>
-            <div class="flex flex-wrap items-center gap-2">
-              <input id="in-r2b" type="text" placeholder="Enter value..." class="px-3 py-1.5 rounded border border-slate-300 text-sm font-mono w-36" />
-              <span class="text-xs font-bold text-slate-600 bg-slate-200 px-2 py-1 rounded">&times; 10⁷ m s⁻¹</span>
-              <button onclick="checkNumStep('r2b', 1.0506, 0.015, [{val:2.10, msg:'Use 4 * pi in the denominator: dv_min = h / (4 * pi * m_p * dx).'}])" class="px-3 py-1.5 rounded bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold uppercase">Check</button>
-            </div>
-            <div id="fb-r2b" class="text-xs font-semibold hidden"></div>
-          </div>
-
-          <div>
-            <button onclick="toggleInClassSolution('sol-r2')" class="inclass-sol-btn px-3 py-1.5 rounded bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold transition">
-              🔒 Show Complete Step-by-Step Solution R2 (Code: IN-U3)
-            </button>
-            <div id="sol-r2" class="hidden mt-2 bg-emerald-50 border border-emerald-300 rounded-lg p-3.5 text-xs text-slate-800 space-y-1">
-              <div class="font-bold text-emerald-900">✅ Complete Solution – Task R2 (Heisenberg Uncertainty, L22 Ex. 3):</div>
-              <div><strong>Formula:</strong> $\Delta v_{x,\min} = \dfrac{h}{4\pi \cdot m \cdot \Delta x}$ with $\dfrac{h}{4\pi} = \dfrac{6.626 \times 10^{-34}\text{ J s}}{12.5664} = 5.2728 \times 10^{-35}\text{ J s}$.</div>
-              <div><strong>(a) Mosquito:</strong> $\Delta v_{x,\min} = \dfrac{5.2728 \times 10^{-35}}{1.00 \times 10^{-6}\text{ kg} \cdot 1.00 \times 10^{-4}\text{ m}} = \mathbf{5.27 \times 10^{-25}\text{ m s}^{-1}}$ (completely unobservable).</div>
-              <div><strong>(b) Proton in nucleus:</strong> $\Delta v_{x,\min} = \dfrac{5.2728 \times 10^{-35}}{1.673 \times 10^{-27}\text{ kg} \cdot 3.00 \times 10^{-15}\text{ m}} = \mathbf{1.05 \times 10^{7}\text{ m s}^{-1}}$ ($\approx 3.5\%$ of the speed of light!).</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================================== -->
-    <!-- PART 3: VOLUNTARY HOMEWORK (H1 & H2 - UNLOCKED VIA CODE HW-U3)        -->
-    <!-- ===================================================================== -->
-    <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-      <div class="px-6 py-3.5 bg-violet-950 text-white flex flex-wrap items-center justify-between gap-2">
-        <div>
-          <span class="text-[11px] uppercase font-bold tracking-wider text-violet-300">Part 3 &bull; Voluntary Homework &amp; Exam Self-Check</span>
-          <h2 class="text-base sm:text-lg font-bold">🏠 3D Box Transfer (H1) &amp; Original C/W Quiz Table from Slide 38 (H2)</h2>
-        </div>
-        <span class="text-xs text-violet-200 font-mono">Solution Unlock Code: HW-U3</span>
-      </div>
-
-      <div class="p-6 space-y-8">
-        <!-- HOMEWORK H1: 3D RECTANGULAR BOX ZERO-POINT ENERGY -->
-        <div class="border border-slate-200 rounded-xl p-5 bg-slate-50/70 space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
-            <h3 class="font-bold text-slate-900 text-base">Homework H1: Zero-Point Energy $E_{1,1,1}$ in a Rectangular 3D Box (L22 Slide 22 &amp; Ex. 7a)</h3>
-            <span class="px-2.5 py-0.5 rounded bg-violet-100 text-violet-900 text-xs font-bold">Transfer Task &bull; L22 Ex. 7a</span>
-          </div>
-
-          <p class="text-sm text-slate-700 leading-relaxed">
-            <strong>Problem:</strong> Transfer what you learned from the 1D and 2D box to three dimensions (`L22_The Shell.pdf`, Slide 22): An electron ($m_e = 9.109 \times 10^{-31}\text{ kg}$) is confined in a rectangular 3D box with edge lengths $L_1 = 1.00\text{ nm}$, $L_2 = 2.00\text{ nm}$, and $L_3 = 3.00\text{ nm}$. Calculate its lowest possible energy (zero-point energy $E_{1,1,1}$ for $n_1 = n_2 = n_3 = 1$) using:
-            $$E_{1,1,1} = \frac{h^2}{8 m_e}\left(\frac{1^2}{L_1^2} + \frac{1^2}{L_2^2} + \frac{1^2}{L_3^2}\right)$$
-          </p>
-
-          <div class="flex flex-wrap items-center gap-2">
-            <label class="text-xs sm:text-sm font-semibold text-slate-800">Enter $E_{1,1,1}$ in units of $10^{-20}\text{ J}$ (e.g. enter 8.20 for $8.20 \times 10^{-20}\text{ J}$):</label>
-            <input id="in-h1" type="text" placeholder="Enter value..." class="px-3 py-1.5 rounded border border-slate-300 bg-white text-sm font-mono w-36" />
-            <span class="text-xs font-bold text-slate-600 bg-slate-200 px-2 py-1 rounded">&times; 10⁻²⁰ J</span>
-            <button onclick="checkNumStep('h1', 8.2004, 0.015, [{val:6.024, msg:'6.024e-20 J is Only the L1 term! Multiply by (1 + 1/4 + 1/9) = 49/36 = 1.3611.'}, {val:0.512, msg:'0.512 is the energy in eV! Convert to 10^-20 J (8.20).'}])" class="px-3 py-1.5 rounded bg-violet-700 hover:bg-violet-600 text-white text-xs font-bold uppercase">Check</button>
-          </div>
-          <div id="fb-h1" class="text-xs font-semibold hidden"></div>
-
-          <div>
-            <button onclick="toggleHwSolution('sol-h1')" class="hw-sol-btn px-3 py-1.5 rounded bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold transition">
-              🔒 Show Complete Solution H1 (Code: HW-U3)
-            </button>
-            <div id="sol-h1" class="hidden mt-2 bg-violet-50 border border-violet-300 rounded-lg p-3.5 text-xs text-slate-800 space-y-1">
-              <div class="font-bold text-violet-900">✅ Complete Solution – Homework H1 (L22 Ex. 7a):</div>
-              <div>With $\dfrac{h^2}{8 m_e} = \dfrac{(6.626 \times 10^{-34})^2}{8 \cdot 9.109 \times 10^{-31}} = 6.0247 \times 10^{-38}\text{ J m}^2$ and $\dfrac{1}{1.00^2} + \dfrac{1}{2.00^2} + \dfrac{1}{3.00^2} = 1 + 0.25 + 0.1111 = 1.3611\text{ nm}^{-2} = 1.3611 \times 10^{18}\text{ m}^{-2}$:</div>
-              $$E_{1,1,1} = 6.0247 \times 10^{-38}\text{ J m}^2 \cdot 1.3611 \times 10^{18}\text{ m}^{-2} = \mathbf{8.20 \times 10^{-20}\text{ J}} \quad (\mathbf{0.512\text{ eV}})$$
-            </div>
-          </div>
-        </div>
-
-        <!-- HOMEWORK H2: ORIGINAL C/W TABLE FROM SLIDE 38 -->
-        <div class="border border-slate-200 rounded-xl p-5 bg-slate-50/70 space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
-            <div>
-              <h3 class="font-bold text-slate-900 text-base">Homework H2: Original C/W Table – The Shell (L22_The Shell.pdf, Slide 38, Exercise 7)</h3>
-              <p class="text-xs text-slate-500">Exam Scoring Rule: Correct = +1 P, Skip = 0 P, Wrong = &minus;1 P (min. 0 P total). Pure guessing can be dangerous!</p>
-            </div>
-            <div id="cw-score-badge" class="px-3 py-1 rounded bg-slate-900 text-amber-400 font-mono text-xs font-bold">
-              Score: 0 / 6 P
-            </div>
-          </div>
-
-          <div class="overflow-x-auto">
-            <table class="w-full text-xs sm:text-sm text-left border-collapse bg-white rounded-lg overflow-hidden border border-slate-200">
-              <thead>
-                <tr class="bg-slate-800 text-white">
-                  <th class="p-2.5 w-36 text-center">Your Choice</th>
-                  <th class="p-2.5">Statement (L22 Slide 38, Exercise 7)</th>
-                  <th class="p-2.5 w-28 text-center">Feedback</th>
-                </tr>
-              </thead>
-              <tbody id="cw-table-body" class="divide-y divide-slate-200"></tbody>
-            </table>
-          </div>
-
-          <div class="flex flex-wrap items-center gap-3">
-            <button onclick="evaluateCWTable()" class="px-4 py-1.5 rounded bg-violet-700 hover:bg-violet-600 text-white text-xs font-bold uppercase shadow-sm">
-              Evaluate My C/W Decisions
-            </button>
-            <button onclick="toggleHwSolution('sol-h2')" class="hw-sol-btn px-3 py-1.5 rounded bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold transition">
-              🔒 Show All C/W Answers &amp; Explanations (Code: HW-U3)
-            </button>
-          </div>
-
-          <div id="sol-h2" class="hidden bg-violet-50 border border-violet-300 rounded-lg p-4 text-xs text-slate-800 space-y-1.5">
-            <div class="font-bold text-violet-900">✅ Official Key &amp; Explanations (L22_The Shell.pdf, Slide 38):</div>
-            <ul class="list-disc list-inside space-y-1">
-              <li><strong>1. [W] Wrong:</strong> Blue light ($\lambda \approx 450\text{ nm}$) has a shorter wavelength and higher frequency than red light ($\lambda \approx 700\text{ nm}$), so blue photons are <em>more</em> energetic ($E = hc/\lambda$).</li>
-              <li><strong>2. [C] Correct:</strong> In a pure 1-electron system like the hydrogen atom, orbital energy depends <em>only</em> on $n$ ($2s$ and $2p$, or $3s, 3p, 3d$ are degenerate).</li>
-              <li><strong>3. [C] Correct:</strong> Because $h = 6.626 \times 10^{-34}\text{ J s}$ is tiny, $\Delta x \cdot \Delta v_x \ge h/(4\pi m)$ is completely negligible for macroscopic masses (see Task R2!).</li>
-              <li><strong>4. [W] Wrong:</strong> Classic exam trap! From $\lambda = \frac{h}{\sqrt{2 m_e e U}}$, the wavelength is inversely proportional to the <strong>square root</strong> of the acceleration voltage ($\lambda \propto 1/\sqrt{U}$), not to $U$ itself.</li>
-              <li><strong>5. [C] Correct:</strong> Confinement (boundary conditions) forces standing waves and quantized energy levels.</li>
-              <li><strong>6. [C] Correct:</strong> Pauli's exclusion principle only forbids two electrons <em>within the same atom</em> from sharing all four quantum numbers $(n, \ell, m_\ell, m_s)$. Electrons in two <em>different</em> atoms can of course have the same set!</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <script>
-    const UNIT_ID = 'UE03';
-    const STORAGE_KEY = 'PC2_UE03_UNLOCK_STATE_V1';
-
-    // Default fallback codes if codes.js is not found
-    const DEFAULT_UNIT_CODES = {
-      master: 'KERZI-PROF',
-      guided: 'G-U3',
-      inclass: 'IN-U3',
-      homework: 'HW-U3'
-    };
-
-    let unlockState = {
-      prof: false,
-      guided: false,
-      inclass: false,
-      homework: false
-    };
-
-    let selectedRadRow = null;
-    let selectedAngRow = null;
-
-    const CW_STATEMENTS = [
-      { id: 1, text: 'Red light ("warm" light) is more energetic than blue light ("cold" light).', ans: 'W' },
-      { id: 2, text: 'Orbitals in hydrogen with the same principal quantum number are degenerate.', ans: 'C' },
-      { id: 3, text: "Heisenberg's uncertainty principle only plays a role for very small particles.", ans: 'C' },
-      { id: 4, text: 'The wavelength of charged particles is inverse proportional to the acceleration voltage.', ans: 'W' },
-      { id: 5, text: 'Confined electrons show quantised energy terms.', ans: 'C' },
-      { id: 6, text: 'It is possible that electrons in two different atoms show the same set of quantum numbers.', ans: 'C' }
-    ];
-
-    function getActiveCodes() {
-      if (window.PC2_CODES && window.PC2_CODES.units && window.PC2_CODES.units[UNIT_ID]) {
-        const u = window.PC2_CODES.units[UNIT_ID];
-        return {
-          master: (window.PC2_CODES.master_code || DEFAULT_UNIT_CODES.master).toUpperCase(),
-          guided: (u.guided || DEFAULT_UNIT_CODES.guided).toUpperCase(),
-          inclass: (u.inclass || DEFAULT_UNIT_CODES.inclass).toUpperCase(),
-          homework: (u.homework || DEFAULT_UNIT_CODES.homework).toUpperCase(),
-          open_guided: !!u.open_guided,
-          open_inclass: !!u.open_inclass,
-          open_hw: !!u.open_hw
-        };
-      }
-      return { ...DEFAULT_UNIT_CODES, open_guided: false, open_inclass: false, open_hw: false };
-    }
-
-    function loadUnlockState() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) unlockState = { ...unlockState, ...JSON.parse(raw) };
-      } catch (e) {}
-      const cfg = getActiveCodes();
-      if (cfg.open_guided) unlockState.guided = true;
-      if (cfg.open_inclass) { unlockState.guided = true; unlockState.inclass = true; }
-      if (cfg.open_hw) unlockState.homework = true;
-      applyUnlockUI();
-    }
-
-    function saveUnlockState() {
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(unlockState)); } catch (e) {}
-    }
-
-    // Secret double-click on Mag. Erich Kerzendorfer
-    function toggleLecturerMode() {
-      unlockState.prof = !unlockState.prof;
-      const msg = document.getElementById('unlock-msg');
-      msg.textContent = unlockState.prof ? '👨‍🏫 Lecturer Mode Active (All Unlocked)' : 'Lecturer Mode Off';
-      saveUnlockState();
-      applyUnlockUI();
-    }
-
-    function submitUnlockCode() {
-      const inputEl = document.getElementById('unlock-code-input');
-      const code = (inputEl.value || '').trim().toUpperCase();
-      const cfg = getActiveCodes();
-      const msg = document.getElementById('unlock-msg');
-
-      if (!code) return;
-
-      if (code === cfg.master) {
-        unlockState.prof = true;
-        msg.className = 'text-xs font-semibold text-emerald-400';
-        msg.textContent = '✅ Master Code accepted: All sections unlocked!';
-      } else if (code === cfg.guided) {
-        unlockState.guided = true;
-        msg.className = 'text-xs font-semibold text-emerald-400';
-        msg.textContent = '✅ Part 1 (Guided Demos G1 & G2) unlocked!';
-      } else if (code === cfg.inclass) {
-        unlockState.guided = true;
-        unlockState.inclass = true;
-        msg.className = 'text-xs font-semibold text-emerald-400';
-        msg.textContent = '✅ Part 1 & Part 2 (In-Class Solutions) unlocked!';
-      } else if (code === cfg.homework) {
-        unlockState.homework = true;
-        msg.className = 'text-xs font-semibold text-emerald-400';
-        msg.textContent = '✅ Part 3 (Voluntary Homework Solutions) unlocked!';
-      } else {
-        msg.className = 'text-xs font-semibold text-rose-400';
-        msg.textContent = '❌ Unknown unlock code for UE 03.';
-        return;
-      }
-
-      inputEl.value = '';
-      saveUnlockState();
-      applyUnlockUI();
-    }
-
-    function resetAllLocks() {
-      unlockState = { prof: false, guided: false, inclass: false, homework: false };
-      saveUnlockState();
-      // Hide all open solution boxes
-      ['g1-a','g1-b','g1-c','g2-a','g2-b','sol-c1','sol-c2','sol-r1','sol-r2','sol-h1','sol-h2'].forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) el.classList.add('hidden');
-      });
-      document.getElementById('unlock-msg').textContent = 'Locks reset.';
-      applyUnlockUI();
-    }
-
-    function applyUnlockUI() {
-      const canGuided = unlockState.prof || unlockState.guided || unlockState.inclass;
-      const canInClass = unlockState.prof || unlockState.inclass;
-      const canHw = unlockState.prof || unlockState.homework;
-
-      document.getElementById('prof-dot').classList.toggle('hidden', !unlockState.prof);
-      const profNote = document.getElementById('prof-note-slide25');
-      if (profNote) profNote.classList.toggle('hidden', !unlockState.prof);
-
-      // Header Badges
-      const bG = document.getElementById('badge-guided');
-      bG.className = canGuided
-        ? 'px-2 py-0.5 rounded bg-emerald-950 border border-emerald-600 text-emerald-300'
-        : 'px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-400';
-      bG.textContent = canGuided ? '🔓 Part 1 Open' : '🔒 Part 1 (G-U3)';
-
-      const bI = document.getElementById('badge-inclass');
-      bI.className = canInClass
-        ? 'px-2 py-0.5 rounded bg-emerald-950 border border-emerald-600 text-emerald-300'
-        : 'px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-400';
-      bI.textContent = canInClass ? '🔓 Part 2 Open' : '🔒 Part 2 (IN-U3)';
-
-      const bH = document.getElementById('badge-hw');
-      bH.className = canHw
-        ? 'px-2 py-0.5 rounded bg-emerald-950 border border-emerald-600 text-emerald-300'
-        : 'px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-400';
-      bH.textContent = canHw ? '🔓 Part 3 Open' : '🔒 Part 3 (HW-U3)';
-
-      document.getElementById('part1-status-tag').textContent = canGuided
-        ? '🔓 Guided Steps Unlocked – Click Step a/b/c to view'
-        : '🔒 Steps locked until Lecturer Demo / Code G-U3';
-
-      document.querySelectorAll('.guided-btn').forEach((btn) => {
-        btn.textContent = btn.textContent.replace(/^[🔒🔓]\s*/, canGuided ? '🔓 ' : '🔒 ');
-      });
-      document.querySelectorAll('.inclass-sol-btn').forEach((btn) => {
-        btn.textContent = btn.textContent.replace(/^[🔒🔓]\s*/, canInClass ? '🔓 ' : '🔒 ');
-      });
-      document.querySelectorAll('.hw-sol-btn').forEach((btn) => {
-        btn.textContent = btn.textContent.replace(/^[🔒🔓]\s*/, canHw ? '🔓 ' : '🔒 ');
-      });
-    }
-
-    function toggleGuidedStep(id) {
-      const canGuided = unlockState.prof || unlockState.guided || unlockState.inclass;
-      if (!canGuided) {
-        alert('These guided calculation steps are locked during the live board presentation. Enter code G-U3 (or IN-U3) in the top bar once your lecturer releases them!');
-        return;
-      }
-      const el = document.getElementById(id);
-      if (el) el.classList.toggle('hidden');
-    }
-
-    function toggleInClassSolution(id) {
-      const canInClass = unlockState.prof || unlockState.inclass;
-      if (!canInClass) {
-        alert('Complete step-by-step solutions are locked during active practice. Enter the In-Class code (IN-U3) in the top bar when announced by your lecturer!');
-        return;
-      }
-      const el = document.getElementById(id);
-      if (el) el.classList.toggle('hidden');
-    }
-
-    function toggleHwSolution(id) {
-      const canHw = unlockState.prof || unlockState.homework;
-      if (!canHw) {
-        alert('Homework solutions are locked. Enter the Homework code (HW-U3) sent out by Mag. Kerzendorfer in the top bar!');
-        return;
-      }
-      const el = document.getElementById(id);
-      if (el) el.classList.toggle('hidden');
-    }
-
-    // Task C1 checks
-    function checkC1a() {
-      const v11 = parseFloat((document.getElementById('c1-e11').value || '').replace(',', '.'));
-      const v12 = parseFloat((document.getElementById('c1-e12').value || '').replace(',', '.'));
-      const v21 = parseFloat((document.getElementById('c1-e21').value || '').replace(',', '.'));
-      const fb = document.getElementById('fb-c1a');
-      fb.classList.remove('hidden');
-
-      if (v11 === 2 && v12 === 5 && v21 === 5) {
-        fb.className = 'text-xs font-semibold text-emerald-700';
-        fb.innerHTML = '✅ Spot on! $E_{1,1} = (1^2+1^2)E_0 = 2E_0$, and $E_{1,2} = E_{2,1} = (1^2+2^2)E_0 = 5E_0$.';
-      } else {
-        fb.className = 'text-xs font-semibold text-rose-700';
-        fb.innerHTML = '❌ Check $n_1^2 + n_2^2$: For $(1,1)$ it is $1^2+1^2 = 2$; for $(1,2)$ and $(2,1)$ it is $1^2+2^2 = 5$.';
-      }
-      renderMath();
-    }
-
-    function checkC1b() {
-      const deg = document.getElementById('c1-deg-select').value;
-      const occ = document.getElementById('c1-occ-select').value;
-      const fb = document.getElementById('fb-c1b');
-      fb.classList.remove('hidden');
-
-      if (deg === 'correct' && occ === 'correct') {
-        fb.className = 'text-xs font-semibold text-emerald-700';
-        fb.textContent = '✅ Both correct! Symmetry (Lx = Ly) causes the degeneracy of (1,2) and (2,1), and 6 electrons fill E(1,1), E(1,2), and E(2,1) with 2 electrons each.';
-      } else {
-        fb.className = 'text-xs font-semibold text-rose-700';
-        fb.textContent = '❌ Not quite right yet. Remember: each spatial state (n1,n2) holds at most 2 electrons (Pauli principle), and equal side lengths Lx = Ly make (1,2) and (2,1) energetically identical.';
-      }
-    }
-
-    // Task C2 interactive table row selection
-    function selectRadialRow(code) {
-      selectedRadRow = code;
-      ['10', '20', '21'].forEach((c) => {
-        document.getElementById(`rad-row-${c}`).classList.toggle('row-selected', c === code);
-      });
-    }
-
-    function selectAngularRow(code) {
-      selectedAngRow = code;
-      ['00', '10', '1m1', '1p1'].forEach((c) => {
-        document.getElementById(`ang-row-${c}`).classList.toggle('row-selected', c === code);
-      });
-    }
-
-    function checkC2() {
-      const fb = document.getElementById('fb-c2');
-      fb.classList.remove('hidden');
-      if (selectedRadRow === '21' && selectedAngRow === '1m1') {
-        fb.className = 'text-xs font-semibold text-emerald-800 bg-emerald-50 border border-emerald-300 p-3 rounded-lg';
-        fb.innerHTML = '✅ <strong>Correct rows marked!</strong> For a $2p$ orbital with $m = -1$, we have $n=2, \\ell=1, m=-1$. The complete wave function is the product:<br />$$\\psi_{2,1,-1}(r,\\theta,\\phi) = R_{2,1}(r)\\cdot Y_{1,-1}(\\theta,\\phi) = \\frac{1}{\\sqrt{24}}\\left(\\frac{Z}{a_0}\\right)^{3/2} \\rho\\, e^{-\\rho/2} \\cdot \\left(\\frac{3}{8\\pi}\\right)^{1/2}\\sin\\theta\\,e^{-i\\phi}$$';
-      } else {
-        fb.className = 'text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200 p-2.5 rounded-lg';
-        fb.innerHTML = '❌ Check the quantum numbers for <strong>2p ($m = -1$)</strong>: Principal quantum number $n = 2$, azimuthal quantum number for a $p$-orbital is $\\ell = 1$, and magnetic quantum number $m = -1$. Click the matching row in each table!';
-      }
-      renderMath();
-    }
-
-    // Generic numerical checker with Smart Traps
-    function checkNumStep(stepId, targetVal, relTol, traps) {
-      const inputEl = document.getElementById(`in-${stepId}`);
-      const fbEl = document.getElementById(`fb-${stepId}`);
-      fbEl.classList.remove('hidden');
-
-      const val = parseFloat((inputEl.value || '').trim().replace(',', '.'));
-      if (isNaN(val)) {
-        fbEl.className = 'text-xs font-semibold text-rose-600';
-        fbEl.textContent = '⚠️ Please enter a valid number.';
-        return;
-      }
-
-      const relErr = Math.abs(val - targetVal) / (Math.abs(targetVal) || 1);
-      if (relErr <= relTol) {
-        fbEl.className = 'text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 p-2 rounded';
-        fbEl.innerHTML = `✅ Correct! (Exact reference value: <span class="font-mono">${targetVal}</span>)`;
-        return;
-      }
-
-      if (traps) {
-        for (const t of traps) {
-          const tErr = Math.abs(val - t.val) / (Math.abs(t.val) || 1);
-          if (tErr <= 0.03) {
-            fbEl.className = 'text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200 p-2 rounded';
-            fbEl.innerHTML = `❌ <strong>Smart Trap Notice:</strong> ${t.msg}`;
-            return;
-          }
-        }
-      }
-
-      fbEl.className = 'text-xs font-semibold text-rose-700';
-      fbEl.textContent = '❌ Not quite right yet. Check your powers of ten and units!';
-    }
-
-    // Render & Evaluate C/W Table (H2)
-    function renderCWTable() {
-      const tbody = document.getElementById('cw-table-body');
-      tbody.innerHTML = CW_STATEMENTS.map((st) => `
-        <tr>
-          <td class="p-2.5 text-center">
-            <select id="cw-sel-${st.id}" class="px-2 py-1 rounded border border-slate-300 bg-slate-50 font-bold text-xs">
-              <option value="">-- Skip (0 P) --</option>
-              <option value="C">C (Correct)</option>
-              <option value="W">W (Wrong)</option>
-            </select>
-          </td>
-          <td class="p-2.5 text-slate-800">${st.text}</td>
-          <td id="cw-fb-${st.id}" class="p-2.5 text-center font-bold text-xs text-slate-400">–</td>
-        </tr>
-      `).join('');
-    }
-
-    function evaluateCWTable() {
-      let score = 0;
-      CW_STATEMENTS.forEach((st) => {
-        const sel = document.getElementById(`cw-sel-${st.id}`).value;
-        const fb = document.getElementById(`cw-fb-${st.id}`);
-        if (!sel) {
-          fb.className = 'p-2.5 text-center font-semibold text-xs text-slate-400';
-          fb.textContent = '0 P (Skipped)';
-        } else if (sel === st.ans) {
-          score += 1;
-          fb.className = 'p-2.5 text-center font-bold text-xs text-emerald-700 bg-emerald-50';
-          fb.textContent = '✅ +1 P';
-        } else {
-          score -= 1;
-          fb.className = 'p-2.5 text-center font-bold text-xs text-rose-700 bg-rose-50';
-          fb.textContent = '❌ -1 P';
-        }
-      });
-      const finalScore = Math.max(0, score);
-      document.getElementById('cw-score-badge').textContent = `Score: ${finalScore} / 6 P (Raw: ${score})`;
-    }
-
-    function renderMath() {
-      if (window.renderMathInElement) {
-        renderMathInElement(document.body, {
-          delimiters: [
-            { left: '$$', right: '$$', display: true },
-            { left: '\\(', right: '\\)', display: false },
-            { left: '$', right: '$', display: false }
-          ],
-          output: 'html',
-          throwOnError: false
-        });
-      }
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      renderCWTable();
-      loadUnlockState();
-      renderMath();
-    });
-  </script>
+            $$E_{n_1,n_2} = \frac{h^2}{8 m_e}\left(\frac{n_1^2}{L_x^2} + \frac{n_2^2}{L_y^2}\right) \xrightarrow{L_x = L_y = L} \frac{h^2}{8 m_e L^2}(n_1^2 + n_2^2) = \mathbf{E_0 \cdot (n_1^2 + n_2^2)}$$</div>
+</details>
+<details class="guided">
+<summary>Optional extension · de Broglie wavelength (L22 slides 10–12, Exercise 2)</summary>
+<div>
+<p>An electron starts from rest and is accelerated through 100 V. Using nonrelativistic kinetic energy gives $eU=p^2/(2m_e)$, so $\lambda=h/\sqrt{2m_e eU}\approx123\,\mathrm{pm}$. This predicts $\lambda\propto U^{-1/2}$.</p></div>
+</details></div>
+</section>
+<section id="c1" class="card Concept">
+<header>
+<p>Concept</p>
+<h2>C1 · Degeneracy and electron occupation</h2></header>
+<div class="body">
+<details class="lookup">
+<summary>Lecture script lookup · <a href="#source-l22">L22</a> slides 21–22 · <a href="#source-t02">T02</a> Q4 (PDF p. 8, printed p. 6)</summary>
+<div>
+<p>Find the two terms contributing to the energy and identify what makes their length factors equal in a square. Different spatial states can share an energy. Each spatial state can hold two electrons of opposite spin.</p></div>
+</details>
+<p>Put six noninteracting electrons in a square box. Consider $(n_x,n_y)=(1,1),(1,2),(2,1)$.</p>
+<form id="step-c1a" class="step" data-step="c1a">
+<div class="prompt">(a) Enter the integer coefficients of the three energies in units of the common scale $E_0$.</div>
+<div class="inputs"><label for="answer-e11">(1,1)<span><input id="answer-e11" type="text" autocomplete="off" spellcheck="false"> </span></label><label for="answer-e12">(1,2)<span><input id="answer-e12" type="text" autocomplete="off" spellcheck="false"> </span></label><label for="answer-e21">(2,1)<span><input id="answer-e21" type="text" autocomplete="off" spellcheck="false"> </span></label><button type="submit" class="check">Check</button></div>
+<p class="feedback" role="status"></p>
+</form>
+<form id="concept-c1b" class="step">
+<p class="prompt">(b) Explain the equality of two energies, then decide how the electrons are distributed.</p>
+<div class="inputs">
+<label for="c1-reason">Reason for equal energy<select id="c1-reason"><option value="">Choose a reason</option><option value="sum">The quantum numbers sum to an odd number</option><option value="square">Swapping the two quantum numbers in a square leaves the energy unchanged</option><option value="pauli">The Pauli principle forces the energies to be equal</option></select></label>
+<label for="c1-occupation">Ground-state occupation<select id="c1-occupation"><option value="">Choose an occupation</option><option value="pair">Two electrons in each of the three listed states</option><option value="one">All six electrons in the lowest spatial state</option><option value="higher">Two each in (1,1), (2,2) and (3,3)</option></select></label>
+<button type="submit">Check</button></div>
+<p class="feedback" role="status"></p>
+</form>
+<p class="lock-note" data-lock-note="inclass">The complete solution is released after in-class practice.</p>
+<details id="solution-c1" class="solution" data-release="inclass" hidden>
+<summary>Show complete solution · C1</summary>
+<div>
+<p>$E_{1,1}=2E_0$ and $E_{1,2}=E_{2,1}=5E_0$. With equal side lengths the energy depends on the sum $n_x^2+n_y^2$, which is unchanged when the indices are exchanged. State $(1,2)$ has no interior node along $x$ and one along $y$. State $(2,1)$ has the reverse pattern. The six electrons occupy the three lowest spatial states in pairs, with opposite spins in each pair.</p></div>
+</details></div>
+</section>
+<section id="c2" class="card Concept">
+<header>
+<p>Concept</p>
+<h2>C2 · Assemble a hydrogen wave function</h2></header>
+<div class="body">
+<details class="lookup">
+<summary>Lecture script lookup · <a href="#source-l22">L22</a> slides 25 and 27 · <a href="#source-t02">T02</a> Q5 (PDF p. 9, printed p. 7)</summary>
+<div>
+<p>Slide 25 separates the wave function into a radial factor indexed by $(n,\ell)$ and an angular factor indexed by $(\ell,m)$. Slide 27 explains how to read the quantum numbers from the orbital label. Q5 uses the same table-lookup method. Compare the sign convention in the angular table, then multiply the two selected factors on paper.</p></div>
+</details>
+<p>For the hydrogen $2p$ orbital with $m=-1$, mark one radial row and one angular row. Then write their product on paper. The check only verifies the row selections.</p>
+<form id="concept-c2" class="step">
+<div class="tables">
+<fieldset><legend>Radial factor · (n, ℓ)</legend>
+<div class="table-wrap">
+<table><thead><tr><th scope="col">Indices</th><th scope="col">Factor</th></tr></thead><tbody><tr><td><label><input type="radio" name="radial" value="10"> (1, 0)</label></td><td>$2(Z/a_0)^{3/2}e^{-\rho/2}$</td></tr><tr><td><label><input type="radio" name="radial" value="20"> (2, 0)</label></td><td>$(Z/a_0)^{3/2}(2-\rho)e^{-\rho/2}/\sqrt{8}$</td></tr><tr><td><label><input type="radio" name="radial" value="21"> (2, 1)</label></td><td>$(Z/a_0)^{3/2}\rho e^{-\rho/2}/\sqrt{24}$</td></tr></tbody></table></div></fieldset>
+<fieldset><legend>Angular factor · (ℓ, m)</legend>
+<div class="table-wrap">
+<table><thead><tr><th scope="col">Indices</th><th scope="col">Factor</th></tr></thead><tbody><tr><td><label><input type="radio" name="angular" value="00"> (0, 0)</label></td><td>$1/\sqrt{4\pi}$</td></tr><tr><td><label><input type="radio" name="angular" value="10"> (1, 0)</label></td><td>$\sqrt{3/(4\pi)}\cos\theta$</td></tr><tr><td><label><input type="radio" name="angular" value="1m1"> (1, −1)</label></td><td>$+\sqrt{3/(8\pi)}\sin\theta\,e^{-i\phi}$</td></tr><tr><td><label><input type="radio" name="angular" value="1p1"> (1, +1)</label></td><td>$-\sqrt{3/(8\pi)}\sin\theta\,e^{+i\phi}$</td></tr></tbody></table></div></fieldset></div>
+<p>For hydrogen use $Z=1$, $a_0$ as the Bohr radius in the fixed-nucleus approximation, and $\rho=2Zr/(na_0)$.</p><button type="submit">Check selected rows</button>
+<p class="feedback" role="status"></p>
+</form>
+<p class="lock-note" data-lock-note="inclass">The complete solution is released after in-class practice.</p>
+<details id="solution-c2" class="solution" data-release="inclass" hidden>
+<summary>Show complete solution · C2</summary>
+<div>
+<p>The indices are $n=2$, $\ell=1$, $m=-1$. Select $R_{2,1}$ and $Y_{1,-1}$. Multiplication gives:</p>
+$$\psi_{2,1,-1}=\frac{1}{\sqrt{24}}\left(\frac{Z}{a_0}\right)^{3/2}\rho e^{-\rho/2}
+\sqrt{\frac{3}{8\pi}}\sin\theta\,e^{-i\phi}
+=\frac{1}{8\sqrt\pi}\left(\frac{Z}{a_0}\right)^{3/2}\rho e^{-\rho/2}\sin\theta\,e^{-i\phi}.$$
+<p>For hydrogen, $Z=1$ and $\rho=r/a_0$ in the approximation used here.</p></div>
+</details></div>
+</section>
+<section id="r2" class="card Practice">
+<header>
+<p>Practice</p>
+<h2>R2 · A lower bound from the uncertainty relation</h2></header>
+<div class="body">
+<details class="lookup">
+<summary>Lecture script lookup · <a href="#source-l22">L22</a> slide 8 · slide 13, Exercise 3 · formula summary on slide 41</summary>
+<div>
+<p>Slide 8 states the position–momentum uncertainty relation. Slide 41 summarises the formula. Exercise 3 finds a lower bound on position uncertainty from a velocity uncertainty. Here the direction is reversed: use a stated position uncertainty and find a lower bound on the velocity uncertainty, using $\Delta p_x=m\Delta v_x$ in the nonrelativistic approximation.</p></div>
+</details>
+<p>For each system use the given $\Delta x$ as a position standard deviation. Enter velocities in $\mathrm{m\,s^{-1}}$.</p>
+<p id="r2-start-note" class="lock-note">Complete the last check in R1 to open the first calculation in R2.</p>
+<form id="step-r2a" class="step" data-step="r2a" hidden>
+<div class="prompt">(a) Mosquito · $m=1.00\,\mathrm{mg}$, $\Delta x=0.100\,\mathrm{mm}$. Find the lower bound on $\Delta v_x$.</div>
+<div class="inputs"><label for="answer-mosquito">Lower bound<span><input id="answer-mosquito" type="text" autocomplete="off" spellcheck="false"> m/s</span></label><button type="submit" class="check">Check</button></div>
+<p class="feedback" role="status"></p>
+</form>
+<form id="step-r2b" class="step" data-step="r2b" hidden>
+<div class="prompt">(b) Proton · $m=m_p$. For this estimate assume $\Delta x=3.00\,\mathrm{fm}$. Find the lower bound on $\Delta v_x$.</div>
+<div class="inputs"><label for="answer-proton">Lower bound<span><input id="answer-proton" type="text" autocomplete="off" spellcheck="false"> m/s</span></label><button type="submit" class="check">Check</button></div>
+<p class="feedback" role="status"></p>
+</form>
+<p id="practice-done" class="note" hidden>Self-calculation complete. Compare the two scales. The full solutions are available once the lecturer announces the in-class code.</p>
+<p class="lock-note" data-lock-note="inclass">The complete solution is released after in-class practice.</p>
+<details id="solution-r2" class="solution" data-release="inclass" hidden>
+<summary>Show complete solution · R2</summary>
+<div>
+<p>$\Delta x\,\Delta p_x\ge h/(4\pi)$ and $\Delta p_x=m\Delta v_x$ give a lower bound $h/(4\pi m\Delta x)$, not a prediction of the actual uncertainty.</p>
+<p><strong>(a)</strong> $1.00\,\mathrm{mg}=1.00\times10^{-6}\,\mathrm{kg}$ and $0.100\,\mathrm{mm}=1.00\times10^{-4}\,\mathrm m$.</p>
+$$\frac{6.626\times10^{-34}\,\mathrm{J\,s}}{4\pi(1.00\times10^{-6}\,\mathrm{kg})(1.00\times10^{-4}\,\mathrm m)}
+=5.27\times10^{-25}\,\mathrm{m\,s^{-1}}.$$
+<p><strong>(b)</strong> With $3.00\,\mathrm{fm}=3.00\times10^{-15}\,\mathrm m$:</p>
+$$\frac{6.626\times10^{-34}\,\mathrm{J\,s}}{4\pi(1.673\times10^{-27}\,\mathrm{kg})(3.00\times10^{-15}\,\mathrm m)}
+=1.05\times10^{7}\,\mathrm{m\,s^{-1}}.$$
+<p>The first bound is negligible in this context. The second is about $3.5\%$ of the speed of light.</p></div>
+</details></div>
+</section>
+<section id="h1" class="card Homework">
+<header>
+<p>Homework</p>
+<h2>H1 · Zero-point energy in a rectangular 3D box</h2></header>
+<div class="body">
+<details class="lookup">
+<summary>Lecture script lookup · <a href="#source-l22">L22</a> slide 21 · PDF p. 84, Exercise 7a–b</summary>
+<div>
+<p>Slide 21 gives the energy in a rectangular 3D box as a sum of three confinement terms, one per edge. Exercise 7a finds the general ground-state expression, and 7b uses the unequal edge lengths below. Each quantum number starts at 1.</p></div>
+</details>
+<p>Find the zero-point energy of an electron in a rectangular box with edge lengths $1.00\,\mathrm{nm}$, $2.00\,\mathrm{nm}$ and $3.00\,\mathrm{nm}$.</p>
+<form id="step-h1" class="step" data-step="h1">
+<div class="prompt">Enter the ground-state energy.</div>
+<div class="inputs"><label for="answer-zero">Energy<span><input id="answer-zero" type="text" autocomplete="off" spellcheck="false"> J</span></label><button type="submit" class="check">Check</button></div>
+<p class="feedback" role="status"></p>
+</form>
+<p class="lock-note" data-lock-note="homework">The complete solution is released with the homework code.</p>
+<details id="solution-h1" class="solution" data-release="homework" hidden>
+<summary>Show complete solution · H1</summary>
+<div>
+<p>Set $n_x=n_y=n_z=1$. The sum of inverse squared edge lengths is $(1+1/4+1/9)\,\mathrm{nm^{-2}}=1.3611\times10^{18}\,\mathrm{m^{-2}}$.</p>
+$$E_{1,1,1}=\frac{h^2}{8m_e}\left(\frac{1}{L_x^2}+\frac{1}{L_y^2}+\frac{1}{L_z^2}\right)=8.20\times10^{-20}\,\mathrm J.$$
+<p>As a check, the 3D result must be greater than the contribution of the shortest edge alone.</p></div>
+</details></div>
+</section>
+<section id="h2" class="card Homework">
+<header>
+<p>Homework</p>
+<h2>H2 · Correct or Wrong · Unscored self-check</h2></header>
+<div class="body">
+<details class="lookup">
+<summary>Lecture script lookup · <a href="#source-l22">L22</a> slide 39, Exercise 7 · slides 8, 10–12, 20, 28 and 33</summary>
+<div>
+<p>This is an adapted self-check, not a scored test. The references are the uncertainty relation (8), wave/energy relations (10–12), confinement (20), hydrogenic energy levels (28) and the Pauli principle (33). Assume the nonrelativistic models used in these slides.</p></div>
+</details>
+<form class="step cw" data-statement="light"><label for="cw-light">1. A red-light photon has more energy than a blue-light photon.</label>
+<div class="inputs"><select id="cw-light"><option value="">Choose…</option><option value="C">Correct</option><option value="W">Wrong</option></select><button type="submit">Check</button></div>
+<p class="feedback" role="status"></p>
+</form>
+<form class="step cw" data-statement="hydrogen"><label for="cw-hydrogen">2. In the nonrelativistic Coulomb model of hydrogen, orbitals with the same principal quantum number are degenerate.</label>
+<div class="inputs"><select id="cw-hydrogen"><option value="">Choose…</option><option value="C">Correct</option><option value="W">Wrong</option></select><button type="submit">Check</button></div>
+<p class="feedback" role="status"></p>
+</form>
+<form class="step cw" data-statement="uncertainty"><label for="cw-uncertainty">3. The position–momentum uncertainty relation applies only to microscopic objects.</label>
+<div class="inputs"><select id="cw-uncertainty"><option value="">Choose…</option><option value="C">Correct</option><option value="W">Wrong</option></select><button type="submit">Check</button></div>
+<p class="feedback" role="status"></p>
+</form>
+<form class="step cw" data-statement="voltage"><label for="cw-voltage">4. In the nonrelativistic model, an electron accelerated from rest has a de Broglie wavelength inversely proportional to the voltage itself.</label>
+<div class="inputs"><select id="cw-voltage"><option value="">Choose…</option><option value="C">Correct</option><option value="W">Wrong</option></select><button type="submit">Check</button></div>
+<p class="feedback" role="status"></p>
+</form>
+<form class="step cw" data-statement="box"><label for="cw-box">5. An electron in an infinite potential box has discrete energy levels.</label>
+<div class="inputs"><select id="cw-box"><option value="">Choose…</option><option value="C">Correct</option><option value="W">Wrong</option></select><button type="submit">Check</button></div>
+<p class="feedback" role="status"></p>
+</form>
+<form class="step cw" data-statement="pauli"><label for="cw-pauli">6. Electrons in two separate, noninteracting atoms may carry the same set of four atomic quantum-number labels.</label>
+<div class="inputs"><select id="cw-pauli"><option value="">Choose…</option><option value="C">Correct</option><option value="W">Wrong</option></select><button type="submit">Check</button></div>
+<p class="feedback" role="status"></p>
+</form>
+<p class="lock-note" data-lock-note="homework">Explanations are released with the homework code.</p>
+<details id="solution-h2" class="solution" data-release="homework" hidden>
+<summary>Show complete solution · H2</summary>
+<div>
+<ol>
+<li><strong>Wrong.</strong> $E=hc/\lambda$, so blue photons have more energy than red photons.</li>
+<li><strong>Correct in the specified model.</strong> Coulomb energies depend on $n$, not on $\ell$.</li>
+<li><strong>Wrong.</strong> The relation applies to macroscopic objects too. Its contribution to typical macroscopic uncertainties is practically negligible, as illustrated by R2a.</li>
+<li><strong>Wrong.</strong> From $p^2=2m_e eU$ and $\lambda=h/p$ follows $\lambda\propto U^{-1/2}$.</li>
+<li><strong>Correct.</strong> The boundary conditions select a discrete set of standing waves and energies.</li>
+<li><strong>Correct.</strong> The same atomic labels on different atoms do not identify the same one-electron state.</li>
+</ol></div>
+</details></div>
+</section>
+<section id="sources" class="sources">
+<h2>Course sources</h2>
+<p id="source-l22"><strong>L22 · <cite>L22_The Shell.pdf</cite></strong>, Manfred Kerschbaumer, Physical Chemistry II. The lookup boxes distinguish numbered slides from the PDF page numbers of the appended exercises. Use the copy from your lecture materials.</p>
+<p id="source-t02"><strong>T02 · <cite>Q02_Try_Tests_Lecture2.pdf</cite></strong>, Q4 (square box) and Q5 (wave function), printed pages 6–7. Use the question versions for practice if both questions and worked answers are available.</p>
+</section>
+</main>
 </body>
 </html>
