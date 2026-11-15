@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physical Chemistry II – Interactive Coaching Hub | FH IMC Krems</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="codes.js"></script>
+  <style>
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: #f8fafc; color: #0f172a; }
+    .katex-display { margin: 0.4em 0 !important; overflow-x: auto; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+  <div>
+    <!-- TOP HEADER -->
+    <header class="bg-slate-900 text-white border-b border-slate-700 shadow-lg">
+      <div class="max-w-6xl mx-auto px-4 py-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div class="flex flex-wrap items-center gap-2 mb-1.5">
+              <span class="px-2.5 py-0.5 rounded text-[11px] font-extrabold uppercase tracking-wider bg-amber-500 text-slate-950">
+                FH IMC Krems &bull; Bachelor Applied Chemistry
+              </span>
+              <span class="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-slate-800 text-slate-300 border border-slate-700">
+                4. Semester &bull; Module 4.1 (5 ECTS / 4 CH)
+              </span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+              Physical Chemistry II &ndash; In-Class Coaching Hub
+            </h1>
+            <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-3xl">
+              Interactive exercises, lecture script lookups (<code class="text-amber-300">L21&ndash;L26</code>), concept &amp; symmetry trainers, and exam-style calculations aligned with the portfolio quizzes (<code class="text-amber-300">Q02</code>) and final exam (<code class="text-amber-300">T02</code>).
+            </p>
+          </div>
+
+          <!-- Lecturer Info + Secret Double-Click Trigger for Code Overview -->
+          <div class="bg-slate-800/90 border border-slate-700 rounded-xl px-4 py-3 text-xs text-slate-200 select-none">
+            <div class="text-slate-400 uppercase tracking-wider font-bold text-[10px] mb-1">Course Team</div>
+            <div><strong>Main Lecture &amp; Exam:</strong> Prof. Manfred Kerschbaumer</div>
+            <div
+              ondblclick="toggleLecturerPanel()"
+              title="Double-click for Lecturer Code Overview"
+              class="mt-0.5 cursor-pointer hover:text-amber-300 transition"
+            >
+              <strong>UE Coaching:</strong> Mag. Erich Kerzendorfer <span id="hub-prof-dot" class="hidden">🟢</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="max-w-6xl mx-auto px-4 py-6 space-y-6">
+
+      <!-- SECRET LECTURER CODE OVERVIEW PANEL (Hidden by default, toggled via double-click on name) -->
+      <section id="lecturer-code-panel" class="hidden bg-amber-50 border-2 border-amber-400 rounded-xl p-4 shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-amber-300 pb-2 mb-3">
+          <div class="font-bold text-amber-950 text-sm">
+            👨‍🏫 Dozenten-Übersicht: Aktuelle Freischaltcodes aus <code class="bg-amber-100 px-1.5 py-0.5 rounded">codes.js</code>
+          </div>
+          <span class="text-xs font-mono text-amber-900">Master-Code (alle Units): <strong id="disp-master-code">KERZI-PROF</strong></span>
+        </div>
+        <div id="lecturer-code-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 text-xs font-mono"></div>
+        <p class="text-[11px] text-amber-800 mt-2">
+          💡 Tipp: In jeder Unit schaltet auch ein <strong>Doppelklick auf „Mag. Erich Kerzendorfer“</strong> rechts oben im Header sofort alle Schritte und Lösungen für den Beamer frei.
+        </p>
+      </section>
+
+      <!-- HOW THE COACHING FORMAT WORKS + QUICK TOOLS -->
+      <section class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-bold uppercase tracking-wider text-indigo-700 mb-1">Didactic Structure (90 Min. per Double Unit)</div>
+            <h2 class="text-base font-bold text-slate-900 mb-2">2 + 2 + 2 In-Class Coaching &amp; Voluntary Homework</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-slate-700">
+              <div class="bg-indigo-50/70 border border-indigo-200 rounded-lg p-2.5">
+                <strong class="text-indigo-950 block">👨‍🏫 Part 1: 2 Guided Beamer Demos (G1 &amp; G2)</strong>
+                Step-by-step model derivation &amp; reference calculation moderated in class (unlocked via code <code class="font-mono font-bold">G-Ux</code>).
+              </div>
+              <div class="bg-amber-50/70 border border-amber-200 rounded-lg p-2.5">
+                <strong class="text-amber-950 block">🧩 Part 2A: 2 Concept &amp; Structure Tasks (C1 &amp; C2)</strong>
+                Direct lecture-script lookups, decay schemes, wave-function tables, MO/ligand-field schemes &amp; symmetry flowcharts.
+              </div>
+              <div class="bg-emerald-50/70 border border-emerald-200 rounded-lg p-2.5">
+                <strong class="text-emerald-950 block">🧮 Part 2B: 2 Self-Calculations (R1 &amp; R2)</strong>
+                Focused exam-level calculations with instant check &amp; smart error feedback (solutions via code <code class="font-mono font-bold">IN-Ux</code>).
+              </div>
+              <div class="bg-violet-50/70 border border-violet-200 rounded-lg p-2.5">
+                <strong class="text-violet-950 block">🏠 Part 3: Voluntary Homework (H1 &amp; H2)</strong>
+                1 transfer calculation + original <code class="font-mono font-bold">C/W</code> quiz table for self-assessment (solutions via code <code class="font-mono font-bold">HW-Ux</code>).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- THE 5 BY HEART FORMULAS CARD -->
+        <div class="bg-rose-50 border border-rose-200 rounded-xl p-5 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-bold uppercase tracking-wider text-rose-800 mb-1">Mandatory Exam Basics</div>
+            <h2 class="text-base font-bold text-rose-950 mb-2">🧠 The 5 "By Heart" Formulas</h2>
+            <p class="text-xs text-rose-900 mb-3">
+              These five fundamental equations are <strong>not</strong> printed on the exam formula sheet and must be known by heart:
+            </p>
+            <div class="grid grid-cols-2 gap-2 text-xs bg-white p-3 rounded-lg border border-rose-200 text-center">
+              <div>$$\rho = \frac{m}{V}$$</div>
+              <div>$$n = \frac{m}{M}$$</div>
+              <div>$$c = \frac{n}{V}$$</div>
+              <div>$$p V = n R T$$</div>
+              <div class="col-span-2 border-t border-slate-100 pt-1">$$x_i = \frac{n_i}{n_{\text{tot}}}$$</div>
+            </div>
+          </div>
+          <button
+            onclick="document.getElementById('converter-modal').classList.toggle('hidden')"
+            class="mt-3 w-full py-2 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-amber-400 font-bold text-xs transition flex items-center justify-center gap-2"
+          >
+            ⚡ Open Quick Energy &amp; Wavelength Converter
+          </button>
+        </div>
+      </section>
+
+      <!-- COLLAPSIBLE INTERACTIVE ENERGY CONVERTER -->
+      <section id="converter-modal" class="hidden bg-white rounded-xl border-2 border-indigo-200 p-5 shadow-md space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm">⚡ Interactive Photon &amp; Molar Energy Converter (PC II Standard Constants)</h3>
+            <p class="text-xs text-slate-500">Enter a value in any field to convert across $\lambda\text{ (nm)}$, $E_{\text{Photon}}\text{ (J)}$, $E\text{ (eV)}$, $\Delta E_m\text{ (kJ mol}^{-1}\text{)}$, and $\tilde{\nu}\text{ (cm}^{-1}\text{)}$</p>
+          </div>
+          <button onclick="document.getElementById('converter-modal').classList.add('hidden')" class="text-xs font-bold text-slate-500 hover:text-slate-800">✕ Close</button>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs">
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">Wavelength $\lambda$ (nm):</label>
+            <input id="conv-nm" type="number" step="any" placeholder="e.g. 434" oninput="convertEnergy('nm', this.value)" class="w-full px-2.5 py-1.5 rounded border border-slate-300 font-mono" />
+          </div>
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">$E_{\text{Photon}}$ ($\times 10^{-19}\text{ J}$):</label>
+            <input id="conv-j" type="number" step="any" placeholder="e.g. 4.58" oninput="convertEnergy('j', this.value)" class="w-full px-2.5 py-1.5 rounded border border-slate-300 font-mono" />
+          </div>
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">Energy $E$ (eV):</label>
+            <input id="conv-ev" type="number" step="any" placeholder="e.g. 2.86" oninput="convertEnergy('ev', this.value)" class="w-full px-2.5 py-1.5 rounded border border-slate-300 font-mono" />
+          </div>
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">Molar $\Delta E_m$ ($\text{kJ mol}^{-1}$):</label>
+            <input id="conv-kj" type="number" step="any" placeholder="e.g. 275.6" oninput="convertEnergy('kj', this.value)" class="w-full px-2.5 py-1.5 rounded border border-slate-300 font-mono" />
+          </div>
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">Wavenumber $\tilde{\nu}$ ($\text{cm}^{-1}$):</label>
+            <input id="conv-cm" type="number" step="any" placeholder="e.g. 23041" oninput="convertEnergy('cm', this.value)" class="w-full px-2.5 py-1.5 rounded border border-slate-300 font-mono" />
+          </div>
+        </div>
+      </section>
+
+      <!-- THE 7 DOUBLE UNITS SYLLABUS GRID -->
+      <section class="space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h2 class="text-lg font-extrabold text-slate-900">Syllabus: 7 Double Units (UE 01 &ndash; UE 07)</h2>
+          <span class="text-xs text-slate-500">Aligned with Prof. Kerschbaumer's Lectures L21&ndash;L26, Q02 &amp; T02 (Version 3.0)</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <!-- UE 01 -->
+          <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="px-2.5 py-0.5 rounded text-xs font-extrabold bg-slate-200 text-slate-800">UE 01 &bull; Kick-Off</span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200">⏳ Scheduled after Alignment</span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900">Intro, Orders of Magnitude, Density Units &amp; Light Energy</h3>
+              <p class="text-xs text-indigo-700 font-semibold mt-0.5">Sources: 00_Intro.pdf &bull; Try-Test Targets (5 Grundformeln)</p>
+              <ul class="mt-3 space-y-1 text-xs text-slate-600 list-disc list-inside">
+                <li><strong>Guided (G1/G2):</strong> Density $\rho = m/V$ with $\text{pm}^3 \leftrightarrow \text{cm}^3$ conversion (for UE 06) &amp; direct light path $\lambda \to E_{\text{Ph}} \to \Delta E_m$.</li>
+                <li><strong>Concept (C1/C2):</strong> Orders of magnitude ($\text{fm}$ to $\text{m}$) &amp; dimensional plausibility check.</li>
+                <li><strong>Self-Calc (R1/R2):</strong> Reverse light path ($\Delta E_m \to \lambda$) &amp; unit-cell mass/density practice.</li>
+                <li><strong>Homework (H1/H2):</strong> Wavenumber $\tilde{\nu}$ ($\text{cm}^{-1}$), combustion stoichiometry warmup &amp; C/W traps.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span class="text-slate-400 font-mono">unit01_intro_units_energy.html</span>
+              <span class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-500 font-semibold">Unlocked after Meeting</span>
+            </div>
+          </div>
+
+          <!-- UE 02 -->
+          <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="px-2.5 py-0.5 rounded text-xs font-extrabold bg-slate-200 text-slate-800">UE 02 &bull; Nucleus &amp; Spectra</span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200">⏳ Scheduled after Alignment</span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900">The Nucleus &amp; Atomic Spectra (Bohr / Rydberg)</h3>
+              <p class="text-xs text-indigo-700 font-semibold mt-0.5">Sources: L21_The Nucleus.pdf &bull; L22 (Part 1) &bull; Q02 &bull; T02 Q1&ndash;Q3</p>
+              <ul class="mt-3 space-y-1 text-xs text-slate-600 list-disc list-inside">
+                <li><strong>Guided (G1/G2):</strong> Mass defect &amp; $\alpha$-decay energy $^{210}\text{Po} \to {}^{206}\text{Pb}$ ($\text{eV}$); Balmer line $n=5\to 2$ ($434\text{ nm}$).</li>
+                <li><strong>Concept (C1/C2):</strong> Decay chain with explicit $A$ vs. $Z$ axes + $\beta^-$-equation; Quarks ($uud$ vs. $udd$) &amp; C/W table.</li>
+                <li><strong>Self-Calc (R1/R2):</strong> D&ndash;T fusion energy &amp; radiometric age determination from remaining parent fraction $N(t)/N_0$.</li>
+                <li><strong>Homework (H1/H2):</strong> Ruby laser pulse photons &amp; nucleon sphere reaction sketch (L21 Slide 50).</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span class="text-slate-400 font-mono">unit02_nucleus_spectra.html</span>
+              <span class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-500 font-semibold">Unlocked after Meeting</span>
+            </div>
+          </div>
+
+          <!-- UE 03 (ACTIVE PILOT UNIT) -->
+          <div class="bg-white rounded-xl border-2 border-emerald-500 p-5 shadow-md flex flex-col justify-between relative">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="px-2.5 py-0.5 rounded text-xs font-extrabold bg-emerald-600 text-white">UE 03 &bull; Pilot Unit</span>
+                <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-300">🟢 Pilot Ready for Demo</span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900">The Shell: Wave Mechanics, Box Models &amp; Atomic Orbitals</h3>
+              <p class="text-xs text-indigo-700 font-semibold mt-0.5">Sources: L22_The Shell.pdf (Slides 18&ndash;38) &bull; T02 Q4 &amp; Q5</p>
+              <ul class="mt-3 space-y-1 text-xs text-slate-700 list-disc list-inside">
+                <li><strong>Guided (G1/G2):</strong> 1D Box on 1,3,5-Hexatriene ($6\text{ }\pi\text{-e}^-$) before 2D Box; de Broglie acceleration ($\lambda \propto 1/\sqrt{U}$).</li>
+                <li><strong>Concept (C1/C2):</strong> Square 2D Box $(1,1), (1,2), (2,1)$ degeneracy &amp; $6\text{ e}^-$ filling (T02 Q4); Wave function lookup $\psi_{2,1,-1}$ (Slide 25, T02 Q5).</li>
+                <li><strong>Self-Calc (R1/R2):</strong> $\beta$-Carotene ($22\text{ }\pi\text{-e}^- \to 1239\text{ nm}$ vs. $497\text{ nm}$ model critique); Heisenberg minimum uncertainty $\Delta v_{x,\min}$.</li>
+                <li><strong>Homework (H1/H2):</strong> 3D rectangular box zero-point energy $E_{1,1,1}$ &amp; Original C/W Table from Slide 38.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-emerald-100 flex items-center justify-between text-xs">
+              <span class="text-emerald-800 font-mono font-semibold">unit03_shell_quantum.html</span>
+              <a
+                href="unit03_shell_quantum.html"
+                class="px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold shadow-sm transition"
+              >
+                Open Pilot Unit 03 &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- UE 04 -->
+          <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="px-2.5 py-0.5 rounded text-xs font-extrabold bg-slate-200 text-slate-800">UE 04 &bull; Bonding &amp; Symmetry</span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200">⏳ Scheduled after Alignment</span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900">Covalent Bonding, MO Theory, Complexes &amp; Symmetry</h3>
+              <p class="text-xs text-indigo-700 font-semibold mt-0.5">Sources: L23_Covalent Particles.pdf &bull; L24_Symmetry.pdf &bull; Q02 &bull; T02</p>
+              <ul class="mt-3 space-y-1 text-xs text-slate-600 list-disc list-inside">
+                <li><strong>Guided (G1/G2):</strong> Heteronuclear MO scheme of $\text{HF}$ ($1\sigma^2 2\sigma^2 1\pi^4$) + VSEPR ($\text{SF}_6$); Frost&ndash;Musulin circle on $\text{C}_7\text{H}_7^+$.</li>
+                <li><strong>Concept (C1/C2):</strong> Octahedral High-Spin $d^6$ scheme ($t_{2g}^4 e_g^2$) + $\text{O}_2^{n}$ MO ranking; Symmetry flowchart applied to 2 structures.</li>
+                <li><strong>Self-Calc (R1/R2):</strong> Pauling $\Delta\chi(\text{HCl})$ &amp; dipole moment; Combined complex calculation (LFSE, spin-only $\mu$, color $\Delta_O$).</li>
+                <li><strong>Homework (H1/H2):</strong> Frost&ndash;Musulin for $n=4$ &amp; planar $\text{Pd(II)}$ isomerism; Original C/W tables.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span class="text-slate-400 font-mono">unit04_bonding_symmetry.html</span>
+              <span class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-500 font-semibold">Unlocked after Meeting</span>
+            </div>
+          </div>
+
+          <!-- UE 05 -->
+          <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="px-2.5 py-0.5 rounded text-xs font-extrabold bg-slate-200 text-slate-800">UE 05 &bull; Spectroscopy &amp; NMR</span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200">⏳ Scheduled after Alignment</span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900">Matter and Radiation &ndash; Spectroscopy &amp; NMR</h3>
+              <p class="text-xs text-indigo-700 font-semibold mt-0.5">Sources: L25_Matter and Radiation.pdf &bull; T02 Q20&ndash;Q23 &bull; Final Exam Task 7</p>
+              <ul class="mt-3 space-y-1 text-xs text-slate-600 list-disc list-inside">
+                <li><strong>Guided (G1/G2):</strong> Reading term symbols ($L, S, J$) &amp; selection rules (Yes/No); Harmonic oscillator $^1\text{H}^{35}\text{Cl}$ ($\tilde{\nu}=2990\text{ cm}^{-1}$).</li>
+                <li><strong>Concept (C1/C2):</strong> Normal modes puzzle ($N_{\text{vib}}=6$, T02 Q20); $^1\text{H}$-NMR of ethyl ethanoate incl. integration ($3:2:3$) &amp; C/W table.</li>
+                <li><strong>Self-Calc (R1/R2):</strong> Exam-style Lambert&ndash;Beer ($T \to A = -\log_{10}T \to \varepsilon$); $^1\text{H}$ ($600\text{ MHz}$) &amp; $^{13}\text{C}$ ($12\text{ T}$) Larmor scaling.</li>
+                <li><strong>Homework (H1/H2):</strong> Final Exam Task 7 Integrated Problem (Willow-bark derivative $M=180\text{ g mol}^{-1}$) &amp; $\text{Cl}_2$ photodissociation.</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span class="text-slate-400 font-mono">unit05_spectroscopy_nmr.html</span>
+              <span class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-500 font-semibold">Unlocked after Meeting</span>
+            </div>
+          </div>
+
+          <!-- UE 06 -->
+          <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="px-2.5 py-0.5 rounded text-xs font-extrabold bg-slate-200 text-slate-800">UE 06 &bull; Solid State &amp; Surfaces</span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200">⏳ Scheduled after Alignment</span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900">Solid State Crystallography, XRD &amp; Surfaces</h3>
+              <p class="text-xs text-indigo-700 font-semibold mt-0.5">Sources: L26_Solid State.pdf &bull; T02 Q24&ndash;Q28 &bull; Final Exam Task 6</p>
+              <ul class="mt-3 space-y-1 text-xs text-slate-600 list-disc list-inside">
+                <li><strong>Guided (G1/G2):</strong> Primitive cubic $\alpha$-Polonium density &amp; $\{111\}$ Bragg reflection; Bravais sketch &amp; orthorhombic Aragonite.</li>
+                <li><strong>Concept (C1/C2):</strong> Miller indices $(hkl)$ from intercepts; Semiconductor doping ($\text{P}$ in $\text{Ge}$) &amp; Superconductivity MC + C/W table.</li>
+                <li><strong>Self-Calc (R1/R2):</strong> Exam Task 6A: bcc-Sodium ($r=186\text{ pm}, \rho=0.968\text{ g cm}^{-3} \to N_A$); Cubic $d_{222}$ &amp; Bragg wavelength $\lambda$.</li>
+                <li><strong>Homework (H1/H2):</strong> Globulin protein crystal molar mass ($360.6\text{ kDa}$) &amp; Surfaces / Langmuir (scope per alignment).</li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span class="text-slate-400 font-mono">unit06_solid_state_surfaces.html</span>
+              <span class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-500 font-semibold">Unlocked after Meeting</span>
+            </div>
+          </div>
+
+          <!-- UE 07 (FULL WIDTH CARD) -->
+          <div class="md:col-span-2 bg-slate-900 text-white rounded-xl border border-slate-700 p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
+            <div class="space-y-1 max-w-3xl">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded text-xs font-extrabold bg-amber-500 text-slate-950">UE 07 &bull; Coupled Exam Simulation</span>
+                <span class="text-xs text-slate-300 font-mono">Coupled with 2 Lecture Units of Prof. Kerschbaumer</span>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-white">Joint Try-Test &amp; Final Exam Simulation (135 Min. Full Scope + Debriefing)</h3>
+              <p class="text-xs text-slate-300">
+                Complete realistic exam walkthrough using the official formula sheet, symmetry flowchart, and pocket calculator, followed by an in-depth discussion of grading schemes and typical exam traps.
+              </p>
+            </div>
+            <span class="px-3.5 py-2 rounded-lg bg-slate-800 border border-slate-600 text-amber-300 text-xs font-bold">
+              🎯 Joint Final Session
+            </span>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 mt-12 py-4 text-center text-xs text-slate-500">
+    FH IMC Krems &bull; Bachelor Applied Chemistry &bull; Physical Chemistry II Coaching Hub &bull; Mag. Erich Kerzendorfer
+  </footer>
+
+  <script>
+    const h = 6.626e-34;
+    const c = 2.9979e8;
+    const eV = 1.602e-19;
+    const NA = 6.022e23;
+
+    function convertEnergy(source, rawVal) {
+      const val = parseFloat(rawVal);
+      if (isNaN(val) || val <= 0) {
+        ['nm','j','ev','kj','cm'].forEach((id) => {
+          if (id !== source) document.getElementById(`conv-${id}`).value = '';
+        });
+        return;
+      }
+
+      let E_joule = 0;
+      if (source === 'nm') {
+        E_joule = (h * c) / (val * 1e-9);
+      } else if (source === 'j') {
+        E_joule = val * 1e-19;
+      } else if (source === 'ev') {
+        E_joule = val * eV;
+      } else if (source === 'kj') {
+        E_joule = (val * 1000) / NA;
+      } else if (source === 'cm') {
+        E_joule = h * c * (val * 100);
+      }
+
+      const nm = ((h * c) / E_joule) * 1e9;
+      const j19 = E_joule * 1e19;
+      const evVal = E_joule / eV;
+      const kjVal = (E_joule * NA) / 1000;
+      const cmVal = E_joule / (h * c * 100);
+
+      if (source !== 'nm') document.getElementById('conv-nm').value = nm.toPrecision(4);
+      if (source !== 'j') document.getElementById('conv-j').value = j19.toPrecision(4);
+      if (source !== 'ev') document.getElementById('conv-ev').value = evVal.toPrecision(4);
+      if (source !== 'kj') document.getElementById('conv-kj').value = kjVal.toPrecision(4);
+      if (source !== 'cm') document.getElementById('conv-cm').value = Math.round(cmVal);
+    }
+
+    function toggleLecturerPanel() {
+      const panel = document.getElementById('lecturer-code-panel');
+      const dot = document.getElementById('hub-prof-dot');
+      const isHidden = panel.classList.toggle('hidden');
+      dot.classList.toggle('hidden', isHidden);
+
+      if (!isHidden) {
+        const cfg = window.PC2_CODES || {
+          master_code: 'KERZI-PROF',
+          units: {
+            UE01: { guided: 'G-U1', inclass: 'IN-U1', homework: 'HW-U1' },
+            UE02: { guided: 'G-U2', inclass: 'IN-U2', homework: 'HW-U2' },
+            UE03: { guided: 'G-U3', inclass: 'IN-U3', homework: 'HW-U3' },
+            UE04: { guided: 'G-U4', inclass: 'IN-U4', homework: 'HW-U4' },
+            UE05: { guided: 'G-U5', inclass: 'IN-U5', homework: 'HW-U5' },
+            UE06: { guided: 'G-U6', inclass: 'IN-U6', homework: 'HW-U6' }
+          }
+        };
+        document.getElementById('disp-master-code').textContent = cfg.master_code;
+        const grid = document.getElementById('lecturer-code-grid');
+        grid.innerHTML = Object.entries(cfg.units).map(([uKey, uVal]) => `
+          <div class="bg-white p-2 rounded border border-amber-300">
+            <div class="font-bold text-slate-900 border-b border-slate-100 pb-0.5 mb-1">${uKey}</div>
+            <div class="text-indigo-800">Part 1: <strong>${uVal.guided}</strong></div>
+            <div class="text-emerald-800">Part 2: <strong>${uVal.inclass}</strong></div>
+            <div class="text-violet-800">Part 3: <strong>${uVal.homework}</strong></div>
+          </div>
+        `).join('');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '\\(', right: '\\)', display: false },
+            { left: '$', right: '$', display: false }
+          ],
+          output: 'html',
+          throwOnError: false
+        });
+      }
+    });
+  </script>
+</body>
+</html>
