@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scientific calculator · Physical Chemistry II</title>
+<style>
+:root{color-scheme:light;font:16px/1.45 system-ui,sans-serif;color:#162d3d;background:#eff5f7;--accent:#00665c;--line:#a8bec8}
+*{box-sizing:border-box}body{margin:0}.shell{max-width:37rem;padding:.85rem;margin:auto}p,h1,h2{margin:0 0 .55rem}h1{font-size:1.5rem}h2{font-size:1rem}a{color:#075985;text-underline-offset:.16em}
+.embed .standalone{display:none}body.embed{background:#fff}.embed .shell{padding:.65rem}
+.panel{border:1px solid #c6d5dc;border-radius:.65rem;padding:.75rem;background:#fff}.embed .panel{border:0;padding:0}
+.topline,.toolbar{display:flex;gap:.45rem;flex-wrap:wrap;align-items:center;justify-content:space-between}.toolbar{justify-content:flex-end}
+label,summary{font-weight:650}input,select,button{font:inherit;color:inherit}input,select{border:1px solid var(--line);border-radius:.32rem;background:#fff;padding:.36rem .45rem;min-width:0}
+input{display:block;width:100%;margin:.22rem 0 .4rem;font:1.03rem ui-monospace,monospace;padding:.62rem .52rem}
+button{cursor:pointer;background:#edf4f6;border:1px solid #a9bec8;border-radius:.32rem;padding:.35rem .45rem;font-weight:630;min-height:2.2rem}button:hover:not(:disabled){background:#d5e8ec}button:disabled{cursor:default;opacity:.58}
+:focus-visible{outline:3px solid #bf5800;outline-offset:2px}
+.result{min-height:2.4rem;margin:.35rem 0;overflow-wrap:anywhere;font:700 1.28rem/1.4 ui-monospace,monospace;color:var(--accent)}
+.result[data-error]{color:#a11e32;font:650 .91rem/1.4 system-ui,sans-serif}
+.hint{color:#415a67;font-size:.81rem;margin:.35rem 0}.status{min-height:1.2rem;margin:.25rem 0;color:#075a52;font-size:.8rem}
+.keys{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.28rem;margin:.55rem 0}
+.keys button{padding:.22rem .08rem;min-width:0}.keys .action{background:var(--accent);color:#fff;border-color:var(--accent)}.keys .action:hover{background:#004d45}
+.keys .wide{grid-column:span 2}.keys .fn{background:#e5edf7}.keys .number{background:#fbfdfe}.kbd{font-family:ui-monospace,monospace}
+.constants{display:flex;gap:.35rem;align-items:end}.constants label{display:grid;gap:.2rem;min-width:0;flex:1}.constants select{max-width:100%;width:100%}
+details{margin-top:.65rem;border-top:1px solid #d4e0e4;padding-top:.5rem}summary{cursor:pointer}.mem{margin-top:.42rem;display:grid;gap:.32rem}
+.memrow{display:grid;grid-template-columns:1.5rem minmax(0,1fr) repeat(3,auto);gap:.2rem;align-items:center}.memrow output{font:.78rem ui-monospace,monospace;overflow-wrap:anywhere}.memrow button{font-size:.8rem;padding:.24rem .3rem}
+.source{font-size:.8rem;margin-top:.55rem}.settings{display:flex;flex-wrap:wrap;gap:.42rem;align-items:center;font-size:.86rem}.settings label{white-space:nowrap}
+@media(max-width:340px){.memrow{grid-template-columns:1.35rem minmax(0,1fr) repeat(3,auto)}.hint{font-size:.78rem}}
+</style>
+</head>
+<body>
+<main class="shell">
+<header class="standalone"><p><a href="index.html">← Course Hub</a></p><h1>Scientific calculator</h1><p class="hint">Evaluate your own expression. The calculator does not choose an equation or convert your units.</p></header>
+<section class="panel" aria-label="Calculator">
+<form id="calc">
+<div class="topline">
+<label for="expression">Expression</label>
+<div class="settings">
+<label>Angle <select id="angle" aria-label="Angle unit"><option value="DEG">DEG</option><option value="RAD">RAD</option></select></label>
+<label>Display <select id="format" aria-label="Result format"><option value="auto">Auto</option><option value="sci">SCI</option></select></label>
+</div>
+</div>
+<input id="expression" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="768" placeholder="e.g. 2.5e-12 * 4" aria-describedby="notation">
+<p class="hint" id="notation">Multiply with <b>*</b> or <b>×</b>. Enter <span class="kbd">2.5e-12</span> for 2.5 × 10<sup>−12</sup>. A decimal comma also works.</p>
+<output class="result" id="result" for="expression" aria-live="polite">—</output>
+<div class="toolbar">
+<button type="button" id="copy" disabled>Copy result</button>
+<button type="button" id="ans" title="Insert the last result">Ans</button>
+<button type="button" id="clear" title="Clear expression">AC</button>
+</div>
+<div class="keys" id="keys" aria-label="Calculator keypad">
+<button class="fn" type="button" data-key="sin(" aria-label="Sine">sin</button><button class="fn" type="button" data-key="cos(" aria-label="Cosine">cos</button><button class="fn" type="button" data-key="tan(" aria-label="Tangent">tan</button><button class="fn" type="button" data-key="log(" aria-label="Base ten logarithm">log₁₀</button><button class="fn" type="button" data-key="ln(" aria-label="Natural logarithm">ln</button>
+<button class="fn" type="button" data-key="asin(" aria-label="Inverse sine">sin⁻¹</button><button class="fn" type="button" data-key="acos(" aria-label="Inverse cosine">cos⁻¹</button><button class="fn" type="button" data-key="atan(" aria-label="Inverse tangent">tan⁻¹</button><button class="fn" type="button" data-key="exp(" aria-label="Exponential function">eˣ</button><button class="fn" type="button" data-key="sqrt(" aria-label="Square root">√</button>
+<button type="button" data-key="(">(</button><button type="button" data-key=")">)</button><button type="button" data-key="^" aria-label="Raise to a power">xʸ</button><button type="button" data-key="π" aria-label="Pi">π</button><button type="button" id="backspace" aria-label="Delete previous character">⌫</button>
+<button class="number" type="button" data-key="7">7</button><button class="number" type="button" data-key="8">8</button><button class="number" type="button" data-key="9">9</button><button type="button" data-key="÷" aria-label="Divide">÷</button><button type="button" data-key="e" aria-label="Scientific exponent">EE</button>
+<button class="number" type="button" data-key="4">4</button><button class="number" type="button" data-key="5">5</button><button class="number" type="button" data-key="6">6</button><button type="button" data-key="×" aria-label="Multiply">×</button><button type="button" data-key="^2" aria-label="Square">x²</button>
+<button class="number" type="button" data-key="1">1</button><button class="number" type="button" data-key="2">2</button><button class="number" type="button" data-key="3">3</button><button type="button" data-key="−" aria-label="Subtract or negate">−</button><button type="button" data-key="+" aria-label="Add">+</button>
+<button class="number wide" type="button" data-key="0">0</button><button class="number" type="button" data-key="." aria-label="Decimal point">.</button><button class="action wide" type="submit" aria-label="Calculate">=</button>
+</div>
+</form>
+<div class="constants">
+<label>Physical constants <select id="constant" aria-label="Physical constant"></select></label>
+<button type="button" id="insert">Insert</button>
+</div>
+<p class="hint" id="constant-value"></p>
+<details id="memories" open>
+<summary>Memory · M1–M3</summary>
+<div class="mem" id="mem"></div>
+<p class="hint">Calculate first, then Store. Recall inserts the saved value. Slots are kept in this browser when storage is available.</p>
+</details>
+<p id="status" class="status" role="status"></p>
+<details>
+<summary>Notation and constant reference</summary>
+<p class="hint">Use explicit multiplication, for example <span class="kbd">2*pi</span>. In DEG mode <span class="kbd">sin(30)</span> returns 0.5 and inverse trig returns degrees. RAD uses radians. <span class="kbd">exp(x)</span> means Euler’s number raised to <i>x</i>. EE enters the <span class="kbd">e</span> in scientific notation. The key for elementary charge inserts <span class="kbd">q_e</span>.</p>
+<p class="source">Values follow <a href="https://physics.nist.gov/cuu/pdf/all.pdf" target="_blank" rel="noopener">NIST / CODATA 2022</a>. Use the stated units when combining values. Units are labels only and are not tracked by the calculator.</p>
+</details>
+</section>
+</main>
+<script>
+/* Numerical engine. Only the grammar below is interpreted. */
+const CONSTANTS = [
+ ['c','c · Speed of light','m s⁻¹',299792458],
+ ['h','h · Planck constant','J s',6.62607015e-34],
+ ['q_e','e · Elementary charge','C',1.602176634e-19],
+ ['k_B','kᵦ · Boltzmann constant','J K⁻¹',1.380649e-23],
+ ['R','R · Molar gas constant','J mol⁻¹ K⁻¹',8.31446261815324],
+ ['R_kJ','R · Molar gas constant','kJ mol⁻¹ K⁻¹',8.31446261815324/1000],
+ ['R_LkPa','R · Molar gas constant','L kPa mol⁻¹ K⁻¹',8.31446261815324],
+ ['R_Lbar','R · Molar gas constant','L bar mol⁻¹ K⁻¹',8.31446261815324/100],
+ ['R_Latm','R · Molar gas constant','L atm mol⁻¹ K⁻¹',8.31446261815324/101.325],
+ ['N_A','Nₐ · Avogadro constant','mol⁻¹',6.02214076e23],
+ ['mu_0','μ₀ · Vacuum permeability','N A⁻²',1.25663706127e-6],
+ ['epsilon_0','ε₀ · Vacuum permittivity','F m⁻¹',8.8541878188e-12],
+ ['F','F · Faraday constant','C mol⁻¹',96485.33212331002],
+ ['m_e','mₑ · Electron mass','kg',9.1093837139e-31],
+ ['m_p','mₚ · Proton mass','kg',1.67262192595e-27],
+ ['m_n','mₙ · Neutron mass','kg',1.67492750056e-27]
+];
+const NAMES = new Map(CONSTANTS.map(([id,,,value])=>[id,value]));
+NAMES.set('pi',Math.PI); NAMES.set('e',Math.E);
+function calculate(raw, mode='DEG', ans=null) {
+ const s=raw.replaceAll(',', '.').replaceAll('−','-').replaceAll('×','*').replaceAll('÷','/').replaceAll('π','pi').replaceAll('**','^');
+ if(s.length>768) throw Error('Expression is too long.');
+ const tokens=[]; let i=0;
+ while(i<s.length){
+   const tail=s.slice(i);
+   const t=tail.match(/^\s+|^(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?|^[a-z_][a-z_0-9]*|^[+*/^()-]/i);
+   if(!t) throw Error('Unrecognised character at position '+(i+1)+'.');
+   if(t[0].trim()) tokens.push(t[0]);
+   i+=t[0].length;
+ }
+ let j=0;
+ const take=x=>tokens[j]===x&&(++j,true);
+ const finite=v=>{if(!Number.isFinite(v)) throw Error('Result is outside the real-number range.');return v;};
+ function expr(){let v=product();while(j<tokens.length){if(take('+'))v=finite(v+product());else if(take('-'))v=finite(v-product());else break;}return v;}
+ function product(){let v=unary();while(j<tokens.length){if(take('*'))v=finite(v*unary());else if(take('/')){const divisor=unary();if(divisor===0)throw Error('Cannot divide by zero.');v=finite(v/divisor);}else break;}return v;}
+ function unary(){if(take('+'))return unary();if(take('-'))return -unary();return power();}
+ function power(){const base=atom();return take('^')?finite(base**unary()):base;}
+ function atom(){
+   if(take('(')){const v=expr();if(!take(')'))throw Error('Missing closing parenthesis.');return v;}
+   const t=tokens[j++];
+   if(!t)throw Error('Enter a complete expression.');
+   if(/^[\d.]/.test(t))return finite(Number(t));
+   if(t==='Ans'){if(ans===null)throw Error('No previous result yet.');return ans;}
+   if(NAMES.has(t))return NAMES.get(t);
+   const f=t.toLowerCase();
+   if(['sin','cos','tan','asin','acos','atan','ln','log','log10','exp','sqrt'].includes(f)){
+     if(!take('('))throw Error('Use parentheses around the function argument.');
+     const v=expr();if(!take(')'))throw Error('Missing closing parenthesis.');
+     return fn(f,v);
+   }
+   throw Error('Unexpected token: '+t);
+ }
+ function fn(f,v){
+   if(f==='log'||f==='log10'||f==='ln'){if(v<=0)throw Error('Logarithms require a positive argument.');return f==='ln'?Math.log(v):Math.log10(v);}
+   if(f==='sqrt'){if(v<0)throw Error('Square root requires a non-negative argument.');return Math.sqrt(v);}
+   if(f==='exp')return finite(Math.exp(v));
+   if(f==='asin'||f==='acos'||f==='atan'){
+     if(f!=='atan'&&Math.abs(v)>1)throw Error('This inverse trig function requires an argument between −1 and 1.');
+     return finite(Math[f](v)*(mode==='DEG'?180/Math.PI:1));
+   }
+   const x=mode==='DEG'?((v%360)*Math.PI/180):v;
+   const reduced=mode==='DEG'?v%180:null;
+   if(f==='tan'&&(mode==='DEG'?Math.abs(reduced)===90:Math.abs(Math.cos(x))<Number.EPSILON/2))throw Error('Tangent is undefined at this angle.');
+   return finite(Math[f](x));
+ }
+ const value=expr();if(j<tokens.length)throw Error('Use an operator between terms, or check your parentheses.');
+ return finite(value);
+}
+</script>
+<script>
+'use strict';
+if(new URLSearchParams(location.search).has('embedded')){
+ document.body.classList.add('embed');
+ if(location.origin!=='null')document.addEventListener('keydown',event=>{
+   if(event.key==='Escape')window.parent.postMessage('impc-calculator-hide',location.origin);
+ });
+}
+const get=id=>document.getElementById(id);
+const expression=get('expression'), result=get('result'), status=get('status'), angle=get('angle'), format=get('format');
+const stateKey='IMPC.calculator.v1', memKey='IMPC.calculator.memory.v1';
+function load(key){try{return JSON.parse(localStorage.getItem(key));}catch{return null;}}
+function save(key,data){try{localStorage.setItem(key,JSON.stringify(data));return true;}catch{return false;}}
+const state=load(stateKey)||{};
+const valid=v=>typeof v==='number'&&Number.isFinite(v);
+let last=valid(state.last)?state.last:null;
+let current=valid(state.current)?state.current:null;
+let ansContext=valid(state.ansContext)?state.ansContext:null;
+let lastComputed=typeof state.lastComputed==='string'?state.lastComputed:null;
+let lastAngle=state.lastAngle==='RAD'?'RAD':'DEG';
+function loadMem(){const data=load(memKey);return Array.from({length:3},(_,i)=>valid(data?.[i])?data[i]:null);}
+let memory=loadMem();
+angle.value=state.angle==='RAD'?'RAD':'DEG';
+format.value=state.format==='sci'?'sci':'auto';
+expression.value=typeof state.expression==='string'?state.expression.slice(0,768):'';
+if(expression.value!==lastComputed||angle.value!==lastAngle) current=null;
+function saveState(){save(stateKey,{last,current,angle:angle.value,format:format.value,expression:expression.value,lastComputed,lastAngle,ansContext});}
+function pretty(v,mode=format.value){
+ if(v===null)return '—';
+ if(mode==='sci'||(v!==0&&(Math.abs(v)<1e-5||Math.abs(v)>=1e10))){
+   const [m,e]=v.toExponential(11).split('e');
+   const sup={'-':'⁻','+':'⁺',0:'⁰',1:'¹',2:'²',3:'³',4:'⁴',5:'⁵',6:'⁶',7:'⁷',8:'⁸',9:'⁹'};
+   return String(Number(m))+' × 10'+Array.from(String(Number(e)),c=>sup[c]).join('');
+ }
+ return String(Number(v.toPrecision(12)));
+}
+function report(message){status.textContent=message;}
+function repaint(error=''){
+ result.textContent=error||pretty(current);
+ result.toggleAttribute('data-error',Boolean(error));
+ get('copy').disabled=current===null;
+ get('ans').disabled=last===null;
+ memory.forEach((v,i)=>{
+   get('mem-value-'+i).textContent=v===null?'Empty':pretty(v,'auto');
+   get('mem-store-'+i).disabled=current===null;
+   get('mem-recall-'+i).disabled=v===null;
+   get('mem-clear-'+i).disabled=v===null;
+ });
+}
+function dirty(){current=null;lastComputed=null;repaint();report('');saveState();}
+function insert(text){
+ const start=expression.selectionStart??expression.value.length,end=expression.selectionEnd??start;
+ if(expression.value.length-end+start+text.length>768){report('Expression is too long.');return;}
+ expression.setRangeText(text,start,end,'end');expression.focus();dirty();
+}
+function numberToken(v){return v<0?'('+String(v)+')':String(v);}
+get('calc').addEventListener('submit',event=>{
+ event.preventDefault();report('');
+ if(!expression.value.trim()){current=null;repaint('Enter an expression first.');return;}
+ try{
+   // Re-checking an unchanged expression with Ans uses the same previous answer.
+   const reference=lastComputed===expression.value&&lastAngle===angle.value?ansContext:last;
+   current=calculate(expression.value,angle.value,reference);
+   lastComputed=expression.value;lastAngle=angle.value;ansContext=reference;last=current;
+   repaint();
+ }catch(e){current=null;repaint(e.message);}
+ saveState();
+});
+get('keys').addEventListener('click',event=>{const key=event.target.closest('button[data-key]');if(key)insert(key.dataset.key);});
+expression.addEventListener('input',dirty);
+angle.addEventListener('change',dirty);
+format.addEventListener('change',()=>{repaint();saveState();});
+get('clear').addEventListener('click',()=>{expression.value='';expression.focus();dirty();});
+get('backspace').addEventListener('click',()=>{
+ const a=expression.selectionStart??0,b=expression.selectionEnd??a;
+ expression.setRangeText('',a===b?Math.max(0,a-1):a,b,'end');expression.focus();dirty();
+});
+get('ans').addEventListener('click',()=>{if(last!==null)insert(numberToken(last));});
+get('copy').addEventListener('click',async()=>{
+ if(current===null)return;
+ const val=format.value==='sci'?current.toExponential():String(current);
+ try{await navigator.clipboard.writeText(val);report('Copied: '+val);}
+ catch{report('Copy this value: '+val);}
+});
+const select=get('constant');
+for(const [id,name,unit] of CONSTANTS){
+ const opt=document.createElement('option');opt.value=id;opt.textContent=name+' ['+unit+']';select.append(opt);
+}
+function showConstant(){
+ const [id,,unit,value]=CONSTANTS.find(([key])=>key===select.value);
+ get('constant-value').textContent=id+' = '+pretty(value,'auto')+' '+unit;
+}
+select.addEventListener('change',showConstant);
+get('insert').addEventListener('click',()=>insert(select.value));
+for(let i=0;i<3;i++){
+ const row=document.createElement('div');row.className='memrow';
+ const name='M'+(i+1), label=document.createElement('strong'), val=document.createElement('output');
+ label.textContent=name;val.id='mem-value-'+i;row.append(label,val);
+ for(const [action,caption] of [['store','Store'],['recall','Recall'],['clear','Clear']]){
+   const btn=document.createElement('button');btn.type='button';btn.id='mem-'+action+'-'+i;
+   btn.textContent=caption;btn.setAttribute('aria-label',caption+' '+name);row.append(btn);
+   btn.addEventListener('click',()=>{
+     if(action==='recall'){if(memory[i]!==null){insert(numberToken(memory[i]));report(name+' recalled.');}return;}
+     if(action==='store'&&current===null)return;
+     memory[i]=action==='clear'?null:current;
+     const kept=save(memKey,memory);
+     repaint();report(name+(action==='clear'?' cleared.':' stored.')+(kept?'':' Available in this window only.'));
+   });
+ }
+ get('mem').append(row);
+}
+window.addEventListener('storage',event=>{if(event.key===memKey){memory=loadMem();repaint();}});
+showConstant();repaint();
+</script>
+</body>
+</html>
