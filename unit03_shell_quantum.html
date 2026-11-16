@@ -49,6 +49,7 @@
     :focus-visible{outline:3px solid #0284c7;outline-offset:2px}
     .feedback{margin:.45rem 0 0;font-size:.92rem}.feedback:empty{display:none}
     .feedback[data-kind=pass]{color:#065f46}.feedback[data-kind=retry]{color:#9f1239}
+    .theory-link a:first-child{font-weight:650}
     .lock-note{color:#475569;font-size:.9rem}.format{font-size:.88rem;color:#475569}
     .tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:.75rem}
     fieldset{margin:0;min-width:0;border:1px solid #cbd5e1;border-radius:.5rem;padding:.5rem}
@@ -93,11 +94,10 @@
 <p>Guided</p>
 <h2>G1 · Hexatriene in a 1D box</h2></header>
 <div class="body">
-<details class="lookup">
-<summary>Lecture script lookup · <a href="#source-l22">L22</a> slide 20 · One-dimensional box</summary>
-<div>
-<p>Slide 20 applies the standing-wave condition $L=n\lambda_{\mathrm{dB}}/2$ to a confined electron. This gives $E_n=n^2h^2/(8m_eL^2)$ with $n=1,2,\ldots$. The box length $L$ and the electron’s de Broglie wavelength are distinct from the wavelength of an absorbed photon.</p></div>
-</details>
+<div class="note theory-link">
+<p><a href="unit03_theory.html#box-1d">Theory · Particle in a 1D box</a></p>
+<p>Before calculating, distinguish the electron’s standing wave from the light it absorbs. <a href="#source-l22">L22</a>, slides 19–20.</p>
+</div>
 <p>Model 1,3,5-hexatriene as six π electrons in a 1D box of <strong>assumed effective length</strong> $L=0.730\,\mathrm{nm}$. Find the HOMO and LUMO, their energy difference, and the absorption wavelength. For comparison, <a href="https://openstax.org/books/organic-chemistry/pages/14-8-interpreting-ultraviolet-spectra-the-effect-of-conjugation">OpenStax lists an absorption maximum of 258 nm</a>.</p>
 <details class="guided">
 <summary>Step a · Fill the levels</summary>
@@ -126,11 +126,10 @@
 <p>Practice</p>
 <h2>R1 · From β-carotene occupancy to wavelength</h2></header>
 <div class="body">
-<details class="lookup">
-<summary>Lecture script lookup · <a href="#source-l22">L22</a> slide 20 · PDF p. 83, Exercise 6</summary>
-<div>
-<p>Slide 20 defines the spectrum of a 1D box. Find the dependence of $E_n$ on the quantum number and on the effective length. Exercise 6 applies the model to β-carotene and invites a comparison with experiment. Use the same route as in G1, starting with level occupancy.</p></div>
-</details>
+<div class="note theory-link">
+<p><a href="unit03_theory.html#box-1d">Theory · Particle in a 1D box</a></p>
+<p>Use the calculation route to find the level indices, the energy gap and the photon wavelength. <a href="#source-l22">L22</a>, slide 20 and PDF p. 83, Exercise 6.</p>
+</div>
 <p>Treat the 22 delocalised π electrons of β-carotene as independent electrons in a one-dimensional box with effective length $L=2.94\,\mathrm{nm}$. The reference absorption wavelength in L22 is $497\,\mathrm{nm}$. Write down your reasoning before each check.</p>
 <form id="step-r1a" class="step" data-step="r1a">
 <div class="prompt">(a) Find the quantum numbers of the highest occupied and lowest unoccupied levels.</div>

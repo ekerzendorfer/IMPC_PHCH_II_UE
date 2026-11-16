@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Particle in a 1D box · Unit 03 theory · Physical Chemistry II</title>
+<style>
+  :root{color-scheme:light;--ink:#172b3a;--muted:#425968;--paper:#f4f8fa;--white:#fff;--line:#c9d8df;--navy:#10283a;--teal:#006460;--teal-wash:#e6f5f1;--amber:#904100;--serif:Georgia,serif;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper);line-height:1.55}
+  *{box-sizing:border-box}body{margin:0}.wrap{width:min(100% - 2rem,66rem);margin-inline:auto}
+  a{color:#075985;text-underline-offset:.15em}a:hover{text-decoration-thickness:2px}:focus-visible{outline:3px solid #a64e00;outline-offset:4px}
+  .hero{padding:1.4rem 0 2.2rem;background:var(--navy);color:#fff}.hero a{color:#beeae6}
+  .eyebrow,.tag{font-size:.8rem;font-weight:720;letter-spacing:.11em;text-transform:uppercase}
+  .hero .eyebrow{color:#a8dcd6;margin:1.45rem 0 .45rem}
+  h1,h2,h3,p{margin-block:0 .65rem}h1{font:600 clamp(2.15rem,6vw,3.9rem)/1.04 var(--serif);margin-bottom:.8rem}
+  h2{font:650 clamp(1.55rem,3.5vw,2.2rem)/1.16 var(--serif)}h3{font-size:1.04rem;line-height:1.35}
+  p:last-child{margin-bottom:0}.hero p:last-child{color:#d5e7ee;max-width:65ch}
+  .nav,.links{display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;align-items:center}.nav{padding:.85rem 0;border-bottom:1px solid var(--line)}
+  .nav a,.links a{padding:.35rem 0;font-size:.93rem;font-weight:650}.back{font-size:.91rem}
+  main{padding-block:1.25rem 2rem}section{scroll-margin-block-start:1rem}
+  .panel{padding:clamp(1rem,3vw,1.65rem);margin-bottom:1.15rem;background:var(--white);border:1px solid var(--line);border-radius:.85rem}
+  .tag{color:var(--teal);margin-bottom:.4rem}.lead{max-width:75ch;font-size:1.02rem}
+  .figures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin:1.05rem 0}
+  figure{margin:0;padding:.9rem;background:var(--paper);border-radius:.55rem}
+  figure h3{margin-bottom:.35rem}figcaption{font-size:.89rem;color:var(--muted)}
+  svg{display:block;width:100%;height:auto;max-width:25rem;margin:.1rem auto .55rem;overflow:visible}
+  svg text{font:15px system-ui,sans-serif;fill:var(--ink)}svg .wave{fill:none;stroke:var(--teal);stroke-width:2.5}
+  svg .axis{stroke:#748d9b;stroke-width:1.2;fill:none}svg .wall{stroke:#274657;stroke-width:1.5;fill:none}
+  svg .level{stroke:#144762;stroke-width:2.4}svg .photon{stroke:var(--amber);fill:none;stroke-width:2.4}
+  svg .photon-label{fill:var(--amber);font-weight:700}.note{padding:.75rem .9rem;background:var(--teal-wash);border-inline-start:4px solid var(--teal);border-radius:.2rem .45rem .45rem .2rem}
+  .method{margin:.6rem 0 .2rem;padding-left:1.55rem}.method li{padding-left:.3rem;margin:.65rem 0}.method li::marker{font-weight:750;color:var(--teal)}
+  .eq{display:block;width:fit-content;max-width:100%;overflow:auto;background:var(--paper);padding:.45rem .65rem;border-radius:.35rem;margin:.42rem 0;font-size:1.08rem}
+  math{font-family:"Cambria Math","STIX Two Math","Latin Modern Math",serif}
+  details{border:1px solid var(--line);border-radius:.55rem;margin:.7rem 0 0;overflow:hidden}summary{cursor:pointer;font-weight:700;padding:.65rem .85rem;background:var(--paper)}details>div{padding:.85rem}
+  footer{padding:0 0 2rem;color:var(--muted);font-size:.92rem}.refs{font-size:.89rem;color:var(--muted)}
+  @media(max-width:44rem){.figures{grid-template-columns:1fr}}
+  @media print{body,.hero,.panel{background:white;color:#000}.hero p:last-child,.hero .eyebrow{color:#000}.panel{border:none;padding:.35rem 0}.hero{padding:.4rem 0}.nav,.back{display:none}.figures{grid-template-columns:repeat(2,minmax(0,1fr))}.figures,details{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <a class="back" href="unit03_shell_quantum.html">← Unit 03 exercises</a>
+    <p class="eyebrow">Physical Chemistry II · Unit 03 theory pilot</p>
+    <h1>Particle in a 1D box</h1>
+    <p>How confinement gives electrons discrete energies, and how a jump between those energies sets the wavelength of absorbed light.</p>
+  </div>
+</header>
+<nav class="wrap nav" aria-label="On this page">
+  <a href="#box-1d">The model</a>
+  <a href="#calculation">Calculation route</a>
+  <a href="#deeper">Why it works</a>
+  <a href="#sources">Lecture references</a>
+</nav>
+<main class="wrap">
+  <section class="panel" id="box-1d" aria-labelledby="model-title">
+    <p class="tag">Core idea · For G1 and R1</p>
+    <h2 id="model-title">Two wavelengths, two jobs</h2>
+    <p class="lead">Picture an electron confined to a segment of length <i>L</i>. In the ideal model, the potential is zero inside and the walls are impenetrable. The electron’s wave function must vanish at both ends. Only standing waves with a whole number of half-wavelengths fit, so the allowed energies are discrete.</p>
+    <div class="figures">
+      <figure>
+        <h3>Electron wave inside the box</h3>
+        <svg viewBox="0 0 350 221" role="img" aria-labelledby="waves-title waves-desc">
+          <title id="waves-title">First three standing-wave shapes inside an infinite well</title>
+          <desc id="waves-desc">Between walls at zero and L, the first state fits one half-wave, the second two, and the third three. These are vertically offset wave functions, not an energy scale.</desc>
+          <path class="wall" d="M58 13V173 M298 13V173"/>
+          <path class="axis" stroke-dasharray="4 4" d="M58 35H298 M58 93H298 M58 151H298"/>
+          <path class="wave" d="M58 35 L60.50 33.43 L63.00 31.88 L65.50 30.36 L68.00 28.88 L70.50 27.46 L73.00 26.11 L75.50 24.85 L78.00 23.69 L80.50 22.63 L83.00 21.70 L85.50 20.89 L88.00 20.22 L90.50 19.69 L93.00 19.31 L95.50 19.08 L98.00 19.00 L100.50 19.08 L103.00 19.31 L105.50 19.69 L108.00 20.22 L110.50 20.89 L113.00 21.70 L115.50 22.63 L118.00 23.69 L120.50 24.85 L123.00 26.11 L125.50 27.46 L128.00 28.88 L130.50 30.36 L133.00 31.88 L135.50 33.43 L138.00 35.00 L140.50 36.57 L143.00 38.12 L145.50 39.64 L148.00 41.12 L150.50 42.54 L153.00 43.89 L155.50 45.15 L158.00 46.31 L160.50 47.37 L163.00 48.30 L165.50 49.11 L168.00 49.78 L170.50 50.31 L173.00 50.69 L175.50 50.92 L178.00 51.00 L180.50 50.92 L183.00 50.69 L185.50 50.31 L188.00 49.78 L190.50 49.11 L193.00 48.30 L195.50 47.37 L198.00 46.31 L200.50 45.15 L203.00 43.89 L205.50 42.54 L208.00 41.12 L210.50 39.64 L213.00 38.12 L215.50 36.57 L218.00 35.00 L220.50 33.43 L223.00 31.88 L225.50 30.36 L228.00 28.88 L230.50 27.46 L233.00 26.11 L235.50 24.85 L238.00 23.69 L240.50 22.63 L243.00 21.70 L245.50 20.89 L248.00 20.22 L250.50 19.69 L253.00 19.31 L255.50 19.08 L258.00 19.00 L260.50 19.08 L263.00 19.31 L265.50 19.69 L268.00 20.22 L270.50 20.89 L273.00 21.70 L275.50 22.63 L278.00 23.69 L280.50 24.85 L283.00 26.11 L285.50 27.46 L288.00 28.88 L290.50 30.36 L293.00 31.88 L295.50 33.43 L298.00 35.00 M58 93 L60.50 91.95 L63.00 90.91 L65.50 89.88 L68.00 88.86 L70.50 87.86 L73.00 86.88 L75.50 85.92 L78.00 85.00 L80.50 84.11 L83.00 83.26 L85.50 82.45 L88.00 81.69 L90.50 80.97 L93.00 80.31 L95.50 79.70 L98.00 79.14 L100.50 78.65 L103.00 78.22 L105.50 77.85 L108.00 77.55 L110.50 77.31 L113.00 77.14 L115.50 77.03 L118.00 77.00 L120.50 77.03 L123.00 77.14 L125.50 77.31 L128.00 77.55 L130.50 77.85 L133.00 78.22 L135.50 78.65 L138.00 79.14 L140.50 79.70 L143.00 80.31 L145.50 80.97 L148.00 81.69 L150.50 82.45 L153.00 83.26 L155.50 84.11 L158.00 85.00 L160.50 85.92 L163.00 86.88 L165.50 87.86 L168.00 88.86 L170.50 89.88 L173.00 90.91 L175.50 91.95 L178.00 93.00 L180.50 94.05 L183.00 95.09 L185.50 96.12 L188.00 97.14 L190.50 98.14 L193.00 99.12 L195.50 100.08 L198.00 101.00 L200.50 101.89 L203.00 102.74 L205.50 103.55 L208.00 104.31 L210.50 105.03 L213.00 105.69 L215.50 106.30 L218.00 106.86 L220.50 107.35 L223.00 107.78 L225.50 108.15 L228.00 108.45 L230.50 108.69 L233.00 108.86 L235.50 108.97 L238.00 109.00 L240.50 108.97 L243.00 108.86 L245.50 108.69 L248.00 108.45 L250.50 108.15 L253.00 107.78 L255.50 107.35 L258.00 106.86 L260.50 106.30 L263.00 105.69 L265.50 105.03 L268.00 104.31 L270.50 103.55 L273.00 102.74 L275.50 101.89 L278.00 101.00 L280.50 100.08 L283.00 99.12 L285.50 98.14 L288.00 97.14 L290.50 96.12 L293.00 95.09 L295.50 94.05 L298.00 93.00 M58 151 L60.50 150.48 L63.00 149.95 L65.50 149.43 L68.00 148.91 L70.50 148.39 L73.00 147.88 L75.50 147.37 L78.00 146.86 L80.50 146.36 L83.00 145.86 L85.50 145.36 L88.00 144.88 L90.50 144.40 L93.00 143.92 L95.50 143.46 L98.00 143.00 L100.50 142.55 L103.00 142.11 L105.50 141.68 L108.00 141.26 L110.50 140.85 L113.00 140.45 L115.50 140.06 L118.00 139.69 L120.50 139.32 L123.00 138.97 L125.50 138.63 L128.00 138.31 L130.50 137.99 L133.00 137.70 L135.50 137.41 L138.00 137.14 L140.50 136.89 L143.00 136.65 L145.50 136.43 L148.00 136.22 L150.50 136.03 L153.00 135.85 L155.50 135.69 L158.00 135.55 L160.50 135.42 L163.00 135.31 L165.50 135.21 L168.00 135.14 L170.50 135.08 L173.00 135.03 L175.50 135.01 L178.00 135.00 L180.50 135.01 L183.00 135.03 L185.50 135.08 L188.00 135.14 L190.50 135.21 L193.00 135.31 L195.50 135.42 L198.00 135.55 L200.50 135.69 L203.00 135.85 L205.50 136.03 L208.00 136.22 L210.50 136.43 L213.00 136.65 L215.50 136.89 L218.00 137.14 L220.50 137.41 L223.00 137.70 L225.50 137.99 L228.00 138.31 L230.50 138.63 L233.00 138.97 L235.50 139.32 L238.00 139.69 L240.50 140.06 L243.00 140.45 L245.50 140.85 L248.00 141.26 L250.50 141.68 L253.00 142.11 L255.50 142.55 L258.00 143.00 L260.50 143.46 L263.00 143.92 L265.50 144.40 L268.00 144.88 L270.50 145.36 L273.00 145.86 L275.50 146.36 L278.00 146.86 L280.50 147.37 L283.00 147.88 L285.50 148.39 L288.00 148.91 L290.50 149.43 L293.00 149.95 L295.50 150.48 L298.00 151.00"/>
+          <text x="12" y="40">n = 3</text><text x="12" y="98">n = 2</text><text x="12" y="156">n = 1</text>
+          <text x="58" y="191" text-anchor="middle">0</text><text x="298" y="191" text-anchor="middle" font-style="italic">L</text>
+          <path class="axis" d="M63 202H293 M63 202l7 -4 M63 202l7 4 M293 202l-7 -4 M293 202l-7 4"/>
+          <text x="178" y="216" text-anchor="middle">position along the box</text>
+        </svg>
+        <figcaption><i>n</i> half-waves fit inside <i>L</i>, so the electron’s de Broglie wavelength is <i>λ</i><sub>dB</sub> = 2<i>L</i>/<i>n</i>. The curves show <i>ψ</i>, not trajectories or probability densities. They are vertically offset.</figcaption>
+      </figure>
+      <figure>
+        <h3>Photon absorbed in a transition</h3>
+        <svg viewBox="0 0 350 221" role="img" aria-labelledby="gap-title gap-desc">
+          <title id="gap-title">Energy levels and one illustrative absorption transition</title>
+          <desc id="gap-desc">Levels one, two and three are at one, four and nine times the ground-state energy. An upward arrow from level one to level two shows that the photon must supply just that energy gap.</desc>
+          <path class="axis" d="M26 174V22 m-4 7 4 -7 4 7"/>
+          <path class="level" d="M63 39H200 M63 114H200 M63 159H200"/>
+          <text x="215" y="44">E₃ = 9E₁</text><text x="215" y="119">E₂ = 4E₁</text><text x="215" y="164">E₁</text>
+          <path class="photon" d="M131 155V118 m-5 8 5-8 5 8"/>
+          <text class="photon-label" x="148" y="143">ΔE</text>
+          <text x="26" y="199">Energy increases upward</text>
+          <text x="26" y="216">Illustrative transition</text>
+        </svg>
+        <figcaption>The photon wavelength comes from the <em>energy difference</em> between the initial and final states. It is not constrained by the box walls.</figcaption>
+      </figure>
+    </div>
+    <p class="note"><strong>Keep the two separate.</strong> The standing electron wave tells you which energy levels exist. The photon wavelength tells you how much energy the light supplies.</p>
+  </section>
+
+  <section class="panel" id="calculation" aria-labelledby="calc-title">
+    <p class="tag">Use it on paper</p>
+    <h2 id="calc-title">From level filling to a wavelength</h2>
+    <ol class="method">
+      <li><strong>Fill the levels.</strong> In the independent-electron model, start at <i>n</i> = 1 and place at most two electrons, with opposite spins, in each spatial level. For these closed-shell examples, the HOMO is the highest occupied molecular orbital and the LUMO is the lowest unoccupied one. The box levels stand in for those orbitals.</li>
+      <li><strong>Find the gap.</strong> Get the two energies from the box formula, using <i>L</i> in metres, then subtract the lower energy from the higher one. Subtract the squared indices, rather than squaring their difference.
+        <div class="eq">
+          <math display="block"><mrow><msub><mi>E</mi><mi>n</mi></msub><mo>=</mo><mfrac><mrow><msup><mi>n</mi><mn>2</mn></msup><msup><mi>h</mi><mn>2</mn></msup></mrow><mrow><mn>8</mn><msub><mi>m</mi><mi mathvariant="normal">e</mi></msub><msup><mi>L</mi><mn>2</mn></msup></mrow></mfrac></mrow></math></div><div class="eq"><math display="block"><mrow><mi>Δ</mi><mi>E</mi><mo>=</mo><msub><mi>E</mi><mtext>LUMO</mtext></msub><mo>−</mo><msub><mi>E</mi><mtext>HOMO</mtext></msub></mrow></math>
+        </div>
+        Here <i>n</i> is the level index, <i>h</i> is the Planck constant, and <i>m</i><sub>e</sub> is the electron mass. With SI inputs the gap is in joules per transition, not joules per mole.
+      </li>
+      <li><strong>Get the photon wavelength.</strong> Set the photon energy equal to the model gap. With the speed of light <i>c</i> in m/s and the gap in joules, the wavelength is in metres. Multiply by 10<sup>9</sup> to convert it to nanometres.
+        <div class="eq">
+          <math display="block"><mrow><msub><mi>λ</mi><mtext>photon</mtext></msub><mo>=</mo><mfrac><mrow><mi>h</mi><mi>c</mi></mrow><mrow><mi>Δ</mi><mi>E</mi></mrow></mfrac></mrow></math>
+        </div>
+        A smaller gap means a longer wavelength. Round only after the final conversion.
+      </li>
+    </ol>
+    <div class="links" aria-label="Related exercises">
+      <a href="unit03_shell_quantum.html#g1">← G1 · Guided calculation</a>
+      <a href="unit03_shell_quantum.html#r1">← R1 · Independent calculation</a>
+    </div>
+  </section>
+
+  <section class="panel" id="deeper" aria-labelledby="deeper-title">
+    <p class="tag">Optional depth</p>
+    <h2 id="deeper-title">Why it works</h2>
+    <details>
+      <summary>Where does the factor of 8 come from?</summary>
+      <div>
+        <p>The boundary conditions give <i>L</i> = <i>nλ</i><sub>dB</sub>/2. With the de Broglie relation, the momentum magnitude for either travelling-wave component is |<i>p</i>| = <i>h</i>/<i>λ</i><sub>dB</sub> = <i>nh</i>/(2<i>L</i>). The two components have opposite momenta, but the same kinetic energy <i>p</i><sup>2</sup>/(2<i>m</i><sub>e</sub>). Squaring the 2 from the box condition and multiplying by the 2 in the kinetic-energy denominator gives 8.</p>
+        <p>Setting <i>n</i> = 0 gives the identically zero sine wave, not a physical state. Negative <i>n</i> merely changes the overall sign of the wave function. The first distinct state is therefore <i>n</i> = 1.</p>
+      </div>
+    </details>
+    <details>
+      <summary>Where can the model mislead us?</summary>
+      <div>
+        <p>In a conjugated chain, the π electrons are delocalised. The box replaces that molecular environment with a flat potential and uses an assumed effective length. It leaves out details such as bond-length alternation and electron–electron interactions. At fixed level indices, the gap scales as 1/<i>L</i><sup>2</sup>, so even a modest change in the assumed length affects the wavelength.</p>
+        <p>Use the model to reason about confinement and trends, not as an exact description of an absorption spectrum. In R1, compare your predicted wavelength with the reference value and ask whether they fall in the same spectral region.</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="panel" id="sources" aria-labelledby="source-title">
+    <h2 id="source-title">Lecture references</h2>
+    <p class="refs"><cite>L22 · The Shell</cite>, Manfred Kerschbaumer, Physical Chemistry II. Slide 19 gives the boundary conditions and slide 20 gives the single-electron energy levels. The appended exercise 6 on PDF page 83 applies the 1D model to β-carotene. Both diagrams are explanatory sketches, not reproductions of the slides.</p>
+  </section>
+</main>
+<footer class="wrap"><a href="unit03_shell_quantum.html">← Back to Unit 03</a></footer>
+</body>
+</html>
