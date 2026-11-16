@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Particle in a box · Unit 03 theory · Physical Chemistry II</title>
+<title>Unit 03 theory · Box models and hydrogen orbitals · Physical Chemistry II</title>
 <style>
   :root{color-scheme:light;--ink:#172b3a;--muted:#425968;--paper:#f4f8fa;--white:#fff;--line:#c9d8df;--navy:#10283a;--teal:#006460;--teal-wash:#e6f5f1;--amber:#904100;--serif:Georgia,serif;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper);line-height:1.55}
   *{box-sizing:border-box}body{margin:0}.wrap{width:min(100% - 2rem,66rem);margin-inline:auto}
@@ -32,6 +32,7 @@
   math{font-family:"Cambria Math","STIX Two Math","Latin Modern Math",serif}
   details{border:1px solid var(--line);border-radius:.55rem;margin:.7rem 0 0;overflow:hidden}summary{cursor:pointer;font-weight:700;padding:.65rem .85rem;background:var(--paper)}details>div{padding:.85rem}
   footer{padding:0 0 2rem;color:var(--muted);font-size:.92rem}.refs{font-size:.89rem;color:var(--muted)}
+  .wf-keys{padding:.9rem;background:var(--paper);border-radius:.55rem}.wf-keys dl{margin:.45rem 0 0}.wf-keys dt{font-weight:700;color:var(--navy)}.wf-keys dd{margin:0 0 .55rem}.wf-keys dd:last-child{margin-bottom:0}
   @media(max-width:44rem){.figures{grid-template-columns:1fr}}
   @media print{body,.hero,.panel{background:white;color:#000}.hero p:last-child,.hero .eyebrow{color:#000}.panel{border:none;padding:.35rem 0}.hero{padding:.4rem 0}.nav,.back{display:none}.figures{grid-template-columns:repeat(2,minmax(0,1fr))}.figures,details{break-inside:avoid}}
 </style>
@@ -42,8 +43,8 @@
     <a class="back" href="unit03_shell_quantum.html">← Unit 03 exercises</a>
     <a class="back" style="margin-inline-start:1rem" data-calculator-launch href="calculator.html">Scientific calculator ↗</a>
     <p class="eyebrow">Physical Chemistry II · Unit 03 theory pilot</p>
-    <h1>Particle in a box</h1>
-    <p>How confinement selects discrete energies, how an energy gap sets an absorption wavelength, and what changes when an electron is confined in two directions.</p>
+    <h1>Box models and hydrogen orbitals</h1>
+    <p>From standing waves in a box to the radial and angular parts of a hydrogen orbital. Use the section that matches the exercise you are working on.</p>
   </div>
 </header>
 <nav class="wrap nav" aria-label="On this page">
@@ -51,6 +52,7 @@
   <a href="#calculation">1D calculation</a>
   <a href="#deeper">1D derivation</a>
   <a href="#box-2d">2D box</a>
+  <a href="#wave-function">Hydrogen wave functions</a>
   <a href="#sources">Lecture references</a>
 </nav>
 <main class="wrap">
@@ -202,9 +204,83 @@
     </div>
   </section>
 
+  <section class="panel" id="wave-function" aria-labelledby="wave-function-title">
+    <p class="tag">Core idea · For C2</p>
+    <h2 id="wave-function-title">Hydrogen wave functions</h2>
+    <p class="lead">For hydrogen, it is useful to describe the electron’s position by its distance from the nucleus and its direction. The orbital wave function separates into two factors. <strong>The radial factor depends only on distance. The angular factor depends only on direction.</strong></p>
+    <div class="eq">
+      <math display="block"><mrow>
+        <msub><mi>ψ</mi><mrow><mi>n</mi><mo>,</mo><mi>ℓ</mi><mo>,</mo><mi>m</mi></mrow></msub>
+        <mo>(</mo><mi>r</mi><mo>,</mo><mi>θ</mi><mo>,</mo><mi>φ</mi><mo>)</mo>
+        <mo>=</mo><msub><mi>R</mi><mrow><mi>n</mi><mo>,</mo><mi>ℓ</mi></mrow></msub><mo>(</mo><mi>r</mi><mo>)</mo>
+        <mo>·</mo><msub><mi>Y</mi><mrow><mi>ℓ</mi><mo>,</mo><mi>m</mi></mrow></msub><mo>(</mo><mi>θ</mi><mo>,</mo><mi>φ</mi><mo>)</mo>
+      </mrow></math>
+    </div>
+    <div class="figures">
+      <figure>
+        <h3>Distance and direction</h3>
+        <svg viewBox="0 0 350 204" role="img" aria-labelledby="wf-coord-title wf-coord-desc">
+          <title id="wf-coord-title">Spherical coordinates centred on the nucleus</title>
+          <desc id="wf-coord-desc">The vector from the origin to the point has length r. Theta is the angle from the positive z axis to the vector. Phi is the angle in the xy plane from the positive x axis to the projection of the vector.</desc>
+          <defs><marker id="wf-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#748d9b"/></marker></defs>
+          <path class="axis" marker-end="url(#wf-arrow)" d="M110 132L74 184"/>
+          <path class="axis" marker-end="url(#wf-arrow)" d="M110 132H300"/>
+          <path class="axis" marker-end="url(#wf-arrow)" d="M110 132V15"/>
+          <path class="axis" stroke-dasharray="4 4" d="M110 132L220 158L220 51"/>
+          <path class="wave" d="M110 132L220 51"/>
+          <path class="photon" d="M110 89A43 43 0 0 1 144.65 106.49 M96.35 151.72Q115 166 138.23 138.67"/>
+          <circle cx="110" cy="132" r="3" fill="#172b3a"/><circle cx="220" cy="51" r="4" fill="#006460"/>
+          <text x="99" y="18">z</text><text x="311" y="137">y</text><text x="61" y="195">x</text>
+          <text x="227" y="48">point</text><text x="171" y="81" font-style="italic">r</text>
+          <text x="128" y="86">θ</text><text x="120" y="165">φ</text><text x="228" y="162">projection</text>
+        </svg>
+        <figcaption><i>r</i> is the distance from the nucleus. <i>θ</i> is measured from the positive <i>z</i>-axis. <i>φ</i> is measured in the <i>xy</i>-plane from the positive <i>x</i>-axis. The drawing is a schematic projection, not an electron path.</figcaption>
+      </figure>
+      <div class="wf-keys">
+        <h3>Which indices go in which table?</h3>
+        <dl>
+          <dt><i>n</i> · Principal quantum number</dt><dd>The number in the label, starting at 1. It is used for the radial factor.</dd>
+          <dt><i>ℓ</i> · Orbital angular momentum</dt><dd>The letter gives the index: <i>s</i> = 0, <i>p</i> = 1, <i>d</i> = 2, <i>f</i> = 3. Use <i>ℓ</i> in both tables. It can range from 0 to <i>n</i> − 1.</dd>
+          <dt><i>m</i> · Magnetic quantum number</dt><dd>Also written <i>m</i><sub>ℓ</sub>. Use the given integer, including its sign, in the angular table. The allowed values run from −<i>ℓ</i> to +<i>ℓ</i>.</dd>
+        </dl>
+      </div>
+    </div>
+    <h3>The table-lookup route</h3>
+    <ol class="method">
+      <li><strong>Read the label.</strong> Write down <i>n</i>, <i>ℓ</i>, and <i>m</i> before looking for either factor.</li>
+      <li><strong>Pick two rows.</strong> Match (<i>n</i>, <i>ℓ</i>) in the radial table and (<i>ℓ</i>, <i>m</i>) in the angular table. Changing <i>m</i> does not change the radial row. If a row uses paired signs, choose the signs together as printed in that table.</li>
+      <li><strong>Multiply, then simplify.</strong> Use the definition of the scaled distance <i>ρ</i> that accompanies the table. Keep any angular factors, signs and phase factors. At this point you are constructing <i>ψ</i>, not squaring it.</li>
+    </ol>
+    <details>
+      <summary>Worked example · Assemble a 2s orbital</summary>
+      <div>
+        <p>For <i>2s</i>, <i>n</i> = 2 and <i>ℓ</i> = 0, so <i>m</i> can only be 0. The radial table gives <i>R</i><sub>2,0</sub> = <i>a</i><sub>0</sub><sup>−3/2</sup>(2 − <i>ρ</i>)e<sup>−<i>ρ</i>/2</sup>/√8. The angular table gives <i>Y</i><sub>0,0</sub> = 1/√(4π). For hydrogen in the fixed-nucleus approximation, <i>ρ</i> = 2<i>r</i>/(<i>n a</i><sub>0</sub>), where <i>a</i><sub>0</sub> is the Bohr radius. For this state, <i>ρ</i> = <i>r</i>/<i>a</i><sub>0</sub>.</p>
+        <div class="eq">
+          <math display="block"><mrow>
+            <msub><mi>ψ</mi><mrow><mn>2</mn><mo>,</mo><mn>0</mn><mo>,</mo><mn>0</mn></mrow></msub><mo>=</mo>
+            <mfrac><mn>1</mn><mrow><mn>4</mn><msqrt><mrow><mn>2</mn><mi>π</mi></mrow></msqrt><msubsup><mi>a</mi><mn>0</mn><mrow><mn>3</mn><mo>/</mo><mn>2</mn></mrow></msubsup></mrow></mfrac>
+            <mo>(</mo><mn>2</mn><mo>−</mo><mi>ρ</mi><mo>)</mo><msup><mi mathvariant="normal">e</mi><mrow><mo>−</mo><mi>ρ</mi><mo>/</mo><mn>2</mn></mrow></msup>
+          </mrow></math>
+        </div>
+        <p><strong>Read the result.</strong> There are no angles in the expression, so the orbital is spherically symmetric. It vanishes on the sphere <i>ρ</i> = 2, a radial node. That does not mean the wave function is zero at every radius.</p>
+      </div>
+    </details>
+    <details>
+      <summary>What does the wave function tell us?</summary>
+      <div>
+        <p><i>ψ</i> is a probability amplitude. It can have a sign or be complex. The probability density is |<i>ψ</i>|<sup>2</sup>, always real and non-negative. The probability in a small volume is approximately this density times the volume. The probability in a thin spherical shell instead includes the radial volume factor <i>r</i><sup>2</sup>. For a normalised angular factor, its radial density is <i>r</i><sup>2</sup>|<i>R</i>(<i>r</i>)|<sup>2</sup>.</p>
+        <p>A factor such as e<sup>i<i>mφ</i></sup> has magnitude one for real angles. It can drop out of the density of that state, but it belongs in <i>ψ</i>. C2 asks for the wave function.</p>
+      </div>
+    </details>
+    <p class="refs" style="margin-top:.9rem"><strong>Lecture references.</strong> L22 slide 25 separates the wave function and works through <i>2s</i>. Slides 26–27 connect the orbital letters to the quantum numbers and show their allowed ranges. T02, Q5 (printed p. 7, PDF p. 9), applies the same lookup method to the state used in C2.</p>
+    <div class="links" aria-label="Related wave-function exercise">
+      <a href="unit03_shell_quantum.html#c2">← C2 · Assemble a hydrogen wave function</a>
+    </div>
+  </section>
+
   <section class="panel" id="sources" aria-labelledby="source-title">
     <h2 id="source-title">Lecture references</h2>
-    <p class="refs"><cite>L22 · The Shell</cite>, Manfred Kerschbaumer, Physical Chemistry II. Slide 19 gives the boundary conditions and slide 20 gives the single-electron energy levels. The appended exercise 6 on PDF page 83 applies the 1D model to β-carotene. For 2D, see slides 21–22 and the Try-Test Q4 references above. The diagrams on this page are explanatory sketches, not reproductions of the slides.</p>
+    <p class="refs"><cite>L22 · The Shell</cite>, Manfred Kerschbaumer, Physical Chemistry II. Slide 19 gives the boundary conditions and slide 20 gives the single-electron energy levels. The appended exercise 6 on PDF page 83 applies the 1D model to β-carotene. For the 2D box, see slides 21–22 and Try-Test Q4. For hydrogen orbitals, see slides 25–27 and Try-Test Q5. The diagrams on this page are explanatory sketches, not reproductions of the slides.</p>
   </section>
 </main>
 <footer class="wrap"><a href="unit03_shell_quantum.html">← Back to Unit 03</a></footer>
