@@ -8,7 +8,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
   <script defer src="codes.js?v=ue03-v2"></script>
-  <script defer src="unit03_shell_quantum.js"></script>
+  <script defer src="unit03_shell_quantum.js?v=ue03-restart"></script>
   <style>
     :root{font-family:system-ui,sans-serif;color:#1e293b;background:#f8fafc;line-height:1.53}
     *,*::before,*::after{box-sizing:border-box}
@@ -51,6 +51,7 @@
     .feedback[data-kind=pass]{color:#065f46}.feedback[data-kind=retry]{color:#9f1239}
     .theory-link a:first-child{font-weight:650}
     .lock-note{color:#475569;font-size:.9rem}.format{font-size:.88rem;color:#475569}
+    @media print{#practice-restart,#practice-restart-status{display:none!important}}
     .tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:.75rem}
     fieldset{margin:0;min-width:0;border:1px solid #cbd5e1;border-radius:.5rem;padding:.5rem}
     .table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.93rem}
@@ -132,6 +133,14 @@
 <p>Use the calculation route to find the level indices, the energy gap and the photon wavelength. <a href="#source-l22">L22</a>, slide 20 and PDF p. 83, Exercise 6.</p>
 </div>
 <p>Treat the 22 delocalised π electrons of β-carotene as independent electrons in a one-dimensional box with effective length $L=2.94\,\mathrm{nm}$. The reference absorption wavelength in L22 is $497\,\mathrm{nm}$. Write down your reasoning before each check.</p>
+<details class="lookup" id="practice-restart" hidden>
+<summary>Restart R1/R2 practice</summary>
+<div>
+<p>This clears your answers and progress in R1 and R2 only. Any unlocked solutions stay available.</p>
+<button type="button" id="practice-reset">Clear R1/R2 and start again</button>
+</div>
+</details>
+<p id="practice-restart-status" class="feedback" role="status"></p>
 <form id="step-r1a" class="step" data-step="r1a">
 <div class="prompt">(a) Find the quantum numbers of the highest occupied and lowest unoccupied levels.</div>
 <div class="inputs"><label for="answer-homo">HOMO<span><input id="answer-homo" type="text" autocomplete="off" spellcheck="false"> </span></label><label for="answer-lumo">LUMO<span><input id="answer-lumo" type="text" autocomplete="off" spellcheck="false"> </span></label><button type="submit" class="check">Check</button></div>
@@ -139,7 +148,8 @@
 </form>
 <form id="step-r1b" class="step" data-step="r1b" hidden>
 <div class="prompt">(b) Calculate the energy gap between those two levels.</div>
-<div class="inputs"><label for="answer-gap">Energy gap<span><input id="answer-gap" type="text" autocomplete="off" spellcheck="false"> J</span></label><button type="submit" class="check">Check</button></div>
+<div class="inputs"><label for="answer-gap">Energy gap<span><input id="answer-gap" type="text" aria-describedby="format-gap" autocomplete="off" spellcheck="false"> J</span></label><button type="submit" class="check">Check</button></div>
+<p class="format" id="format-gap">Enter a number without units. Use <code>2.5e-12</code> or <code>2,5e-12</code> for scientific notation.</p>
 <p class="feedback" role="status"></p>
 </form>
 <form id="step-r1c" class="step" data-step="r1c" hidden>
@@ -257,12 +267,14 @@ $$\psi_{2,1,-1}=\frac{1}{\sqrt{24}}\left(\frac{Z}{a_0}\right)^{3/2}\rho e^{-\rho
 <p id="r2-start-note" class="lock-note">Complete the last check in R1 to open the first calculation in R2.</p>
 <form id="step-r2a" class="step" data-step="r2a" hidden>
 <div class="prompt">(a) Mosquito · $m=1.00\,\mathrm{mg}$, $\Delta x=0.100\,\mathrm{mm}$. Find the lower bound on $\Delta v_x$.</div>
-<div class="inputs"><label for="answer-mosquito">Lower bound<span><input id="answer-mosquito" type="text" autocomplete="off" spellcheck="false"> m/s</span></label><button type="submit" class="check">Check</button></div>
+<div class="inputs"><label for="answer-mosquito">Lower bound<span><input id="answer-mosquito" type="text" aria-describedby="format-mosquito" autocomplete="off" spellcheck="false"> m/s</span></label><button type="submit" class="check">Check</button></div>
+<p class="format" id="format-mosquito">Enter a number without units. Use <code>2.5e-12</code> or <code>2,5e-12</code> for scientific notation.</p>
 <p class="feedback" role="status"></p>
 </form>
 <form id="step-r2b" class="step" data-step="r2b" hidden>
 <div class="prompt">(b) Proton · $m=m_p$. For this estimate assume $\Delta x=3.00\,\mathrm{fm}$. Find the lower bound on $\Delta v_x$.</div>
-<div class="inputs"><label for="answer-proton">Lower bound<span><input id="answer-proton" type="text" autocomplete="off" spellcheck="false"> m/s</span></label><button type="submit" class="check">Check</button></div>
+<div class="inputs"><label for="answer-proton">Lower bound<span><input id="answer-proton" type="text" aria-describedby="format-proton" autocomplete="off" spellcheck="false"> m/s</span></label><button type="submit" class="check">Check</button></div>
+<p class="format" id="format-proton">Enter a number without units. Use <code>2.5e-12</code> or <code>2,5e-12</code> for scientific notation.</p>
 <p class="feedback" role="status"></p>
 </form>
 <p id="practice-done" class="note" hidden>Self-calculation complete. Compare the two scales. The full solutions are available once the lecturer announces the in-class code.</p>
@@ -292,7 +304,8 @@ $$\frac{6.626\times10^{-34}\,\mathrm{J\,s}}{4\pi(1.673\times10^{-27}\,\mathrm{kg
 <p>Find the zero-point energy of an electron in a rectangular box with edge lengths $1.00\,\mathrm{nm}$, $2.00\,\mathrm{nm}$ and $3.00\,\mathrm{nm}$.</p>
 <form id="step-h1" class="step" data-step="h1">
 <div class="prompt">Enter the ground-state energy.</div>
-<div class="inputs"><label for="answer-zero">Energy<span><input id="answer-zero" type="text" autocomplete="off" spellcheck="false"> J</span></label><button type="submit" class="check">Check</button></div>
+<div class="inputs"><label for="answer-zero">Energy<span><input id="answer-zero" type="text" aria-describedby="format-zero" autocomplete="off" spellcheck="false"> J</span></label><button type="submit" class="check">Check</button></div>
+<p class="format" id="format-zero">Enter a number without units. Use <code>2.5e-12</code> or <code>2,5e-12</code> for scientific notation.</p>
 <p class="feedback" role="status"></p>
 </form>
 <p class="lock-note" data-lock-note="homework">The complete solution is released with the homework code.</p>

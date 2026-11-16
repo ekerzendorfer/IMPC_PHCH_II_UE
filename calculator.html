@@ -139,8 +139,15 @@ function calculate(raw, mode='DEG', ans=null) {
      return finite(Math[f](v)*(mode==='DEG'?180/Math.PI:1));
    }
    const x=mode==='DEG'?((v%360)*Math.PI/180):v;
-   const reduced=mode==='DEG'?v%180:null;
-   if(f==='tan'&&(mode==='DEG'?Math.abs(reduced)===90:Math.abs(Math.cos(x))<Number.EPSILON/2))throw Error('Tangent is undefined at this angle.');
+   if(f==='tan'){
+     // Compare with the nearest odd multiple of pi/2, allowing for rounding at that pole.
+     const pole=(Math.round(v/Math.PI-0.5)+0.5)*Math.PI;
+     const tolerance=Math.min(8*Number.EPSILON,Number.EPSILON*Math.abs(v));
+     const undefinedAngle=mode==='DEG'
+       ? Math.abs(v%180)===90
+       : Math.abs(v-pole)<=tolerance && Math.abs(Math.cos(x))<1e-12;
+     if(undefinedAngle)throw Error('Tangent is undefined at this angle.');
+   }
    return finite(Math[f](x));
  }
  const value=expr();if(j<tokens.length)throw Error('Use an operator between terms, or check your parentheses.');

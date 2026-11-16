@@ -101,21 +101,35 @@ function updatePractice() {
     const form = byId('step-' + id);
     form.hidden = !available;
     const values = progress[id];
-    if (values) {
-      numberChecks[id].fields.forEach((key, i) => {
-        const input = byId('answer-' + key);
-        input.value = values[i];
-        input.readOnly = true;
-      });
-      form.querySelector('.check').disabled = true;
-      feedback(form, 'pass', 'Correct.');
-    }
+    numberChecks[id].fields.forEach((key, i) => {
+      const input = byId('answer-' + key);
+      input.readOnly = Boolean(values);
+      if (values) input.value = values[i];
+    });
+    form.querySelector('.check').disabled = Boolean(values);
+    if (values) feedback(form, 'pass', 'Correct.');
     available = available && Boolean(values);
   }
   byId('r1-reflect').hidden = !progress.r1c;
   byId('r2-start-note').hidden = Boolean(progress.r1c);
   byId('practice-done').hidden = !progress.r2b;
 }
+const restartPractice = byId('practice-restart');
+const restartStatus = byId('practice-restart-status');
+restartPractice.hidden = false;
+byId('practice-reset').addEventListener('click', () => {
+  for (const id of practiceOrder) {
+    delete progress[id];
+    const form = byId('step-' + id);
+    form.reset();
+    feedback(form, '', '');
+  }
+  saveState(progressStorageKey, progress);
+  restartPractice.open = false;
+  updatePractice();
+  restartStatus.textContent = 'R1/R2 restarted. Begin with R1(a).';
+  byId('answer-homo').focus();
+});
 document.querySelectorAll('form[data-step]').forEach(form => {
   form.addEventListener('submit', event => {
     event.preventDefault();
@@ -124,8 +138,12 @@ document.querySelectorAll('form[data-step]').forEach(form => {
     if (form.hidden || (index > 0 && !progress[practiceOrder[index - 1]]) || progress[id]) return;
     const values = numberChecks[id].fields.map(key => byId('answer-' + key).value.trim());
     const result = classify(id, values);
+    if (index !== -1) restartStatus.textContent = '';
     if (result === 'format') {
-      feedback(form, 'retry', 'Enter a number in each field, without units.');
+      const message = numberChecks[id].tolerance === 0
+        ? 'Enter a whole number in each field, for example 3.'
+        : 'Enter a number without units. For scientific notation, use 2.5e-12 or 2,5e-12.';
+      feedback(form, 'retry', message);
     } else if (result === 'retry') {
       feedback(form, 'retry', 'Not correct yet. Recheck this step and try again.');
     } else if (index !== -1) {
