@@ -56,6 +56,7 @@
   <a href="#box-2d">2D box</a>
   <a href="#wave-function">Hydrogen wave functions</a>
   <a href="#uncertainty">Uncertainty principle</a>
+  <a href="#box-3d">3D box</a>
   <a href="#sources">Lecture references</a>
 </nav>
 <main class="wrap">
@@ -347,9 +348,70 @@
     </div>
   </section>
 
+  <section class="panel" id="box-3d" aria-labelledby="box-3d-title">
+    <p class="tag">Core idea · For H1</p>
+    <h2 id="box-3d-title">Particle in a 3D box</h2>
+    <p class="lead">Adding a third direction to the <a href="#box-2d">2D box</a> adds a third confinement energy. An electron in an ideal rectangular box has a standing-wave factor along each of the three edges. The wave function must vanish at all six walls.</p>
+    <div class="figures">
+      <figure>
+        <h3>Three independent lengths</h3>
+        <svg viewBox="0 0 350 205" role="img" aria-labelledby="box3d-sketch-title box3d-sketch-desc">
+          <title id="box3d-sketch-title">Rectangular box showing the three confinement lengths</title>
+          <desc id="box3d-sketch-desc">Three arrows from the same corner point along the length, depth and height of the box and are labelled L x, L y and L z.</desc>
+          <defs><marker id="box3d-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#006460"/></marker></defs>
+          <path class="wall" d="M64 158H234V69H64Z M64 69L132 31H302L234 69 M302 31V120L234 158"/>
+          <path class="axis" stroke-dasharray="5 4" d="M132 31V120H302 M64 158L132 120"/>
+          <path class="wave" marker-end="url(#box3d-arrow)" d="M64 158H230"/>
+          <path class="wave" marker-end="url(#box3d-arrow)" d="M64 158L129 122"/>
+          <path class="wave" marker-end="url(#box3d-arrow)" d="M64 158V73"/>
+          <circle cx="64" cy="158" r="3.5" fill="#006460"/>
+          <text x="146" y="184" text-anchor="middle">L<tspan baseline-shift="sub" font-size="11">x</tspan></text>
+          <text x="101" y="143" text-anchor="start">L<tspan baseline-shift="sub" font-size="11">y</tspan></text>
+          <text x="46" y="118" text-anchor="end">L<tspan baseline-shift="sub" font-size="11">z</tspan></text>
+        </svg>
+        <figcaption>Each length belongs to its own quantum number. The arrows mark directions, not the motion of an electron.</figcaption>
+      </figure>
+      <div class="wf-keys">
+        <h3>Why is the lowest energy not zero?</h3>
+        <p>In each direction, the lowest allowed mode has <i>n</i> = 1, with one half-wave between opposite walls. Setting any index to 0 makes its sine factor zero everywhere. The entire wave function would then vanish and could not describe an electron.</p>
+        <p>The ground state therefore has <i>n</i><sub>x</sub> = <i>n</i><sub>y</sub> = <i>n</i><sub>z</sub> = 1. With the potential inside the box defined as zero, its energy is positive. This is the <strong>zero-point energy</strong>.</p>
+      </div>
+    </div>
+    <h3>Calculation route</h3>
+    <div class="eq">
+      <math display="block"><mrow>
+        <msub><mi>E</mi><mrow><msub><mi>n</mi><mi>x</mi></msub><mo>,</mo><msub><mi>n</mi><mi>y</mi></msub><mo>,</mo><msub><mi>n</mi><mi>z</mi></msub></mrow></msub>
+        <mo>=</mo><mfrac><msup><mi>h</mi><mn>2</mn></msup><mrow><mn>8</mn><msub><mi>m</mi><mi mathvariant="normal">e</mi></msub></mrow></mfrac>
+        <mo>(</mo><mfrac><msubsup><mi>n</mi><mi>x</mi><mn>2</mn></msubsup><msubsup><mi>L</mi><mi>x</mi><mn>2</mn></msubsup></mfrac>
+        <mo>+</mo><mfrac><msubsup><mi>n</mi><mi>y</mi><mn>2</mn></msubsup><msubsup><mi>L</mi><mi>y</mi><mn>2</mn></msubsup></mfrac>
+        <mo>+</mo><mfrac><msubsup><mi>n</mi><mi>z</mi><mn>2</mn></msubsup><msubsup><mi>L</mi><mi>z</mi><mn>2</mn></msubsup></mfrac><mo>)</mo>
+      </mrow></math>
+    </div>
+    <ol class="method">
+      <li><strong>Choose the state.</strong> For the ground state, put 1 in all three numerators.</li>
+      <li><strong>Convert before squaring.</strong> Write each edge length in metres. Square the lengths separately and add their reciprocals.</li>
+      <li><strong>Apply the common factor.</strong> Multiply the sum by <i>h</i><sup>2</sup>/(8<i>m</i><sub>e</sub>). The factor is in J·m<sup>2</sup>, so the result is in joules. The shortest side contributes the most to the ground-state energy.</li>
+    </ol>
+    <details>
+      <summary>Worked example · A different rectangular box</summary>
+      <div>
+        <p>Take an electron in a box with sides 1.50 nm, 2.50 nm and 4.00 nm. In the ground state, the three terms are 1/(1.50 × 10<sup>−9</sup> m)<sup>2</sup>, 1/(2.50 × 10<sup>−9</sup> m)<sup>2</sup> and 1/(4.00 × 10<sup>−9</sup> m)<sup>2</sup>. Their sum is approximately 6.67 × 10<sup>17</sup> m<sup>−2</sup>.</p>
+        <p>With <i>h</i> = 6.626 × 10<sup>−34</sup> J·s and <i>m</i><sub>e</sub> = 9.109 × 10<sup>−31</sup> kg, the common factor is about 6.02 × 10<sup>−38</sup> J·m<sup>2</sup>. Multiplying before rounding gives <strong>4.02 × 10<sup>−20</sup> J</strong>.</p>
+      </div>
+    </details>
+    <details>
+      <summary>Quick checks · A cube and a change of scale</summary>
+      <div><p>In a cube all three ground-state contributions are equal. The total is three times the 1D ground-state energy for that edge length. Doubling <em>all</em> three sides makes the energy one quarter as large. Doubling just one side changes only that side’s contribution.</p></div>
+    </details>
+    <p class="refs" style="margin-top:.9rem"><strong>Lecture references.</strong> L22 slide 21 gives the 3D energy expression, and slide 22, Exercise 4(a), applies it to a cube. The appended Exercise 7(a–b) on PDF page 84 covers the zero-point energy of a rectangular box.</p>
+    <div class="links" aria-label="Related 3D box exercise">
+      <a href="unit03_shell_quantum.html#h1">← H1 · Independent calculation</a>
+    </div>
+  </section>
+
   <section class="panel" id="sources" aria-labelledby="source-title">
     <h2 id="source-title">Lecture references</h2>
-    <p class="refs"><cite>L22 · The Shell</cite>, Manfred Kerschbaumer, Physical Chemistry II. Slide 19 gives the boundary conditions and slide 20 gives the single-electron energy levels. The appended exercise 6 on PDF page 83 applies the 1D model to β-carotene. For the 2D box, see slides 21–22 and Try-Test Q4. For hydrogen orbitals, see slides 25–27 and Try-Test Q5. For uncertainty, see slides 8, 13 (Exercise 3), and 41. The diagrams on this page are explanatory sketches, not reproductions of the slides.</p>
+    <p class="refs"><cite>L22 · The Shell</cite>, Manfred Kerschbaumer, Physical Chemistry II. Slide 19 gives the boundary conditions and slide 20 gives the single-electron energy levels. The appended exercise 6 on PDF page 83 applies the 1D model to β-carotene. For the 2D box, see slides 21–22 and Try-Test Q4. For hydrogen orbitals, see slides 25–27 and Try-Test Q5. For uncertainty, see slides 8, 13 (Exercise 3), and 41. For the 3D box, see slides 21–22 and the appended Exercise 7(a–b) on PDF page 84. The diagrams on this page are explanatory sketches, not reproductions of the slides.</p>
   </section>
 </main>
 <footer class="wrap"><a href="unit03_shell_quantum.html">← Back to Unit 03</a></footer>
