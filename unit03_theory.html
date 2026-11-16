@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Unit 03 theory · Box models and hydrogen orbitals · Physical Chemistry II</title>
+<title>Unit 03 theory · Confinement, orbitals and uncertainty · Physical Chemistry II</title>
 <style>
   :root{color-scheme:light;--ink:#172b3a;--muted:#425968;--paper:#f4f8fa;--white:#fff;--line:#c9d8df;--navy:#10283a;--teal:#006460;--teal-wash:#e6f5f1;--amber:#904100;--serif:Georgia,serif;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper);line-height:1.55}
   *{box-sizing:border-box}body{margin:0}.wrap{width:min(100% - 2rem,66rem);margin-inline:auto}
@@ -33,6 +33,8 @@
   details{border:1px solid var(--line);border-radius:.55rem;margin:.7rem 0 0;overflow:hidden}summary{cursor:pointer;font-weight:700;padding:.65rem .85rem;background:var(--paper)}details>div{padding:.85rem}
   footer{padding:0 0 2rem;color:var(--muted);font-size:.92rem}.refs{font-size:.89rem;color:var(--muted)}
   .wf-keys{padding:.9rem;background:var(--paper);border-radius:.55rem}.wf-keys dl{margin:.45rem 0 0}.wf-keys dt{font-weight:700;color:var(--navy)}.wf-keys dd{margin:0 0 .55rem}.wf-keys dd:last-child{margin-bottom:0}
+  .uncertainty-figure{margin:1rem 0}.uncertainty-plots{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:.25rem .9rem}
+  .uncertainty-plots svg{margin:.15rem auto}
   @media(max-width:44rem){.figures{grid-template-columns:1fr}}
   @media print{body,.hero,.panel{background:white;color:#000}.hero p:last-child,.hero .eyebrow{color:#000}.panel{border:none;padding:.35rem 0}.hero{padding:.4rem 0}.nav,.back{display:none}.figures{grid-template-columns:repeat(2,minmax(0,1fr))}.figures,details{break-inside:avoid}}
 </style>
@@ -43,8 +45,8 @@
     <a class="back" href="unit03_shell_quantum.html">← Unit 03 exercises</a>
     <a class="back" style="margin-inline-start:1rem" data-calculator-launch href="calculator.html">Scientific calculator ↗</a>
     <p class="eyebrow">Physical Chemistry II · Unit 03 theory pilot</p>
-    <h1>Box models and hydrogen orbitals</h1>
-    <p>From standing waves in a box to the radial and angular parts of a hydrogen orbital. Use the section that matches the exercise you are working on.</p>
+    <h1>Confinement, orbitals and uncertainty</h1>
+    <p>How confinement shapes energy levels, hydrogen orbitals and the spreads in position and momentum. Use the section that matches the exercise you are working on.</p>
   </div>
 </header>
 <nav class="wrap nav" aria-label="On this page">
@@ -53,6 +55,7 @@
   <a href="#deeper">1D derivation</a>
   <a href="#box-2d">2D box</a>
   <a href="#wave-function">Hydrogen wave functions</a>
+  <a href="#uncertainty">Uncertainty principle</a>
   <a href="#sources">Lecture references</a>
 </nav>
 <main class="wrap">
@@ -278,9 +281,75 @@
     </div>
   </section>
 
+  <section class="panel" id="uncertainty" aria-labelledby="uncertainty-title">
+    <p class="tag">Core idea · For R2</p>
+    <h2 id="uncertainty-title">Heisenberg’s uncertainty principle</h2>
+    <p class="lead">A state can have a tightly confined position or a narrowly defined momentum, but it cannot have both spreads arbitrarily small. <strong>R2 asks for a lower bound on the velocity spread for a given position spread.</strong> It does not ask for the actual spread or the particle’s speed.</p>
+    <div class="eq">
+      <math display="block"><mrow><mi>Δ</mi><mi>x</mi><mo>·</mo><mi>Δ</mi><msub><mi>p</mi><mi>x</mi></msub><mo>≥</mo><mfrac><mi>ℏ</mi><mn>2</mn></mfrac><mo>=</mo><mfrac><mi>h</mi><mrow><mn>4</mn><mi>π</mi></mrow></mfrac></mrow></math>
+    </div>
+    <p>Here Δ<i>x</i> and Δ<i>p</i><sub>x</sub> are standard deviations for position and momentum <em>along the same axis</em>. Think of the spread of results when measuring identically prepared systems. This spread belongs to the quantum state and is present even with an ideal instrument. It is not an error bar from an imperfect measurement.</p>
+    <figure class="uncertainty-figure">
+      <h3>Better localisation requires a wider momentum spread</h3>
+      <div class="uncertainty-plots">
+        <svg viewBox="0 0 350 170" role="img" aria-labelledby="unc-x-title unc-x-desc">
+          <title id="unc-x-title">Position spread</title>
+          <desc id="unc-x-desc">State A, shown by a solid curve, has a narrow position distribution. State B, shown by a dashed curve, has a wider position distribution.</desc>
+          <text x="175" y="20" text-anchor="middle">Position density</text>
+          <path class="axis" d="M28 130H324 M317 126l7 4-7 4"/>
+          <path class="wave" d="M28 130.00 L31 130.00 L34 130.00 L37 130.00 L40 130.00 L43 130.00 L46 130.00 L49 130.00 L52 130.00 L55 130.00 L58 130.00 L61 130.00 L64 130.00 L67 130.00 L70 130.00 L73 130.00 L76 130.00 L79 129.99 L82 129.99 L85 129.98 L88 129.96 L91 129.94 L94 129.90 L97 129.83 L100 129.73 L103 129.57 L106 129.34 L109 129.00 L112 128.51 L115 127.82 L118 126.86 L121 125.57 L124 123.87 L127 121.67 L130 118.89 L133 115.45 L136 111.30 L139 106.41 L142 100.78 L145 94.48 L148 87.62 L151 80.36 L154 72.93 L157 65.60 L160 58.67 L163 52.44 L166 47.22 L169 43.29 L172 40.83 L175 40.00 L178 40.83 L181 43.29 L184 47.22 L187 52.44 L190 58.67 L193 65.60 L196 72.93 L199 80.36 L202 87.62 L205 94.48 L208 100.78 L211 106.41 L214 111.30 L217 115.45 L220 118.89 L223 121.67 L226 123.87 L229 125.57 L232 126.86 L235 127.82 L238 128.51 L241 129.00 L244 129.34 L247 129.57 L250 129.73 L253 129.83 L256 129.90 L259 129.94 L262 129.96 L265 129.98 L268 129.99 L271 129.99 L274 130.00 L277 130.00 L280 130.00 L283 130.00 L286 130.00 L289 130.00 L292 130.00 L295 130.00 L298 130.00 L301 130.00 L304 130.00 L307 130.00 L310 130.00 L313 130.00 L316 130.00 L319 130.00 L322 130.00"/>
+          <path class="photon" stroke-dasharray="6 4" d="M28 129.74 L31 129.68 L34 129.61 L37 129.52 L40 129.42 L43 129.30 L46 129.16 L49 128.99 L52 128.79 L55 128.57 L58 128.31 L61 128.00 L64 127.66 L67 127.27 L70 126.82 L73 126.32 L76 125.75 L79 125.12 L82 124.42 L85 123.65 L88 122.80 L91 121.88 L94 120.87 L97 119.78 L100 118.61 L103 117.36 L106 116.03 L109 114.62 L112 113.15 L115 111.61 L118 110.02 L121 108.39 L124 106.72 L127 105.03 L130 103.33 L133 101.63 L136 99.95 L139 98.31 L142 96.72 L145 95.20 L148 93.77 L151 92.43 L154 91.22 L157 90.13 L160 89.19 L163 88.40 L166 87.77 L169 87.32 L172 87.05 L175 86.96 L178 87.05 L181 87.32 L184 87.77 L187 88.40 L190 89.19 L193 90.13 L196 91.22 L199 92.43 L202 93.77 L205 95.20 L208 96.72 L211 98.31 L214 99.95 L217 101.63 L220 103.33 L223 105.03 L226 106.72 L229 108.39 L232 110.02 L235 111.61 L238 113.15 L241 114.62 L244 116.03 L247 117.36 L250 118.61 L253 119.78 L256 120.87 L259 121.88 L262 122.80 L265 123.65 L268 124.42 L271 125.12 L274 125.75 L277 126.32 L280 126.82 L283 127.27 L286 127.66 L289 128.00 L292 128.31 L295 128.57 L298 128.79 L301 128.99 L304 129.16 L307 129.30 L310 129.42 L313 129.52 L316 129.61 L319 129.68 L322 129.74"/>
+          <text x="324" y="153" text-anchor="end">Position <tspan font-style="italic">x</tspan></text>
+        </svg>
+        <svg viewBox="0 0 350 170" role="img" aria-labelledby="unc-p-title unc-p-desc">
+          <title id="unc-p-title">Momentum spread</title>
+          <desc id="unc-p-desc">State A now has the wider momentum distribution. State B has the narrower momentum distribution.</desc>
+          <text x="175" y="20" text-anchor="middle">Momentum density</text>
+          <path class="axis" d="M28 130H324 M317 126l7 4-7 4"/>
+          <path class="wave" d="M28 129.74 L31 129.68 L34 129.61 L37 129.52 L40 129.42 L43 129.30 L46 129.16 L49 128.99 L52 128.79 L55 128.57 L58 128.31 L61 128.00 L64 127.66 L67 127.27 L70 126.82 L73 126.32 L76 125.75 L79 125.12 L82 124.42 L85 123.65 L88 122.80 L91 121.88 L94 120.87 L97 119.78 L100 118.61 L103 117.36 L106 116.03 L109 114.62 L112 113.15 L115 111.61 L118 110.02 L121 108.39 L124 106.72 L127 105.03 L130 103.33 L133 101.63 L136 99.95 L139 98.31 L142 96.72 L145 95.20 L148 93.77 L151 92.43 L154 91.22 L157 90.13 L160 89.19 L163 88.40 L166 87.77 L169 87.32 L172 87.05 L175 86.96 L178 87.05 L181 87.32 L184 87.77 L187 88.40 L190 89.19 L193 90.13 L196 91.22 L199 92.43 L202 93.77 L205 95.20 L208 96.72 L211 98.31 L214 99.95 L217 101.63 L220 103.33 L223 105.03 L226 106.72 L229 108.39 L232 110.02 L235 111.61 L238 113.15 L241 114.62 L244 116.03 L247 117.36 L250 118.61 L253 119.78 L256 120.87 L259 121.88 L262 122.80 L265 123.65 L268 124.42 L271 125.12 L274 125.75 L277 126.32 L280 126.82 L283 127.27 L286 127.66 L289 128.00 L292 128.31 L295 128.57 L298 128.79 L301 128.99 L304 129.16 L307 129.30 L310 129.42 L313 129.52 L316 129.61 L319 129.68 L322 129.74"/>
+          <path class="photon" stroke-dasharray="6 4" d="M28 130.00 L31 130.00 L34 130.00 L37 130.00 L40 130.00 L43 130.00 L46 130.00 L49 130.00 L52 130.00 L55 130.00 L58 130.00 L61 130.00 L64 130.00 L67 130.00 L70 130.00 L73 130.00 L76 130.00 L79 129.99 L82 129.99 L85 129.98 L88 129.96 L91 129.94 L94 129.90 L97 129.83 L100 129.73 L103 129.57 L106 129.34 L109 129.00 L112 128.51 L115 127.82 L118 126.86 L121 125.57 L124 123.87 L127 121.67 L130 118.89 L133 115.45 L136 111.30 L139 106.41 L142 100.78 L145 94.48 L148 87.62 L151 80.36 L154 72.93 L157 65.60 L160 58.67 L163 52.44 L166 47.22 L169 43.29 L172 40.83 L175 40.00 L178 40.83 L181 43.29 L184 47.22 L187 52.44 L190 58.67 L193 65.60 L196 72.93 L199 80.36 L202 87.62 L205 94.48 L208 100.78 L211 106.41 L214 111.30 L217 115.45 L220 118.89 L223 121.67 L226 123.87 L229 125.57 L232 126.86 L235 127.82 L238 128.51 L241 129.00 L244 129.34 L247 129.57 L250 129.73 L253 129.83 L256 129.90 L259 129.94 L262 129.96 L265 129.98 L268 129.99 L271 129.99 L274 130.00 L277 130.00 L280 130.00 L283 130.00 L286 130.00 L289 130.00 L292 130.00 L295 130.00 L298 130.00 L301 130.00 L304 130.00 L307 130.00 L310 130.00 L313 130.00 L316 130.00 L319 130.00 L322 130.00"/>
+          <text x="324" y="153" text-anchor="end">Momentum <tspan font-style="italic">p</tspan><tspan baseline-shift="sub" font-size="11">x</tspan></text>
+        </svg>
+      </div>
+      <figcaption><strong>Solid curve · State A.</strong> Narrower in position, wider in momentum. <strong>Dashed curve · State B.</strong> Wider in position, narrower in momentum. These are two illustrative Gaussian states that attain the lower bound. An arbitrary state need not do so.</figcaption>
+    </figure>
+    <h3>Calculation route</h3>
+    <ol class="method">
+      <li><strong>Identify the given spread.</strong> Use the Δ<i>x</i> supplied as a standard deviation. A box length, a diameter or a quoted measurement tolerance is not automatically Δ<i>x</i>.</li>
+      <li><strong>Use SI units.</strong> Write Δ<i>x</i> in metres and the mass <i>m</i> in kilograms. For a fixed mass in the nonrelativistic approximation, <i>p</i><sub>x</sub> = <i>m v</i><sub>x</sub>, so Δ<i>p</i><sub>x</sub> = <i>m</i> Δ<i>v</i><sub>x</sub>.</li>
+      <li><strong>Isolate the lower bound.</strong> Divide by the positive product <i>m</i> Δ<i>x</i> and keep the inequality.
+        <div class="eq">
+          <math display="block"><mrow><mi>Δ</mi><msub><mi>v</mi><mi>x</mi></msub><mo>≥</mo><mfrac><mi>h</mi><mrow><mn>4</mn><mi>π</mi><mi>m</mi><mi>Δ</mi><mi>x</mi></mrow></mfrac></mrow></math>
+        </div>
+        The result is in m/s because J·s divided by kg·m gives m/s. If only the mass changes, a larger mass gives a smaller lower bound.
+      </li>
+    </ol>
+    <details>
+      <summary>Worked example · An electron with a 0.500 nm position spread</summary>
+      <div>
+        <p>Take Δ<i>x</i> = 5.00 × 10<sup>−10</sup> m and <i>m</i><sub>e</sub> = 9.109 × 10<sup>−31</sup> kg. With <i>h</i> = 6.626 × 10<sup>−34</sup> J·s:</p>
+        <div class="eq">
+          <math display="block"><mrow>
+            <mi>Δ</mi><msub><mi>v</mi><mi>x</mi></msub><mo>≥</mo>
+            <mfrac><mrow><mn>6.626</mn><mo>×</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>34</mn></mrow></msup></mrow><mrow><mn>4</mn><mi>π</mi><mo>(</mo><mn>9.109</mn><mo>×</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>31</mn></mrow></msup><mo>)</mo><mo>(</mo><mn>5.00</mn><mo>×</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>10</mn></mrow></msup><mo>)</mo></mrow></mfrac>
+          </mrow></math>
+        </div>
+        <p>The lower bound is <strong>1.16 × 10<sup>5</sup> m/s</strong>. It is a bound on the spread of velocity values, not a statement about the mean velocity. Halving Δ<i>x</i> doubles the bound at the same mass.</p>
+      </div>
+    </details>
+    <details>
+      <summary>Why does a narrow wave packet need more momenta?</summary>
+      <div><p>A single plane wave has a definite momentum and no localised envelope. To make a localised packet, waves with different wave numbers interfere. A narrower packet needs a broader range of wave numbers, and <i>p</i><sub>x</sub> = ℏ<i>k</i><sub>x</sub> maps that range to momentum. The inequality gives a minimum for the product of the two spreads, not a rule that one spread must double whenever the other is halved.</p></div>
+    </details>
+    <p class="refs" style="margin-top:.9rem"><strong>Lecture references.</strong> L22 slide 8 introduces the principle. Slide 13, Exercise 3, works in the opposite direction, from a velocity spread to a bound on position spread. Slide 41 lists the relation. For wave packets, see <a href="https://openstax.org/books/university-physics-volume-3/pages/7-2-the-heisenberg-uncertainty-principle">OpenStax, University Physics Volume 3, §7.2</a>.</p>
+    <div class="links" aria-label="Related uncertainty exercise">
+      <a href="unit03_shell_quantum.html#r2">← R2 · Independent calculation</a>
+    </div>
+  </section>
+
   <section class="panel" id="sources" aria-labelledby="source-title">
     <h2 id="source-title">Lecture references</h2>
-    <p class="refs"><cite>L22 · The Shell</cite>, Manfred Kerschbaumer, Physical Chemistry II. Slide 19 gives the boundary conditions and slide 20 gives the single-electron energy levels. The appended exercise 6 on PDF page 83 applies the 1D model to β-carotene. For the 2D box, see slides 21–22 and Try-Test Q4. For hydrogen orbitals, see slides 25–27 and Try-Test Q5. The diagrams on this page are explanatory sketches, not reproductions of the slides.</p>
+    <p class="refs"><cite>L22 · The Shell</cite>, Manfred Kerschbaumer, Physical Chemistry II. Slide 19 gives the boundary conditions and slide 20 gives the single-electron energy levels. The appended exercise 6 on PDF page 83 applies the 1D model to β-carotene. For the 2D box, see slides 21–22 and Try-Test Q4. For hydrogen orbitals, see slides 25–27 and Try-Test Q5. For uncertainty, see slides 8, 13 (Exercise 3), and 41. The diagrams on this page are explanatory sketches, not reproductions of the slides.</p>
   </section>
 </main>
 <footer class="wrap"><a href="unit03_shell_quantum.html">← Back to Unit 03</a></footer>
