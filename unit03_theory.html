@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Particle in a 1D box · Unit 03 theory · Physical Chemistry II</title>
+<title>Particle in a box · Unit 03 theory · Physical Chemistry II</title>
 <style>
   :root{color-scheme:light;--ink:#172b3a;--muted:#425968;--paper:#f4f8fa;--white:#fff;--line:#c9d8df;--navy:#10283a;--teal:#006460;--teal-wash:#e6f5f1;--amber:#904100;--serif:Georgia,serif;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper);line-height:1.55}
   *{box-sizing:border-box}body{margin:0}.wrap{width:min(100% - 2rem,66rem);margin-inline:auto}
@@ -42,19 +42,20 @@
     <a class="back" href="unit03_shell_quantum.html">← Unit 03 exercises</a>
     <a class="back" style="margin-inline-start:1rem" data-calculator-launch href="calculator.html">Scientific calculator ↗</a>
     <p class="eyebrow">Physical Chemistry II · Unit 03 theory pilot</p>
-    <h1>Particle in a 1D box</h1>
-    <p>How confinement gives electrons discrete energies, and how a jump between those energies sets the wavelength of absorbed light.</p>
+    <h1>Particle in a box</h1>
+    <p>How confinement selects discrete energies, how an energy gap sets an absorption wavelength, and what changes when an electron is confined in two directions.</p>
   </div>
 </header>
 <nav class="wrap nav" aria-label="On this page">
-  <a href="#box-1d">The model</a>
-  <a href="#calculation">Calculation route</a>
-  <a href="#deeper">Why it works</a>
+  <a href="#box-1d">1D box</a>
+  <a href="#calculation">1D calculation</a>
+  <a href="#deeper">1D derivation</a>
+  <a href="#box-2d">2D box</a>
   <a href="#sources">Lecture references</a>
 </nav>
 <main class="wrap">
   <section class="panel" id="box-1d" aria-labelledby="model-title">
-    <p class="tag">Core idea · For G1 and R1</p>
+    <p class="tag">1D box · For G1 and R1</p>
     <h2 id="model-title">Two wavelengths, two jobs</h2>
     <p class="lead">Picture an electron confined to a segment of length <i>L</i>. In the ideal model, the potential is zero inside and the walls are impenetrable. The electron’s wave function must vanish at both ends. Only standing waves with a whole number of half-wavelengths fit, so the allowed energies are discrete.</p>
     <div class="figures">
@@ -135,9 +136,75 @@
     </details>
   </section>
 
+  <section class="panel" id="box-2d" aria-labelledby="box-2d-title">
+    <p class="tag">Core idea · For G2 and C1</p>
+    <h2 id="box-2d-title">Particle in a 2D box</h2>
+    <p class="lead">An electron confined to a rectangle has a standing-wave pattern in each direction. Count the half-waves separately: <i>n</i><sub>x</sub> along the horizontal side <i>L</i><sub>x</sub> and <i>n</i><sub>y</sub> along the vertical side <i>L</i><sub>y</sub>. Both indices start at 1. The wall in either direction forces the wave function to zero along that edge.</p>
+    <div class="eq">
+      <math display="block"><mrow>
+        <msub><mi>E</mi><mrow><msub><mi>n</mi><mi>x</mi></msub><mo>,</mo><msub><mi>n</mi><mi>y</mi></msub></mrow></msub>
+        <mo>=</mo><mfrac><msup><mi>h</mi><mn>2</mn></msup><mrow><mn>8</mn><msub><mi>m</mi><mi mathvariant="normal">e</mi></msub></mrow></mfrac>
+        <mo>(</mo><mfrac><msubsup><mi>n</mi><mi>x</mi><mn>2</mn></msubsup><msubsup><mi>L</mi><mi>x</mi><mn>2</mn></msubsup></mfrac>
+        <mo>+</mo><mfrac><msubsup><mi>n</mi><mi>y</mi><mn>2</mn></msubsup><msubsup><mi>L</mi><mi>y</mi><mn>2</mn></msubsup></mfrac><mo>)</mo>
+      </mrow></math>
+    </div>
+    <p>Each term is a 1D confinement energy. Putting the same number of half-waves into a shorter side costs more energy, because the wavelength is shorter.</p>
+    <div class="figures">
+      <figure>
+        <h3>Square · equal energies</h3>
+        <svg viewBox="0 0 350 160" role="img" aria-labelledby="square-2d-title square-2d-desc">
+          <title id="square-2d-title">Swapped nodal patterns in a square</title>
+          <desc id="square-2d-desc">State A, with indices two and three, has one vertical and two horizontal interior nodal lines. State B, with indices three and two, has two vertical lines and one horizontal line. The energies are equal in a square.</desc>
+          <text x="87" y="17" text-anchor="middle">A · (2, 3)</text><text x="263" y="17" text-anchor="middle">B · (3, 2)</text>
+          <path class="wall" d="M43 28h88v88H43z M219 28h88v88h-88z"/>
+          <path class="wave" stroke-dasharray="4 3" d="M87 28v88 M43 57.33h88 M43 86.67h88 M248.33 28v88 M277.67 28v88 M219 72h88"/>
+          <text x="175" y="78" text-anchor="middle">↔</text>
+          <text x="175" y="146" text-anchor="middle">Same energy · E(A) = E(B)</text>
+        </svg>
+        <figcaption>Dashed lines mark where the wave function is zero. In a square you can swap the patterns along <i>x</i> and <i>y</i> without changing the energy.</figcaption>
+      </figure>
+      <figure>
+        <h3>Rectangle · different energies</h3>
+        <svg viewBox="0 0 350 160" role="img" aria-labelledby="rectangle-2d-title rectangle-2d-desc">
+          <title id="rectangle-2d-title">Swapping the indices in a rectangle splits the energies</title>
+          <desc id="rectangle-2d-desc">The width is greater than the height. State A has three half-waves along the shorter vertical dimension, while state B has only two. State A has the higher energy.</desc>
+          <text x="87" y="17" text-anchor="middle">A · (2, 3)</text><text x="263" y="17" text-anchor="middle">B · (3, 2)</text>
+          <path class="wall" d="M24 42h126v60H24z M200 42h126v60H200z"/>
+          <path class="wave" stroke-dasharray="4 3" d="M87 42v60 M24 62h126 M24 82h126 M242 42v60 M284 42v60 M200 72h126"/>
+          <text x="175" y="119" text-anchor="middle">x is the longer side</text>
+          <text x="175" y="146" text-anchor="middle">A is higher · E(A) &gt; E(B)</text>
+        </svg>
+        <figcaption>When <i>L</i><sub>x</sub> &gt; <i>L</i><sub>y</sub>, the same change from two to three half-waves costs more along the shorter <i>y</i> side.</figcaption>
+      </figure>
+    </div>
+    <p class="note"><strong>Degenerate means same energy, not same state.</strong> The square-box patterns shown here are two distinct spatial states. Each can hold up to two electrons of opposite spin.</p>
+    <h3>Calculation route</h3>
+    <ol class="method">
+      <li><strong>Choose the formula for the shape.</strong> For a square, set <i>L</i><sub>x</sub> = <i>L</i><sub>y</sub> and factor out the common energy scale used in G2 and C1. In a rectangle, keep the two side lengths separate.</li>
+      <li><strong>Rank states by energy.</strong> Square each index separately. Compare the resulting energies, keeping equal-energy states distinct. The common scale named <i>E</i><sub>0</sub> in C1 is a prefactor, not the ground-state energy of the 2D box.</li>
+      <li><strong>Fill from the lowest energy up.</strong> Count two spin states per spatial state. When two spatial states have the same energy, that energy can accommodate four electrons, not two.</li>
+    </ol>
+    <details>
+      <summary>Why do the energies add?</summary>
+      <div>
+        <p>The 2D wave function is the product of an <i>x</i> sine and a <i>y</i> sine. The <i>x</i> part of the kinetic-energy operator acts only on the <i>x</i> sine, and the <i>y</i> part acts only on the <i>y</i> sine. Each produces its own 1D energy contribution, so the two contributions add.</p>
+        <p>A direction with index <i>n</i> has <i>n</i> − 1 <em>interior</em> zeros, not <i>n</i>. In two dimensions each such zero extends into a nodal line. The box walls are not counted as interior nodes.</p>
+      </div>
+    </details>
+    <details>
+      <summary>What does the square model say about benzene?</summary>
+      <div><p>The square in the Try-Test is a way to practise ranking states and counting electrons at degenerate energies. Real benzene is not square. The model is not a molecular-orbital calculation for benzene.</p></div>
+    </details>
+    <p class="refs" style="margin-top:.9rem"><strong>Lecture references.</strong> L22 slide 21 gives the 2D wave function and energy. Slide 22, Exercise 4(b), compares swapped indices in a square. T02, Q4 (printed p. 6, PDF p. 8), extends this to level filling.</p>
+    <div class="links" aria-label="Related 2D exercises">
+      <a href="unit03_shell_quantum.html#g2">← G2 · Guided calculation</a>
+      <a href="unit03_shell_quantum.html#c1">← C1 · Concept task</a>
+    </div>
+  </section>
+
   <section class="panel" id="sources" aria-labelledby="source-title">
     <h2 id="source-title">Lecture references</h2>
-    <p class="refs"><cite>L22 · The Shell</cite>, Manfred Kerschbaumer, Physical Chemistry II. Slide 19 gives the boundary conditions and slide 20 gives the single-electron energy levels. The appended exercise 6 on PDF page 83 applies the 1D model to β-carotene. Both diagrams are explanatory sketches, not reproductions of the slides.</p>
+    <p class="refs"><cite>L22 · The Shell</cite>, Manfred Kerschbaumer, Physical Chemistry II. Slide 19 gives the boundary conditions and slide 20 gives the single-electron energy levels. The appended exercise 6 on PDF page 83 applies the 1D model to β-carotene. For 2D, see slides 21–22 and the Try-Test Q4 references above. The diagrams on this page are explanatory sketches, not reproductions of the slides.</p>
   </section>
 </main>
 <footer class="wrap"><a href="unit03_shell_quantum.html">← Back to Unit 03</a></footer>
