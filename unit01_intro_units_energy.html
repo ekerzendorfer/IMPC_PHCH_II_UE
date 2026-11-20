@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UE 01 – Units, Ideal Gases &amp; Photon Energy | Physical Chemistry II</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script defer src="codes.js?v=ue01-v1"></script>
+  <style>
+    :root{font-family:system-ui,sans-serif;color:#1e293b;background:#f8fafc;line-height:1.53}
+    *,*::before,*::after{box-sizing:border-box}
+    [hidden]{display:none!important}
+    body{margin:0} main,.wrap{max-width:68rem;margin:auto;padding:0 1rem}
+    main{padding-top:1rem;padding-bottom:3rem}
+    h1,h2,h3,p{margin:.25rem 0 .7rem} h1{font-size:clamp(1.35rem,4vw,2rem)}
+    h2{font-size:1.2rem} h3{font-size:1rem}
+    a{color:#075985;text-underline-offset:.15em} .top a{color:#bae6fd}
+    .top{background:#0f172a;color:#fff;padding:1rem 0}
+    .top .meta{color:#cbd5e1;font-size:.88rem}
+    #release-form{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
+    #release-code{width:min(100%,13rem)}
+    #release-status{min-height:1.5em;color:#fef3c7;margin:0}
+    .status-line{display:flex;flex-wrap:wrap;gap:.35rem 1.2rem;font-size:.88rem;color:#dbeafe}
+    nav,.note,.sources{padding:.85rem 1.1rem;background:#fff;border:1px solid #cbd5e1;border-radius:.8rem;margin:0 0 1.15rem}
+    nav a{display:inline-block;margin:.15rem .5rem .15rem 0}.note p:last-child,.sources p:last-child{margin-bottom:0}
+    .card{--accent:#3730a3;--tint:#eef2ff;border-radius:.8rem;overflow:hidden;border:1px solid #cbd5e1;background:#fff;margin:0 0 1.1rem}
+    .Concept{--accent:#92400e;--tint:#fffbeb}.Practice{--accent:#065f46;--tint:#ecfdf5}.Homework{--accent:#5b21b6;--tint:#f5f3ff}
+    .card>header{color:white;background:var(--accent);padding:.7rem 1.1rem}
+    .card>header p{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;margin:0}.card>header h2{margin:.1rem 0}
+    .body{padding:1rem 1.1rem}.body>p:first-child{margin-top:0}
+    details{border:1px solid #cbd5e1;border-radius:.55rem;margin:.65rem 0;background:#fff}
+    details>summary{cursor:pointer;font-weight:650;padding:.65rem .8rem}
+    details>div{padding:.05rem .8rem .65rem}
+    .lookup{background:#eff6ff;border-color:#bfdbfe}.lookup>summary{color:#075985}
+    .guided,.solution,.step{background:var(--tint)}
+    .solution{border-color:var(--accent)}.solution>summary{color:var(--accent)}
+    .step{margin:.75rem 0;border:1px solid #cbd5e1;border-radius:.55rem;padding:.75rem .85rem}
+    .prompt{font-weight:600;margin-bottom:.55rem}
+    .inputs{display:flex;flex-wrap:wrap;align-items:end;gap:.65rem}
+    label{font-weight:600}.inputs label{display:grid;gap:.25rem;font-size:.9rem}
+    input,select,button{font:inherit}
+    input[type=text],select{background:#fff;color:#0f172a;border:1px solid #94a3b8;border-radius:.35rem;padding:.35rem .5rem;max-width:100%}
+    .inputs input[type=text]{width:9rem}.inputs input[readonly]{background:#f1f5f9}
+    button{background:#334155;color:#fff;border:0;border-radius:.35rem;padding:.38rem .7rem;cursor:pointer;font-weight:650}
+    #release-form button{background:#fbbf24;color:#0f172a}button:disabled{opacity:.65;cursor:default}
+    :focus-visible{outline:3px solid #0284c7;outline-offset:2px}
+    .feedback{margin:.45rem 0 0;font-size:.92rem}.feedback:empty{display:none}
+    .feedback[data-kind=pass]{color:#065f46}.feedback[data-kind=retry]{color:#9f1239}
+    .theory-link a:first-child{font-weight:650}
+    .lock-note{color:#475569;font-size:.9rem}.format{font-size:.88rem;color:#475569}
+    @media print{#practice-restart,#practice-restart-status{display:none!important}}
+    .tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:.75rem}
+    fieldset{margin:0;min-width:0;border:1px solid #cbd5e1;border-radius:.5rem;padding:.5rem}
+    .table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.93rem}
+    th,td{text-align:left;padding:.38rem .5rem;border-bottom:1px solid #cbd5e1}
+    tr:has(input:checked){background:#dbeafe}tr label{cursor:pointer}
+    .katex-display{overflow-x:auto;overflow-y:hidden;margin:.6em 0}.katex{font-size:1.02em}
+    @media print{body,.top{background:#fff;color:#000}.top .meta{color:#000}nav,#release-form,.status-line,#release-status,button{display:none}.card>header{background:#fff;color:#000}.step,.note,.lookup,.guided,.solution{background:#fff}}
+    .resource{margin-top:.75rem;color:#475569;font-size:.91rem;overflow-wrap:anywhere}
+    caption{text-align:left;font-weight:650;padding:.3rem .5rem}
+    .card code{overflow-wrap:anywhere}
+    #formula-reference{scroll-margin-top:.75rem}
+    @media print{.card,.table-wrap,.katex-display{overflow:visible} .step{break-inside:avoid}}
+  </style>
+</head>
+<body>
+<header class="top">
+<div class="wrap">
+  <p class="meta"><a href="index.html">← Course Hub</a> · Physical Chemistry II · UE 01</p>
+  <h1>Units, Ideal Gases &amp; Photon Energy</h1>
+  <p class="meta">FH IMC Krems · Main lecture: Manfred Kerschbaumer · Exercise coaching: Erich Kerzendorfer</p>
+  <a data-calculator-launch href="calculator.html">Scientific calculator ↗</a>
+  <form id="release-form" hidden>
+    <label for="release-code">Solution unlock code</label>
+    <input id="release-code" type="text" placeholder="Enter the announced code" autocomplete="off" spellcheck="false">
+    <button type="submit">Unlock solutions</button>
+  </form>
+  <div class="status-line"><span id="status-inclass">In-class solutions: locked</span><span id="status-homework">Optional solutions: locked</span></div>
+  <p id="release-status" role="status"></p>
+</div>
+</header>
+<main>
+<nav aria-label="Order of activities">
+  <strong>In class</strong> <a href="#g1">G1</a> <a href="#g2">G2</a> <a href="#c1">C1</a> <a href="#c2">C2 (reserve)</a> <a href="#r1">R1</a> <a href="#r2">R2</a>
+  · <strong>Optional</strong> <a href="#h1">H1</a> <a href="#h2">H2</a> · <a href="#reference-data">Reference Data</a>
+</nav>
+<section class="note" aria-label="How to use this worksheet">
+  <p><strong>No lecture preparation required.</strong> Keep track of the units, choose a compatible constant and ask what each result refers to. Write your reasoning on paper first. The calculator evaluates numbers, but it does not track units.</p>
+  <p>Guided steps are always available. In R1 and R2, a correct check opens the next check. The lecturer releases the full in-class solutions and the optional solutions separately. You can start H1 or H2 at any time, in class or at home.</p>
+  <noscript><p>The prompts and guided steps are still available. Online checks and solution release need JavaScript.</p></noscript>
+</section>
+<details class="note" id="formula-reference">
+  <summary>Formula and input reference</summary>
+  <div>
+    <p><strong>Basic relations.</strong> $\rho=m/V$, $n=m/M$, $c=n/V$ for amount concentration, $pV=nRT$, $x_i=n_i/n_{\mathrm{tot}}$. In the photon formulas, $c$ instead denotes the speed of light.</p>
+    <p><strong>Ideal gas.</strong> Use absolute pressure and temperature in kelvin. $T/\mathrm K=t/{}^\circ\mathrm C+273.15$.</p>
+    <div class="table-wrap">
+    <table>
+      <caption>Choose a gas constant that matches the units you use</caption>
+      <thead><tr><th scope="col">Pressure and volume</th><th scope="col">Value and units of R</th><th scope="col">Calculator entry</th></tr></thead>
+      <tbody>
+      <tr><td>bar and L</td><td>0.0831446 L·bar·mol⁻¹·K⁻¹</td><td><code>R_Lbar</code></td></tr>
+      <tr><td>kPa and L</td><td>8.31446 L·kPa·mol⁻¹·K⁻¹</td><td><code>R_LkPa</code></td></tr>
+      <tr><td>Pa and m³</td><td>8.31446 J·mol⁻¹·K⁻¹</td><td><code>R</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p><strong>Photons.</strong> $E_\gamma=hc/\lambda$, $E_{\mathrm{mol}}=N_\mathrm A E_\gamma$, $\lambda$ in metres with SI constants. Use $1\,\mathrm{eV}=1.602\,176\,634\times10^{-19}\,\mathrm J$.</p>
+    <p><strong>Numeric checks.</strong> Enter the number only, in the unit shown. Both <code>2.5e-12</code> and <code>2,5e-12</code> are accepted. Keep extra digits in intermediate results and round only the final results.</p>
+  </div>
+</details>
+
+<section id="g1" class="card Guided">
+<header><p>Guided</p><h2>G1 · One gas, two consistent unit systems</h2></header>
+<div class="body">
+<p>A rigid vessel with a volume of <strong>2.50 L</strong> contains nitrogen at <strong>25.0 °C</strong> and an <strong>absolute pressure of 1.20 bar</strong>. Assume ideal-gas behaviour.</p>
+<p>Calculate the amount of nitrogen in moles. First keep the pressure in bar and the volume in litres. Then verify your result using SI units.</p>
+<p class="note"><strong>Before calculating.</strong> Which value of $R$ lets us keep bar and litres? What must we convert in <em>both</em> calculations?</p>
+<details class="guided"><summary>Step 1 · Set up the calculation</summary><div>
+<p>Rearrange $pV=nRT$ to $n=pV/(RT)$. Use absolute temperature. For $25.0\,{}^\circ\mathrm C$ use $T=298.15\,\mathrm K$ in the calculation and round the final answer only.</p>
+</div></details>
+<details class="guided"><summary>Step 2 · Work in litres and bar</summary><div>
+<p>Choose $R=0.0831446\,\mathrm{L\,bar\,mol^{-1}\,K^{-1}}$.</p>
+$$n=\frac{(1.20\,\mathrm{bar})(2.50\,\mathrm L)}{(0.0831446\,\mathrm{L\,bar\,mol^{-1}\,K^{-1}})(298.15\,\mathrm K)}=\boxed{0.121\,\mathrm{mol}}.$$
+<p><strong>Calculator:</strong> Select the gas constant with L and bar in the constants menu, then enter <code>1.20*2.50/(R_Lbar*(25.0+273.15))</code>.</p>
+</div></details>
+<details class="guided"><summary>Step 3 · Verify in SI units</summary><div>
+<p>Use $p=1.20\times10^5\,\mathrm{Pa}$, $V=2.50\times10^{-3}\,\mathrm{m^3}$ and $R=8.31446\,\mathrm{J\,mol^{-1}\,K^{-1}}$.</p>
+$$n=\frac{(1.20\times10^5\,\mathrm{Pa})(2.50\times10^{-3}\,\mathrm{m^3})}{(8.31446\,\mathrm{J\,mol^{-1}\,K^{-1}})(298.15\,\mathrm K)}=\boxed{0.121\,\mathrm{mol}}.$$
+<p>$1\,\mathrm{Pa\,m^3}=1\,\mathrm J$, whereas $1\,\mathrm{bar\,L}=100\,\mathrm J$. The two values of $R$ represent the same constant in different units.</p>
+<p><strong>Pause and explain.</strong> A student gets $0.00121\,\mathrm{mol}$. Which units did they mix?</p>
+</div></details>
+<p class="resource"><strong>Optional help:</strong> <a href="https://openstax.org/books/chemistry-2e/pages/1-6-mathematical-treatment-of-measurement-results">OpenStax · Dimensional analysis</a> · <a href="calculator.html" target="_blank" rel="noopener">Calculator in a separate tab</a></p>
+</div></section>
+
+<section id="g2" class="card Guided">
+<header><p>Guided</p><h2>G2 · From one photon to one mole of photons</h2></header>
+<div class="body">
+<p>Light has a wavelength of <strong>600.0 nm</strong>. Calculate the energy of <strong>one photon</strong> in joules and the energy of <strong>one mole of these photons</strong> in kilojoules per mole. Use $E_\gamma=hc/\lambda$ and the constants below.</p>
+<p>$h=6.626\,070\,15\times10^{-34}\,\mathrm{J\,s}$, $c=299\,792\,458\,\mathrm{m\,s^{-1}}$, $N_\mathrm A=6.022\,140\,76\times10^{23}\,\mathrm{mol^{-1}}$.</p>
+<p class="note"><strong>Before calculating.</strong> With $c$ in metres per second, what unit should we use for the wavelength? Does $hc/\lambda$ refer to one photon or a mole of photons?</p>
+<details class="guided"><summary>Step 1 · Calculate the energy of one photon</summary><div>
+$$\lambda=600.0\,\mathrm{nm}=6.000\times10^{-7}\,\mathrm m,\qquad E_\gamma=\frac{hc}{\lambda}=3.310743\ldots\times10^{-19}\,\mathrm J.$$
+<p>The units give $(\mathrm{J\,s})(\mathrm{m\,s^{-1}})/\mathrm m=\mathrm J$. The rounded result for one photon is $3.311\times10^{-19}\,\mathrm J$.</p>
+<p><strong>Calculator:</strong> Enter <code>h*c/(600e-9)</code>. Insert $h$ and $c$ from the constants menu. <strong>EE</strong> enters the <code>e</code> in <code>e-9</code>. Store the unrounded result in <strong>M1</strong>.</p>
+</div></details>
+<details class="guided"><summary>Step 2 · Scale up to a mole</summary><div>
+<p>Multiply by $N_\mathrm A$ to get joules per mole, then convert to kilojoules per mole.</p>
+$$E_{\mathrm{mol}}=N_\mathrm A E_\gamma=1.993776\ldots\times10^5\,\mathrm{J\,mol^{-1}}=\boxed{199.4\,\mathrm{kJ\,mol^{-1}}}.$$
+<p><strong>Calculator:</strong> Clear the expression, recall M1 and append <code>*N_A/1000</code>. Keep the unit and the molar basis in your written answer.</p>
+</div></details>
+<p class="resource"><strong>Optional help:</strong> <a href="calculator.html" target="_blank" rel="noopener">Scientific calculator</a> · <a href="#reference-data">Reference Data and CODATA constants</a></p>
+</div></section>
+
+<section id="c1" class="card Concept">
+<header><p>Concept</p><h2>C1 · From a nucleus to a wavelength</h2></header>
+<div class="body">
+<p>Consider three representative lengths: a nuclear radius of <strong>5 fm</strong>, a bond length of <strong>150 pm</strong> and a wavelength of visible light of <strong>550 nm</strong>.</p>
+<ol>
+<li>Rank them from shortest to longest before converting.</li>
+<li>Express each length in metres using scientific notation.</li>
+<li>Roughly how many times longer is the wavelength than the bond length: <strong>4, 40, 4,000 or 1,000,000 times</strong>?</li>
+</ol>
+<p>Use $1\,\mathrm{fm}=10^{-15}\,\mathrm m$, $1\,\mathrm{pm}=10^{-12}\,\mathrm m$ and $1\,\mathrm{nm}=10^{-9}\,\mathrm m$.</p>
+<form id="step-c1" class="step" data-step="c1"><p class="prompt">Check the three lengths in metres.</p><div class="inputs"><label for="answer-nuclear">Nuclear radius<span><input id="answer-nuclear" type="text" autocomplete="off" spellcheck="false" aria-describedby="format-c1"> m</span></label><label for="answer-bond">Bond length<span><input id="answer-bond" type="text" autocomplete="off" spellcheck="false" aria-describedby="format-c1"> m</span></label><label for="answer-light">Light wavelength<span><input id="answer-light" type="text" autocomplete="off" spellcheck="false" aria-describedby="format-c1"> m</span></label><button type="submit" class="check">Check</button></div><p id="format-c1" class="format">Enter numbers only. Scientific notation: <code>2.5e-12</code> or <code>2,5e-12</code>.</p><p class="feedback" role="status"></p></form>
+<p class="resource"><a href="https://www.bipm.org/en/measurement-units/si-prefixes">Optional help · BIPM SI prefixes</a></p>
+<p class="lock-note" data-lock-note="inclass">The discussion solution is released after in-class practice.</p>
+<details class="solution" data-release="inclass" hidden><summary>Show discussion solution · C1</summary><div>
+<p>In metres, the nuclear radius is $5\times10^{-15}$, the bond length is $1.50\times10^{-10}$ and the light wavelength is $5.50\times10^{-7}$, in increasing order. Since $150\,\mathrm{pm}=0.150\,\mathrm{nm}$, the ratio is $550/0.150\approx3.7\times10^3$. The closest choice is <strong>4,000</strong>. Both the prefix and the number in front of it matter.</p>
+</div></details>
+</div></section>
+
+<section id="c2" class="card Concept">
+<header><p>Concept · reserve</p><h2>C2 · Can the units tell us what $h\nu$ is?</h2></header>
+<div class="body">
+<p>The unit of Planck's constant $h$ is J·s. The unit of frequency $\nu$ is Hz, or s⁻¹. Determine the unit of $h\nu$ and say what kind of quantity it represents.</p>
+<p class="lock-note" data-lock-note="inclass">The discussion solution is released after in-class practice.</p>
+<details class="solution" data-release="inclass" hidden><summary>Show discussion solution · C2</summary><div>
+<p>$(\mathrm{J\,s})(\mathrm{s^{-1}})=\mathrm J$. The product is an energy. The units alone do not tell us that it refers to one photon; that comes from the physical relation $E_\gamma=h\nu$.</p>
+</div></details>
+</div></section>
+
+<section id="r1" class="card Practice">
+<header><p>Practice</p><h2>R1 · Find the volume of an ideal gas</h2></header>
+<div class="body">
+<p>A sample contains <strong>2.00 g of argon</strong> at <strong>20.0 °C</strong> and an absolute pressure of <strong>98.0 kPa</strong>. Assume ideal-gas behaviour. The molar mass of argon is <strong>39.95 g mol⁻¹</strong>.</p>
+<p>Calculate the volume in litres. Show how you obtain the amount of argon, and write down the <strong>value and units of $R$</strong> you use. Give your final answer to three significant figures. Use the <a href="#formula-reference" data-open-details>formula reference</a> if needed.</p>
+<details class="lookup" id="practice-restart" hidden>
+<summary>Restart R1/R2 practice</summary><div>
+<p>This clears only your R1 and R2 entries and progress. Solution releases stay as they are.</p>
+<button type="button" id="practice-reset">Clear R1/R2 and start again</button>
+</div></details>
+<p id="practice-restart-status" class="feedback" role="status"></p>
+<form id="step-r1a" class="step" data-step="r1a"><p class="prompt">Step A · Determine the amount of argon.</p><div class="inputs"><label for="answer-argon-amount">Amount<span><input id="answer-argon-amount" type="text" autocomplete="off" spellcheck="false"> mol</span></label><button type="submit" class="check">Check</button></div><p class="feedback" role="status"></p></form>
+<form id="step-r1b" class="step" data-step="r1b" hidden><p class="prompt">Step B · Determine the volume of argon.</p><div class="inputs"><label for="answer-argon-volume">Volume<span><input id="answer-argon-volume" type="text" autocomplete="off" spellcheck="false"> L</span></label><button type="submit" class="check">Check</button></div><p class="feedback" role="status"></p></form>
+<p class="lock-note" data-lock-note="inclass">The full solution is released after in-class practice.</p>
+<details class="solution" data-release="inclass" hidden><summary>Show complete solution · R1</summary><div>
+<p>First convert the mass to amount: $n=m/M=(2.00\,\mathrm g)/(39.95\,\mathrm{g\,mol^{-1}})=0.0500626\ldots\,\mathrm{mol}$. For $20.0\,{}^\circ\mathrm C$ use $T=293.15\,\mathrm K$. Choose $R=8.31446\,\mathrm{L\,kPa\,mol^{-1}\,K^{-1}}$.</p>
+$$V=\frac{nRT}{p}=\frac{(0.0500626\ldots\,\mathrm{mol})(8.31446\,\mathrm{L\,kPa\,mol^{-1}\,K^{-1}})(293.15\,\mathrm K)}{98.0\,\mathrm{kPa}}=1.245\ldots\,\mathrm L\approx\boxed{1.25\,\mathrm L}.$$
+<p><strong>Check the units:</strong> $1\,\mathrm{kPa\,L}=1\,\mathrm J$. Thus the kPa–L entry of $R$ has the same numerical value as the SI entry. A consistent calculation in Pa and m³, followed by conversion to litres, is also valid.</p>
+</div></details>
+</div></section>
+
+<section id="r2" class="card Practice">
+<header><p>Practice</p><h2>R2 · One wavelength, three energy values</h2></header>
+<div class="body">
+<p>Light has a wavelength of <strong>$4.70\times10^2\,\mathrm{nm}$</strong>. Calculate the energy of one photon in <strong>J</strong> and <strong>eV</strong>, then calculate the energy of one mole of these photons in <strong>kJ·mol⁻¹</strong>.</p>
+<p>Keep the unrounded result from the calculation in joules for both conversions. Use the constants from G2 and $1\,\mathrm{eV}=1.602\,176\,634\times10^{-19}\,\mathrm J$.</p>
+<p id="r2-start-note" class="lock-note" hidden>You can start on paper now. Complete the R1 checks to use the R2 check fields.</p>
+<form id="step-r2a" class="step" data-step="r2a" hidden><p class="prompt">Step A · Calculate the photon energy in joules.</p><div class="inputs"><label for="answer-photon-j">Energy of one photon<span><input id="answer-photon-j" type="text" autocomplete="off" spellcheck="false" aria-describedby="format-r2a"> J</span></label><button type="submit" class="check">Check</button></div><p id="format-r2a" class="format">Enter numbers only. Scientific notation: <code>2.5e-12</code> or <code>2,5e-12</code>.</p><p class="feedback" role="status"></p></form>
+<form id="step-r2b" class="step" data-step="r2b" hidden><p class="prompt">Step B · Convert the unrounded value to eV and to kJ per mole.</p><div class="inputs"><label for="answer-photon-ev">Energy of one photon<span><input id="answer-photon-ev" type="text" autocomplete="off" spellcheck="false"> eV</span></label><label for="answer-photon-molar">Energy per mole of photons<span><input id="answer-photon-molar" type="text" autocomplete="off" spellcheck="false"> kJ·mol⁻¹</span></label><button type="submit" class="check">Check</button></div><p class="feedback" role="status"></p></form>
+<details class="lookup"><summary>Optional extension · Wavenumber</summary><div>
+<p>Calculate the wavenumber in cm⁻¹. Express $\lambda$ in centimetres before taking its reciprocal. This is not part of the required checks.</p>
+</div></details>
+<p class="resource"><strong>After calculating:</strong> open the <a href="index.html#converter-modal" target="_blank" rel="noopener">Photon &amp; Molar Energy Converter</a> and enter <code>470</code> in its nm field. If testing the joule field instead, note that the converter expects the coefficient in units of $10^{-19}\,\mathrm J$ rather than the full number in joules.</p>
+<p id="practice-done" class="note" hidden>Practice checks complete. Compare the units and what each energy refers to, or try H1 or H2.</p>
+<p class="lock-note" data-lock-note="inclass">The full solution is released after in-class practice.</p>
+<details class="solution" data-release="inclass" hidden><summary>Show complete solution · R2</summary><div>
+<p>Convert $\lambda$ to $4.70\times10^{-7}\,\mathrm m$ and calculate $E_\gamma=hc/\lambda=4.2264805\ldots\times10^{-19}\,\mathrm J$. The rounded value is $4.23\times10^{-19}\,\mathrm J$ per photon. Use the unrounded value in both conversions below.</p>
+<ul>
+<li><strong>Same photon, different unit:</strong> divide by $1.602\,176\,634\times10^{-19}\,\mathrm{J/eV}$ to get $2.64\,\mathrm{eV}$.</li>
+<li><strong>Different basis:</strong> multiply by $N_\mathrm A$ to get $2.545246\ldots\times10^5\,\mathrm{J\,mol^{-1}}$, or $255\,\mathrm{kJ\,mol^{-1}}$ to three significant figures.</li>
+<li><strong>Optional wavenumber:</strong> $1/(4.70\times10^{-5}\,\mathrm{cm})\approx2.13\times10^4\,\mathrm{cm^{-1}}$.</li>
+</ul>
+</div></details>
+</div></section>
+
+<section class="note" aria-label="Optional challenges">
+<p><strong>Optional challenges · in class or at home.</strong> Finished early? Start either challenge now. Neither is required or graded, and both are available without completing the R1/R2 checks.</p>
+</section>
+<section id="h1" class="card Homework">
+<header><p>Optional challenge</p><h2>H1 · From combustion data to a mystery molecule</h2></header>
+<div class="body">
+<p>A <strong>0.1341 g</strong> sample of a pure compound X containing only carbon, hydrogen and oxygen is completely burned. It produces <strong>0.2200 g of CO₂</strong> and <strong>0.09005 g of H₂O</strong>. The molar mass of X is <strong>134.13 g mol⁻¹</strong>.</p>
+<ol>
+<li>Determine the empirical formula and then the molecular formula.</li>
+<li>Explain why the oxygen content cannot be calculated by simply counting all oxygen atoms in the products.</li>
+<li>After finding the formula, use the optional clues to suggest a structure. What can the combustion data <em>not</em> tell you about the structure?</li>
+</ol>
+<p>Use $M(\mathrm C)=12.011$, $M(\mathrm H)=1.008$ and $M(\mathrm O)=15.999$, in g·mol⁻¹.</p>
+<p class="resource"><a href="https://openstax.org/books/chemistry-2e/pages/3-2-determining-empirical-and-molecular-formulas">Optional help · OpenStax empirical and molecular formulas</a></p>
+<details class="lookup"><summary>Optional structure clues · open after finding the formula</summary><div>
+<p>One candidate is the sugar whose residue occurs in DNA. Compare your formula with that of D-ribose, $\mathrm{C_5H_{10}O_5}$. How many oxygen atoms are missing?</p>
+<details><summary>Second clue · locate the missing oxygen</summary><div>
+<p>In the Fischer projection of open-chain D-ribose, start at the aldehyde carbon (C1). The hydroxyl groups at C2, C3 and C4 point right. At C2, replace its –OH by H and keep the arrangement at C3 and C4. Sketch the result. The clues, not the combustion data, specify this structure.</p>
+</div></details>
+</div></details>
+<form id="check-formula" class="step"><div class="inputs"><label for="answer-empirical">Empirical formula<span><input id="answer-empirical" type="text" autocomplete="off" spellcheck="false"></span></label><label for="answer-molecular">Molecular formula<span><input id="answer-molecular" type="text" autocomplete="off" spellcheck="false"></span></label><button type="submit">Check formulas</button></div><p class="feedback" role="status"></p></form>
+<p class="lock-note" data-lock-note="homework">The optional solution is released separately.</p>
+<details class="solution" data-release="homework" hidden><summary>Show complete solution · H1</summary><div>
+<p>One mole of CO₂ contains one mole of C atoms and one mole of H₂O contains two moles of H atoms. Thus $n(\mathrm C)=0.2200/44.009\approx0.004999\,\mathrm{mol}$ and $n(\mathrm H)=2(0.09005/18.015)\approx0.009997\,\mathrm{mol}$.</p>
+<p>$m(\mathrm C)\approx0.06004\,\mathrm g$ and $m(\mathrm H)\approx0.01008\,\mathrm g$. The difference from $0.1341\,\mathrm g$ is $m(\mathrm O)\approx0.06398\,\mathrm g$, so $n(\mathrm O)\approx0.003999\,\mathrm{mol}$. Oxygen in the products comes partly from the oxygen supplied for combustion.</p>
+<p>Divide by $n(\mathrm O)$ to obtain roughly $1.25:2.50:1$. Multiply <em>all</em> entries by four to obtain $5:10:4$, so the empirical formula is $\mathrm{C_5H_{10}O_4}$. Its formula mass corresponds to $134.13\,\mathrm{g\,mol^{-1}}$. The multiplier is one, so the molecular formula is also $\boxed{\mathrm{C_5H_{10}O_4}}$.</p>
+<p><strong>Structure.</strong> The clues point to <strong>2-deoxy-D-ribose</strong>. The open-chain connectivity is CHO–CH₂–CH(OH)–CH(OH)–CH₂OH, retaining the D-ribose configuration at C3 and C4. In DNA the sugar residue is cyclic. Combustion data and molar mass give a molecular formula, not a unique connectivity, ring form or stereochemistry.</p>
+<p><a href="https://de.wikipedia.org/wiki/Desoxyribose">Compare the structures · Desoxyribose (German)</a> · <a href="https://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=5460005">PubChem · 2-deoxy-D-ribose</a></p>
+</div></details>
+</div></section>
+
+<section id="h2" class="card Homework">
+<header><p>Optional challenge</p><h2>H2 · Spot the mistake and fix it</h2></header>
+<div class="body">
+<p>Decide whether each statement is <strong>correct or wrong</strong>. Correct every wrong statement and justify your answer in one sentence. The checks are for practice only.</p>
+<form class="step cw" data-cw="1"><p class="prompt" id="statement-1">1. The calculator entry <code>5.0e-7</code> means $5.0\times10^{-7}$.</p><div class="inputs"><select id="cw-1" aria-labelledby="statement-1"><option value="">Choose…</option><option value="C">Correct</option><option value="W">Wrong</option></select><button type="submit" aria-label="Check statement 1">Check</button></div><p class="feedback" role="status"></p></form>
+<form class="step cw" data-cw="2"><p class="prompt" id="statement-2">2. Since $1\,\mathrm{cm}=10^{-2}\,\mathrm m$, it follows that $1\,\mathrm{cm^3}=10^{-2}\,\mathrm{m^3}$.</p><div class="inputs"><select id="cw-2" aria-labelledby="statement-2"><option value="">Choose…</option><option value="C">Correct</option><option value="W">Wrong</option></select><button type="submit" aria-label="Check statement 2">Check</button></div><p class="feedback" role="status"></p></form>
+<form class="step cw" data-cw="3"><p class="prompt" id="statement-3">3. A wavelength of $5.00\times10^2\,\mathrm{nm}$ corresponds to a wavenumber of $2.00\times10^4\,\mathrm{cm^{-1}}$.</p><div class="inputs"><select id="cw-3" aria-labelledby="statement-3"><option value="">Choose…</option><option value="C">Correct</option><option value="W">Wrong</option></select><button type="submit" aria-label="Check statement 3">Check</button></div><p class="feedback" role="status"></p></form>
+<form class="step cw" data-cw="4"><p class="prompt" id="statement-4">4. To convert the energy of one photon from joules to electronvolts, first multiply by the Avogadro constant.</p><div class="inputs"><select id="cw-4" aria-labelledby="statement-4"><option value="">Choose…</option><option value="C">Correct</option><option value="W">Wrong</option></select><button type="submit" aria-label="Check statement 4">Check</button></div><p class="feedback" role="status"></p></form>
+<form class="step cw" data-cw="5"><p class="prompt" id="statement-5">5. For pressure in kPa and volume in L, we can use $R=8.31446\,\mathrm{L\,kPa\,mol^{-1}\,K^{-1}}$.</p><div class="inputs"><select id="cw-5" aria-labelledby="statement-5"><option value="">Choose…</option><option value="C">Correct</option><option value="W">Wrong</option></select><button type="submit" aria-label="Check statement 5">Check</button></div><p class="feedback" role="status"></p></form>
+<form class="step cw" data-cw="6"><p class="prompt" id="statement-6">6. For a gas at $20.0\,{}^\circ\mathrm C$, the temperature to enter in $pV=nRT$ is $20.0\,\mathrm K$.</p><div class="inputs"><select id="cw-6" aria-labelledby="statement-6"><option value="">Choose…</option><option value="C">Correct</option><option value="W">Wrong</option></select><button type="submit" aria-label="Check statement 6">Check</button></div><p class="feedback" role="status"></p></form>
+<details class="lookup"><summary>Extra challenge for early finishers</summary><div>
+<p>A student reports <strong>2.50 eV per photon</strong> and <strong>120 kJ mol⁻¹</strong> for the same light. Can both values be correct? Show a short calculation without finding the wavelength.</p>
+</div></details>
+<p class="lock-note" data-lock-note="homework">Explanations are released with the optional-solutions code.</p>
+<details class="solution" data-release="homework" hidden><summary>Show explanations and extra challenge solution · H2</summary><div>
+<ol>
+<li><strong>Correct.</strong> In this context <code>e-7</code> means “times ten to the power of minus seven”.</li>
+<li><strong>Wrong.</strong> Cube the length conversion factor, so $1\,\mathrm{cm^3}=(10^{-2}\,\mathrm m)^3=10^{-6}\,\mathrm{m^3}$.</li>
+<li><strong>Correct.</strong> $500\,\mathrm{nm}=5.00\times10^{-5}\,\mathrm{cm}$. Its reciprocal is $2.00\times10^4\,\mathrm{cm^{-1}}$.</li>
+<li><strong>Wrong.</strong> Divide the photon energy in joules by $1.602\,176\,634\times10^{-19}\,\mathrm{J/eV}$. Multiplying by $N_\mathrm A$ gives a value per mole instead.</li>
+<li><strong>Correct.</strong> $1\,\mathrm{kPa\,L}=(10^3\,\mathrm{Pa})(10^{-3}\,\mathrm{m^3})=1\,\mathrm J$, so the numerical value is the same in J and in kPa·L.</li>
+<li><strong>Wrong.</strong> In $pV=nRT$, use $20.0+273.15=293.15$ K in the calculation, not 20.0 K.</li>
+</ol>
+<p><strong>Extra challenge:</strong> Convert 2.50 eV to joules per photon, multiply by $N_\mathrm A$ and convert to kJ: $2.50(1.602\,176\,634\times10^{-19})N_\mathrm A/1000\approx241\,\mathrm{kJ\,mol^{-1}}$. The two reported values are not consistent.</p>
+</div></details>
+</div></section>
+
+<section id="reference-data" class="sources">
+<h2>Reference Data</h2>
+<p>All data needed for this worksheet are given. Use these links for practice or for later units.</p>
+<ul>
+<li><a href="https://physics.nist.gov/cuu/Constants/">NIST/CODATA · Fundamental Physical Constants</a> — Planck, Avogadro, elementary charge, gas constant, Faraday constant and particle masses.</li>
+<li><a href="https://ciaaw.org/abridged-atomic-weights.htm">CIAAW · Abridged Standard Atomic Weights</a> — element values for ordinary molar-mass calculations.</li>
+<li><a href="https://www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses">NIST · Isotopic Masses</a> — masses for specific isotopes, rather than an element's standard atomic weight.</li>
+<li><a href="https://webbook.nist.gov/chemistry/">NIST Chemistry WebBook</a> — compound-specific thermochemical and spectral data.</li>
+<li><a href="https://www.nist.gov/pml/atomic-spectra-database">NIST Atomic Spectra Database</a> — atomic lines and energy levels.</li>
+</ul>
+</section>
+</main>
+<script>
+'use strict';
+window.addEventListener('DOMContentLoaded', () => {
+  const get = id => document.getElementById(id);
+  const releaseKey = 'PC2_UE01_RELEASE_V1';
+  const progressKey = 'PC2_UE01_PRACTICE_V1';
+  const read = key => {
+    try { return JSON.parse(localStorage.getItem(key)) || {}; }
+    catch { return {}; }
+  };
+  const write = (key, value) => {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+  };
+  const normaliseCode = s => typeof s === 'string' ? s.trim().toUpperCase() : '';
+  const groups = {inclass: 'In-class', homework: 'Optional'};
+  const stored = read(releaseKey);
+  const released = {inclass: stored.inclass === true, homework: stored.homework === true};
+  function updateReleases() {
+    for (const [group, title] of Object.entries(groups)) {
+      get('status-' + group).textContent = title + ' solutions: ' + (released[group] ? 'unlocked' : 'locked');
+      document.querySelectorAll('[data-release="' + group + '"]').forEach(el => { el.hidden = !released[group]; });
+      document.querySelectorAll('[data-lock-note="' + group + '"]').forEach(el => { el.hidden = released[group]; });
+    }
+  }
+  get('release-form').hidden = false;
+  get('release-form').addEventListener('submit', event => {
+    event.preventDefault();
+    const input = get('release-code'), status = get('release-status');
+    const code = normaliseCode(input.value);
+    if (!code) { status.textContent = 'Enter the code announced by the lecturer.'; return; }
+    const config = window.PC2_CODES?.UE01;
+    const keys = Object.keys(groups);
+    const known = keys.map(key => normaliseCode(config?.[key]));
+    if (known.some(x => !x) || known[0] === known[1]) {
+      status.textContent = 'The release codes could not be loaded. Refresh the worksheet and try again.';
+      return;
+    }
+    const group = keys[known.indexOf(code)];
+    if (!group) { status.textContent = 'This code does not match Unit 01.'; return; }
+    released[group] = true;
+    write(releaseKey, released);
+    updateReleases();
+    status.textContent = groups[group] + ' solutions unlocked. Open each solution individually.';
+    input.value = '';
+  });
+
+  const planck = 6.62607015e-34, light = 299792458, avo = 6.02214076e23, joulesPerEv = 1.602176634e-19;
+  const nAr = 2 / 39.95;
+  const ePhoton = planck * light / (470e-9);
+  const checks = {
+    c1: {fields: ['nuclear', 'bond', 'light'], values: [5e-15, 150e-12, 550e-9]},
+    r1a: {fields: ['argon-amount'], values: [nAr]},
+    r1b: {fields: ['argon-volume'], values: [nAr * 8.31446261815324 * 293.15 / 98]},
+    r2a: {fields: ['photon-j'], values: [ePhoton]},
+    r2b: {fields: ['photon-ev', 'photon-molar'], values: [ePhoton / joulesPerEv, ePhoton * avo / 1000]}
+  };
+  const order = ['r1a', 'r1b', 'r2a', 'r2b'];
+  const notation = 'Enter a number without units. Use 2.5e-12 or 2,5e-12 for scientific notation.';
+  function parse(input) {
+    const s = input.trim().replaceAll('−', '-').replace(',', '.');
+    if (!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(s)) return NaN;
+    const value = Number(s);
+    return Number.isFinite(value) ? value : NaN;
+  }
+  function checkNumbers(id, raw) {
+    const nums = raw.map(parse);
+    if (raw.length !== checks[id].values.length || nums.some(n => !Number.isFinite(n))) return 'format';
+    return nums.every((n, i) => Math.abs(n / checks[id].values[i] - 1) <= 0.01) ? 'pass' : 'retry';
+  }
+  function feedback(form, kind, message) {
+    const out = form.querySelector('.feedback');
+    out.dataset.kind = kind;
+    out.textContent = message;
+    return out;
+  }
+  const progress = Object.create(null);
+  const previous = read(progressKey);
+  for (const id of order) {
+    const values = previous[id];
+    if (!Array.isArray(values) || !values.every(v => typeof v === 'string') || checkNumbers(id, values) !== 'pass') break;
+    progress[id] = values;
+  }
+  function updateProgress() {
+    let enabled = true;
+    for (const id of order) {
+      const form = get('step-' + id);
+      const answers = progress[id];
+      form.hidden = !enabled;
+      checks[id].fields.forEach((key, i) => {
+        const input = get('answer-' + key);
+        input.readOnly = Boolean(answers);
+        if (answers) input.value = answers[i];
+      });
+      form.querySelector('.check').disabled = Boolean(answers);
+      if (answers) feedback(form, 'pass', 'Correct.');
+      enabled = enabled && Boolean(answers);
+    }
+    get('r2-start-note').hidden = Boolean(progress.r1b);
+    get('practice-done').hidden = !progress.r2b;
+  }
+  get('practice-restart').hidden = false;
+  get('practice-reset').addEventListener('click', () => {
+    for (const id of order) {
+      delete progress[id];
+      const form = get('step-' + id);
+      form.reset();
+      feedback(form, '', '');
+    }
+    write(progressKey, progress);
+    get('practice-restart').open = false;
+    updateProgress();
+    get('practice-restart-status').textContent = 'R1/R2 restarted. Begin with the amount of argon in R1.';
+    get('answer-argon-amount').focus();
+  });
+  document.querySelectorAll('[data-step]').forEach(form => {
+    form.querySelector('.feedback').tabIndex = -1;
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const id = form.dataset.step;
+      const index = order.indexOf(id);
+      if (form.hidden || progress[id] || (index > 0 && !progress[order[index - 1]])) return;
+      const raw = checks[id].fields.map(key => get('answer-' + key).value.trim());
+      const result = checkNumbers(id, raw);
+      if (index >= 0) get('practice-restart-status').textContent = '';
+      if (result === 'format') feedback(form, 'retry', notation);
+      else if (result === 'retry') feedback(form, 'retry', 'Not correct yet. Recheck the units and the setup.');
+      else if (index >= 0) {
+        progress[id] = raw;
+        write(progressKey, progress);
+        updateProgress();
+        form.querySelector('.feedback').focus();
+      } else feedback(form, 'pass', 'All three lengths in metres are correct. Check your estimate of their ratio on paper.');
+    });
+  });
+  get('check-formula').addEventListener('submit', event => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const normalise = s => s.replace(/\s/g, '').replace(/[₀-₉]/g, c => String('₀₁₂₃₄₅₆₇₈₉'.indexOf(c))).toUpperCase();
+    const answers = ['empirical', 'molecular'].map(key => normalise(get('answer-' + key).value));
+    if (answers.some(x => !x)) { feedback(form, 'retry', 'Enter both formulas, for example CH4.'); return; }
+    const good = answers.every(x => x === 'C5H10O4');
+    feedback(form, good ? 'pass' : 'retry', good ? 'Both formulas are correct. The formula alone does not identify the structure.' : 'Not correct yet. Check the mole ratio and the molar-mass multiplier.');
+  });
+  const statements = ['C', 'W', 'C', 'W', 'C', 'W'];
+  document.querySelectorAll('[data-cw]').forEach(form => {
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const answer = form.querySelector('select').value;
+      if (!answer) { feedback(form, 'retry', 'Choose Correct or Wrong first.'); return; }
+      const good = answer === statements[Number(form.dataset.cw) - 1];
+      feedback(form, good ? 'pass' : 'retry', good ? 'Your choice is correct. Can you justify it?' : 'Reconsider this statement.');
+    });
+  });
+  document.querySelectorAll('[data-open-details]').forEach(link => {
+    link.addEventListener('click', () => { get(link.hash.slice(1)).open = true; });
+  });
+  if (location.hash === '#formula-reference') get('formula-reference').open = true;
+  updateReleases();
+  updateProgress();
+  if (window.renderMathInElement) {
+    window.renderMathInElement(document.body, {
+      delimiters: [{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],
+      throwOnError: false
+    });
+  }
+});
+</script>
+<script src="calculator-dock.js" defer></script>
+</body>
+</html>
