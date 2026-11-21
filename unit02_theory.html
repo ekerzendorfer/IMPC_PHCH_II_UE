@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UE 02 Theory · Nuclear Processes, Spectral Lines and Decay | Physical Chemistry II</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="unit02_style.css?v=ue02-1">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+<p class="meta"><a href="index.html">← Course Hub</a> · <a href="unit02_nucleus_spectra.html">← UE 02 worksheet</a></p>
+<h1>UE 02 · Theory Companion</h1>
+<p class="subtitle">The Nucleus and Atomic Spectra · Targeted explanations for the calculation tasks</p>
+<p class="meta">Not a substitute for the lectures: use the referenced L21/L22 slides for context and the worksheet for your own calculations.</p>
+<a data-calculator-launch href="calculator.html">Scientific calculator ↗</a>
+</div></header>
+<main>
+<nav><strong>Jump to:</strong>
+<a href="#nuclides-decay">Nuclides and decay</a>
+<a href="#mass-defect">Mass and energy</a>
+<a href="#nuclear-energy">Fusion, decay and usable energy</a>
+<a href="#hydrogen-lines">Hydrogen lines</a>
+<a href="#radioactive-decay">Half-life</a>
+<a href="#resources">References</a>
+</nav>
+<section class="note"><p><strong>How to study:</strong> Follow the link from your exercise, inspect the idea and its units, then use the <em>Back to ...</em> link to return. This companion deliberately does not perform the numerical R1, R2, H1 or H2 calculations for you.</p></section>
+
+<section id="nuclides-decay" class="theory-unit"><header><h2>1 · Nuclides, alpha decay and beta decay</h2></header><div class="body">
+<p>A nuclide is identified by its <strong>mass number</strong> $A$ (protons plus neutrons) and <strong>atomic number</strong> $Z$ (protons). Its neutron number is $N=A-Z$. The chemical element is fixed by $Z$, not by its mass number.</p>
+$$ {}^{A}_{Z}X\qquad N=A-Z. $$
+<div class="compare-grid">
+<article><h3>Alpha (α) emission</h3>
+<p>The nucleus emits a helium-4 nucleus containing two protons and two neutrons. The daughter has $A'=A-4$ and $Z'=Z-2$.</p>
+$$ {}^{A}_{Z}X\to{}^{A-4}_{Z-2}Y+{}^{4}_{2}\mathrm{He}. $$
+</article>
+<article><h3>Beta-minus (β⁻) emission</h3>
+<p>A neutron changes into a proton while an electron and an electron antineutrino are emitted. The daughter has $A'=A$ and $Z'=Z+1$.</p>
+$$ {}^{A}_{Z}X\to{}^{A}_{Z+1}Y+e^-+\bar\nu_e. $$
+</article>
+</div>
+<figure class="figure"><svg viewBox="0 0 710 206" role="img" aria-label="Illustrative nuclide chart with horizontal proton number Z and vertical neutron number N. Alpha decay goes two left and two down. Beta-minus decay goes one right and one down.">
+<rect x="0" y="0" width="710" height="206" rx="10" fill="#f8fafc"/>
+<defs><marker id="arrow01" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6Z" fill="#334155"/></marker></defs>
+<g stroke="#cbd5e1" stroke-width="1"><path d="M90 30V171 M150 30V171 M210 30V171 M270 30V171 M330 30V171 M390 30V171 M450 30V171 M510 30V171 M570 30V171 M630 30V171"/><path d="M90 30H630 M90 75H630 M90 120H630 M90 165H630"/></g>
+<path d="M70 175H640" stroke="#475569" stroke-width="2" marker-end="url(#arrow01)"/><path d="M70 175V18" stroke="#475569" stroke-width="2" marker-end="url(#arrow01)"/>
+<text x="635" y="195" font-size="16" fill="#0f172a">Z</text><text x="45" y="23" font-size="16" fill="#0f172a">N</text>
+<circle cx="390" cy="65" r="10" fill="#2563eb"/><text x="409" y="56" font-size="13" fill="#1e293b">parent</text>
+<circle cx="270" cy="155" r="10" fill="#059669"/><path d="M380 74L278 148" stroke="#059669" stroke-width="3" marker-end="url(#arrow01)"/><text x="145" y="126" fill="#065f46" font-size="15">α: −2 Z, −2 N</text>
+<circle cx="450" cy="110" r="10" fill="#b45309"/><path d="M398 72L443 103" stroke="#b45309" stroke-width="3" marker-end="url(#arrow01)"/><text x="475" y="119" fill="#92400e" font-size="14">β⁻: +1 Z, −1 N</text>
+</svg><figcaption>Schematic directions on an $N$–$Z$ chart, <strong>not to scale</strong>. In L21's nuclide-chart exercises, check the axis labels before interpreting a decay arrow.</figcaption></figure>
+<p>At a more microscopic level the proton is <strong>uud</strong> and the neutron <strong>udd</strong>. In beta-minus decay a down quark converts into an up quark through the weak interaction. You do not need to calculate weak-interaction processes in this unit.</p>
+<p class="resource"><strong>Lecture lookup:</strong> L21 slides 6–8 (quarks), 16–17 (α and β⁻), 20–22 (decay chains and practice).</p>
+<p><a href="unit02_nucleus_spectra.html#c1">← Back to C1</a> · <a href="unit02_nucleus_spectra.html#c2">← Back to C2</a> · <a href="unit02_nucleus_spectra.html#g1">← Back to G1</a></p>
+</div></section>
+
+<section id="mass-defect" class="theory-unit"><header><h2>2 · Nuclear mass changes and reaction energy</h2></header><div class="body">
+<p><strong>Important distinction:</strong> The binding-energy mass defect compares a bound nucleus with its separate constituents. The <strong>reaction mass difference</strong> compares all initial particles with all products. Both use mass–energy equivalence, but their reference systems differ.</p>
+<p>For a reaction with a common mass convention on both sides:</p>
+$$Q=\left(\sum m_{\mathrm{initial}}-\sum m_{\mathrm{final}}\right)c^2.$$
+<p>If $Q>0$, energy is released (an exoergic reaction). $Q$ is the total energy available from the reaction; the share received by any one product is determined by conservation of momentum and energy.</p>
+<div class="callout"><strong>Choosing masses correctly.</strong> Atomic masses include electrons. For the alpha decay of a neutral atom, and for the D–T reaction using neutral hydrogen and helium atoms, the number of atomic electrons is the same on each side. Therefore the tabulated atomic masses can be used consistently at the accuracy required here. Do not mix bare nuclear masses with neutral atomic masses without accounting for electrons.</div>
+<p>Unit conversions:</p>
+$$ 1\,\mathrm u = 1.66053906660\times10^{-27}\,\mathrm{kg},\quad
+1\,\mathrm{eV}=1.602176634\times10^{-19}\,\mathrm J. $$
+$$ 1\,\mathrm u\,c^2\approx931.494\,\mathrm{MeV}. $$
+<p><strong>Worked method with symbolic data:</strong> Compute total mass on each side, subtract final from initial, check the sign, and multiply by the mass–energy factor. If requested in joules, convert u to kilograms before multiplying by $c^2$; if requested in MeV, the shortcut avoids unnecessary intermediate rounding.</p>
+<details class="lookup"><summary>Where does binding energy enter?</summary><div>
+<p>With consistent atomic masses, the total binding energy of a nuclide can be approximated using its neutral atomic mass $m_{\mathrm{atom}}$, the neutral hydrogen-atom mass $m({}^1\mathrm H)$ and neutron mass $m_n$:</p>
+$$ B\approx\left[Z\,m({}^1\mathrm H)+N\,m_n-m_{\mathrm{atom}}\right]c^2.$$
+<p>The small atomic-electron binding correction is neglected at this level. The binding energy per nucleon, $B/A$, is useful for understanding the overall trends of nuclear stability.</p>
+</div></details>
+<p class="resource"><strong>Lecture lookup:</strong> L21 slide 11 (mass defect), slides 38–39 (binding and nuclear energy), slide 50 (formula summary).</p>
+<p><a href="unit02_nucleus_spectra.html#g1">← Back to G1</a> · <a href="unit02_nucleus_spectra.html#r1">← Back to R1</a></p>
+</div></section>
+
+<section id="nuclear-energy" class="theory-unit"><header><h2>3 · Why can alpha decay and fusion both release energy?</h2></header><div class="body">
+<p>Both processes transform mass into kinetic energy and other forms of energy when their total product mass is smaller than their total starting mass. But the <strong>mechanisms</strong> are fundamentally different.</p>
+<div class="compare-grid">
+<article><h3>Alpha decay · unstable heavy nucleus</h3><p>A heavy nucleus emits a tightly bound helium-4 nucleus. This is a <strong>spontaneous radioactive process</strong>; its probability per unit time is characterised by the decay constant. The heavy daughter nucleus recoils.</p><p>It is <strong>not</strong> the same as splitting a nucleus into two comparable heavy fragments (nuclear fission).</p></article>
+<article><h3>Deuterium–tritium fusion · light nuclei combine</h3><p>Two positively charged nuclei must approach to nuclear distances despite electrostatic repulsion. This requires very energetic conditions or quantum tunnelling. The result includes a helium-4 nucleus and a fast neutron.</p><p>In a fusion device, most of the D–T reaction energy is carried by the neutron; an alpha particle can help heat the plasma.</p></article>
+</div>
+<figure class="figure"><svg viewBox="0 0 740 298" role="img" aria-label="Schematic of nuclear binding energy per nucleon versus mass number: rises rapidly for light nuclei, peaks near iron and nickel, and decreases slowly for very heavy nuclei. Heavy-nucleus alpha decay and light-nucleus fusion are distinguished.">
+<rect width="740" height="298" rx="10" fill="#fff"/>
+<defs><marker id="nucAr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9Z" fill="#475569"/></marker></defs>
+<path d="M64 250V30 M64 250H709" stroke="#334155" stroke-width="2" fill="none" marker-end="url(#nucAr)"/>
+<g font-size="13" fill="#334155"><text x="22" y="30" transform="rotate(-90,22,30)">Binding energy per nucleon (schematic)</text><text x="478" y="285">Increasing mass number A →</text><text x="76" y="267">Light nuclei</text><text x="340" y="267">Fe / Ni region</text><text x="599" y="267">Heavy nuclei</text></g>
+<path d="M80 239C125 166 175 83 235 70 S365 39 427 51 S585 75 681 100" stroke="#2563eb" stroke-width="4" fill="none" stroke-linecap="round"/>
+<circle cx="108" cy="191" r="5" fill="#059669"/><text x="92" y="209" font-size="14" fill="#065f46">D/T</text>
+<circle cx="162" cy="109" r="5" fill="#059669"/><text x="170" y="120" font-size="14" fill="#065f46">⁴He</text>
+<path d="M114 183L158 119" stroke="#059669" stroke-width="3" marker-end="url(#nucAr)"/>
+<text x="115" y="151" font-size="13" fill="#065f46">fusion</text>
+<circle cx="667" cy="95" r="5" fill="#b45309"/><text x="633" y="82" font-size="14" fill="#92400e">heavy</text>
+<path d="M673 102L649 109" stroke="#b45309" stroke-width="2" marker-end="url(#nucAr)"/>
+<text x="506" y="143" font-size="13" fill="#92400e">α decay: specific</text><text x="506" y="161" font-size="13" fill="#92400e">nuclear Q-value</text>
+<text x="287" y="29" font-size="13" fill="#2563eb">Strongest binding per nucleon</text>
+</svg>
+<figcaption>Qualitative stability trend, not a numerical mass-energy calculation or a scaled nuclide chart. The sign and amount of an <em>individual</em> alpha-decay Q-value must be checked from actual masses; the broad trend alone does not determine it.</figcaption></figure>
+<p><strong>Energy per event is not power.</strong> Reactor power additionally depends on how many reactions occur each second, what fraction of their energy is captured, and the efficiency of conversion to electricity. Fusion, spontaneous decay and induced fission must not be conflated.</p>
+<p><strong>Applications:</strong> Radioisotope thermoelectric generators exploit the heat from certain radioactive decays; today's commercial nuclear power reactors use induced fission; controlled fusion for net electricity production is a separate engineering challenge. Natural stellar fusion is yet another context (and the Sun is not a D–T reactor).</p>
+<p><strong>Reflect after R1:</strong> Both G1 and R1 produce helium-4. Why does one happen spontaneously, while the other needs fusion conditions? What would you need to know to convert a reaction Q-value into electrical power?</p>
+<p class="resource"><strong>Lecture lookup:</strong> L21 slides 38–46 (fission and fusion) and 50 (formula summary). Optional independent reading: <a href="https://openstax.org/books/university-physics-volume-3/pages/10-2-nuclear-binding-energy">OpenStax · Nuclear Binding Energy</a> · <a href="https://science.nasa.gov/planetary-science/programs/radioisotope-power-systems/about-plutonium-238/">NASA · Plutonium-238</a>.</p>
+<p><a href="unit02_nucleus_spectra.html#r1">← Back to R1</a> · <a href="unit02_nucleus_spectra.html#g1">← Back to G1</a></p>
+</div></section>
+
+<section id="hydrogen-lines" class="theory-unit"><header><h2>4 · Hydrogen energy levels and Balmer lines</h2></header><div class="body">
+<p>In the simple Bohr/Coulomb model, the bound hydrogen energy levels are discrete and negative. The ionisation limit is chosen as zero energy. The energy depends on the principal quantum number $n$:</p>
+$$E_n=-\frac{hc\,\widetilde R_{\mathrm H}}{n^2}.$$
+<p>For emission $n_i>n_f$. The atom loses energy, while the photon receives <strong>positive</strong> energy $E_\gamma=E_{n_i}-E_{n_f}=hc/\lambda$.</p>
+<figure class="figure"><svg viewBox="0 0 700 328" role="img" aria-label="Hydrogen energy-level schematic for n = 2, 3, 4, 5 and ionisation; arrows show downward H-alpha transition 3 to 2 and H-gamma transition 5 to 2.">
+<rect width="700" height="328" rx="10" fill="#fff"/>
+<g stroke="#64748b" stroke-width="3"><path d="M126 55H465 M126 95H465 M126 143H465 M126 257H465"/></g>
+<path d="M126 25H465" stroke="#94a3b8" stroke-dasharray="6 4"/>
+<g font-size="17" fill="#334155"><text x="48" y="29">n = ∞</text><text x="67" y="59">n = 5</text><text x="67" y="99">n = 4</text><text x="67" y="147">n = 3</text><text x="67" y="261">n = 2</text><text x="470" y="28">0 eV</text><text x="470" y="61">≈ −0.54 eV</text><text x="470" y="100">≈ −0.85 eV</text><text x="470" y="148">≈ −1.51 eV</text><text x="470" y="261">≈ −3.40 eV</text></g>
+<defs><marker id="spectrumAr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9Z" fill="#0f172a"/></marker></defs>
+<path d="M270 58V251" stroke="#7c3aed" stroke-width="4" marker-end="url(#spectrumAr)"/>
+<path d="M393 146V251" stroke="#dc2626" stroke-width="4" marker-end="url(#spectrumAr)"/>
+<g font-size="16" font-weight="600"><text x="189" y="184" fill="#6d28d9">Hγ (5→2)</text><text x="397" y="216" fill="#b91c1c">Hα (3→2)</text></g>
+<text x="120" y="307" fill="#475569" font-size="14">Energy levels schematic; vertical spacing reflects level-energy differences approximately.</text>
+</svg><figcaption>Both arrows terminate at $n=2$, so both are in the Balmer series. The 5→2 jump is larger than the 3→2 jump, hence it produces a more energetic photon with a shorter wavelength.</figcaption></figure>
+<p>Using $\nu=c/\lambda$, the Rydberg relation for vacuum wavelengths follows:</p>
+$$\frac1\lambda=\widetilde R_{\mathrm H}\left(\frac1{n_f^2}-\frac1{n_i^2}\right).$$
+<p><strong>Unit warning:</strong> $\widetilde R_{\mathrm H}$ is a <em>wavenumber</em> in m⁻¹, not the gas constant $R$. Some spectra are reported as air wavelengths rather than vacuum wavelengths. For high precision, distinguish the hydrogen reduced-mass Rydberg constant from the infinite-nuclear-mass value; this worksheet uses rounded input or explicitly specified constants.</p>
+<section class="sim-card" id="sim-spectra"><h3>Explore the Atomic Spectra Lab</h3>
+<p><a href="https://thelabgames.org/chemistry/atomic-spectra-lab/" target="_blank" rel="noopener noreferrer">Open the interactive Atomic Spectra Lab ↗</a>. Select <strong>AP Chemistry</strong> for the extended hydrogen level/line activities. The site has a staged lab interface: some activities ask for a name, class and chosen lab before the bench opens; the Explore option may be more convenient for independent exploration.</p>
+<ol class="tight"><li>Find the hydrogen energy-level display and its line spectrum.</li><li>Explore a downward transition. Ask: what changes in wavelength as the energy gap grows?</li><li>Compare the model line with the value calculated in your worksheet. Do not substitute an approximate visual readout for a requested numerical precision.</li></ol>
+<p class="small"><strong>Model limit:</strong> the simplified level picture is not a mechanical orbit model of electrons. Screen colours and simulator readouts are approximations; check wavelength conventions for precise work.</p>
+</section>
+<p class="resource"><strong>Lecture lookup:</strong> L22 slides 4–7; Q02 3rd Repetition Q1; L25 Exercise 2.</p>
+<p><a href="unit02_nucleus_spectra.html#g2">← Back to G2</a> · <a href="unit02_nucleus_spectra.html#h2">← Back to H2</a></p>
+</div></section>
+
+<section id="radioactive-decay" class="theory-unit"><header><h2>5 · Exponential decay, activity and half-life</h2></header><div class="body">
+<p>A radioactive decay is a stochastic nuclear event. For a large population of the <em>same</em> radionuclide, its expected number of remaining nuclei decreases exponentially. Activity is the number of decays per second and is proportional to the number of radioactive nuclei when the decay constant is fixed.</p>
+$$N_t=N_0e^{-\lambda t},\qquad
+A_{\mathrm{act},t}=\lambda N_t,\qquad t_{1/2}=\frac{\ln2}{\lambda}.$$
+<p><strong>Symbol warning:</strong> $A_{\mathrm{act}}$ denotes <em>activity</em>, in becquerels (s⁻¹). It is not the same as the mass number $A$ in a nuclide symbol.</p>
+<p>Because activity and nucleus count have the same relative decay:</p>
+$$\frac{A_{\mathrm{act},t}}{A_{\mathrm{act},0}}=\left(\frac12\right)^{t/t_{1/2}}.$$
+<div class="table-scroll"><table><thead><tr><th>Elapsed half-lives</th><th>Expected fraction left</th><th>Percentage</th></tr></thead><tbody>
+<tr><td>0</td><td>1</td><td>100%</td></tr><tr><td>1</td><td>1/2</td><td>50%</td></tr><tr><td>2</td><td>1/4</td><td>25%</td></tr><tr><td>3</td><td>1/8</td><td>12.5%</td></tr><tr><td>4</td><td>1/16</td><td>6.25%</td></tr>
+</tbody></table></div>
+<p><strong>Method example (different from R2):</strong> After 1.5 half-lives, the expected remaining fraction is $2^{-1.5}\approx0.354$, or about 35.4%. That lies between 50% (one half-life) and 25% (two half-lives).</p>
+<p>To determine the <em>elapsed time</em> from a measured fraction $f=A_t/A_0$ instead, take the natural logarithm:</p>
+$$t=-\frac{t_{1/2}}{\ln2}\,\ln f.$$
+<p>Dating an unknown requires assumptions beyond this equation: the initial amount or reference activity must be known, the relevant material must behave as a sufficiently closed system, and production or contamination must be controlled.</p>
+<section class="sim-card" id="sim-decay"><h3>Explore the Half-Life Hourglass</h3>
+<p><a href="https://thelabgames.org/chemistry/half-life-hourglass/" target="_blank" rel="noopener noreferrer">Open Half-Life Hourglass ↗</a>. The external page is a guided practice game, including a <strong>General / AP</strong> choice and a graph. It typically presents a series of separate questions rather than an unrestricted laboratory instrument.</p>
+<ol class="tight"><li>Before playing, predict the expected fraction after 1, 2 and 3 half-lives from the table.</li><li>Read the graph and identify whether the problem asks for remaining amount, elapsed time or initial amount.</li><li>Check why a non-integer number of half-lives needs exponentiation rather than simply subtracting a fixed amount.</li></ol>
+<p class="small"><strong>Model limit:</strong> a smooth exponential curve is the statistical expectation for many nuclei; it does not predict when a particular single nucleus will decay. A game's visual precision is not the same as a quantitative answer.</p>
+</section>
+<p class="resource"><strong>Lecture lookup:</strong> L21 slide 23 (kinetics of decay), slide 50 (formula summary); T02 Question 2.</p>
+<p><a href="unit02_nucleus_spectra.html#r2">← Back to R2</a> · <a href="unit02_nucleus_spectra.html#h1">← Back to H1</a></p>
+</div></section>
+
+<section id="resources" class="sources"><h2>Reference materials</h2>
+<p><strong>Lecture slides:</strong> Manfred Kerschbaumer, <em>L21 · The Nucleus</em>, and <em>L22 · The Shell</em>, cited above; Q02 quizzes and T02 Try-Test. These documents define the exercise context and terminology.</p>
+<p><strong>Constants and masses:</strong> <a href="https://physics.nist.gov/cuu/Constants/">NIST/CODATA</a> · <a href="https://www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses">NIST atomic mass reference</a>.</p>
+<p><strong>Additional reading:</strong> <a href="https://openstax.org/books/university-physics-volume-3/pages/10-2-nuclear-binding-energy">OpenStax: Nuclear Binding Energy</a> · <a href="https://science.nasa.gov/planetary-science/programs/radioisotope-power-systems/about-plutonium-238/">NASA: About Plutonium-238</a>.</p>
+<p><a href="unit02_nucleus_spectra.html">← Return to all UE02 exercises</a></p>
+</section>
+</main>
+<script>
+window.addEventListener('DOMContentLoaded',()=>{if(window.renderMathInElement)window.renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});});
+</script>
+<script src="calculator-dock.js" defer></script>
+</body></html>
