@@ -4,7 +4,8 @@ const pc2Unit = 'UE03';
 const releaseStorageKey = 'PC2_UE03_RELEASE_V2';
 const progressStorageKey = 'PC2_UE03_PRACTICE_V2';
 const byId = id => document.getElementById(id);
-const practiceOrder = ['r1a', 'r1b', 'r1c', 'r2a', 'r2b'];
+const practiceGroups = [['r1a', 'r1b', 'r1c'], ['r2a', 'r2b']];
+const practiceOrder = practiceGroups.flat();
 const numberChecks = {
   c1a: { fields: ['e11', 'e12', 'e21'], targets: [2, 5, 5], tolerance: 0 },
   r1a: { fields: ['homo', 'lumo'], targets: [11, 12], tolerance: 0 },
@@ -89,29 +90,33 @@ function feedback(form, kind, message) {
 }
 const progress = Object.create(null);
 const storedProgress = readState(progressStorageKey, {}) || {};
-for (const id of practiceOrder) {
-  const values = storedProgress[id];
-  if (!Array.isArray(values) || !values.every(value => typeof value === 'string') ||
-      classify(id, values) !== 'pass') break;
-  progress[id] = values;
+for (const group of practiceGroups) {
+  // Restore each exercise separately: unfinished R1 must not discard valid R2 progress.
+  for (const id of group) {
+    const values = storedProgress[id];
+    if (!Array.isArray(values) || !values.every(value => typeof value === 'string') ||
+        classify(id, values) !== 'pass') break;
+    progress[id] = values;
+  }
 }
 function updatePractice() {
-  let available = true;
-  for (const id of practiceOrder) {
-    const form = byId('step-' + id);
-    form.hidden = !available;
-    const values = progress[id];
-    numberChecks[id].fields.forEach((key, i) => {
-      const input = byId('answer-' + key);
-      input.readOnly = Boolean(values);
-      if (values) input.value = values[i];
-    });
-    form.querySelector('.check').disabled = Boolean(values);
-    if (values) feedback(form, 'pass', 'Correct.');
-    available = available && Boolean(values);
+  for (const group of practiceGroups) {
+    let available = true;
+    for (const id of group) {
+      const form = byId('step-' + id);
+      form.hidden = !available;
+      const values = progress[id];
+      numberChecks[id].fields.forEach((key, i) => {
+        const input = byId('answer-' + key);
+        input.readOnly = Boolean(values);
+        if (values) input.value = values[i];
+      });
+      form.querySelector('.check').disabled = Boolean(values);
+      if (values) feedback(form, 'pass', 'Correct.');
+      available = available && Boolean(values);
+    }
   }
   byId('r1-reflect').hidden = !progress.r1c;
-  byId('r2-start-note').hidden = Boolean(progress.r1c);
   byId('practice-done').hidden = !progress.r2b;
 }
 const restartPractice = byId('practice-restart');
@@ -127,7 +132,7 @@ byId('practice-reset').addEventListener('click', () => {
   saveState(progressStorageKey, progress);
   restartPractice.open = false;
   updatePractice();
-  restartStatus.textContent = 'R1/R2 restarted. Begin with R1(a).';
+  restartStatus.textContent = 'R1/R2 restarted. Begin with R1(a) or R2(a).';
   byId('answer-homo').focus();
 });
 document.querySelectorAll('form[data-step]').forEach(form => {
@@ -135,7 +140,8 @@ document.querySelectorAll('form[data-step]').forEach(form => {
     event.preventDefault();
     const id = form.dataset.step;
     const index = practiceOrder.indexOf(id);
-    if (form.hidden || (index > 0 && !progress[practiceOrder[index - 1]]) || progress[id]) return;
+    const prerequisite = { r1b: 'r1a', r1c: 'r1b', r2b: 'r2a' }[id];
+    if (form.hidden || (prerequisite && !progress[prerequisite]) || progress[id]) return;
     const values = numberChecks[id].fields.map(key => byId('answer-' + key).value.trim());
     const result = classify(id, values);
     if (index !== -1) restartStatus.textContent = '';
